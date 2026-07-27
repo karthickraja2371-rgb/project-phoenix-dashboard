@@ -58,80 +58,36 @@ const RESULT_VALS = [
 
 const EMG_LEN = 80;
 
-// ── Comprehensive Universal AI Knowledge Engine (Direct Answers Only - Zero Bot Questions) ──
+// ── Clean & Fast AI Assistant Bot Knowledge Engine ───────────────────────────
 const getBotResponse = (question) => {
   const q = question.toLowerCase().trim();
 
-  // Greetings & Identity
-  if (q.includes("hi") || q.includes("hello") || q.includes("hey") || q === "who are you" || q.includes("what is this")) {
-    return "⚡ **Project Phoenix AI Knowledge Engine**: I am the dedicated AI assistant for Project Phoenix. Project Phoenix is an autonomous 1.18kg transhumeral myoelectric prosthetic arm featuring 100% offline edge AI, microfluidic sweat cortisol biosensing, self-healing socket liners, FSR pressure safety locks, and TENS phantom pain relief designed for skin-grafted amputees.";
+  if (q.includes("hi") || q.includes("hello") || q.includes("hey")) {
+    return "👋 Hello! I am the **Project Phoenix AI Assistant**. How can I help you explore our bionic prosthesis system today?";
   }
-  if (q.includes("inventor") || q.includes("karthick") || q.includes("author") || q.includes("who built") || q.includes("who made")) {
-    return "👨‍💻 **Inventor & Lead Engineer**: R. Karthick Raja (Pasumpon Nagar, Vadipatti Road, Sholavandan, Madurai, Tamil Nadu, India - 625214). Engineered from personal experience to serve transhumeral amputees with skin-grafted residual limbs.";
+  if (q.includes("patent") || q.includes("claim") || q.includes("number")) {
+    return "📜 **Patent Information**: Project Phoenix holds Indian Provisional Patent Application No. **202641077314** (Filed **23 June 2026**). It features **13 Novel Claims** starting from **Claim 1 through Claim 13**, covering offline Syntiant AI, microfluidic sweat cortisol capping, self-healing socket liners, 20.0 kPa FSR pressure locks, and 3-position TENS rotation.";
   }
-
-  // Patent & IP Claims
-  if (q.includes("patent") || q.includes("claim") || q.includes("number") || q.includes("provisional") || q.includes("ip")) {
-    return "📜 **Patent Portfolio**: Indian Provisional Patent Application No. **202641077314** (Filed **23 June 2026**). Features 13 Novel Claims (Claim 1 to Claim 13) covering offline NDP120 AI, Vision-EMG Intent Fusion, Sweat Cortisol Microfluidics, Self-Healing Socket Liner, Nightly On-Device Retraining, TENS Phantom Pain Suppression, Voice-EMG Fusion, 20.0 kPa Pressure Lock, Socket Microclimate Sensors, Pre-Donning Skin Inspection, 3h Active / 15m Rest Timers, 3-Position TENS Rotation, and Integrated 1.18kg System.";
+  if (q.includes("safety") || q.includes("pressure") || q.includes("graft") || q.includes("skin")) {
+    return "🛡️ **Skin Graft Safety System**: Designed specifically for skin-grafted transhumeral amputees. Features an 8-point FSR array that triggers an **automatic 20.0 kPa passive lock interrupt** to protect skin-grafted tissue. Includes daily 3-position TENS pad rotation and a disposable sweat cartridge with a Blue → Yellow hydrogel saturation indicator.";
   }
-  if (q.includes("pct") || q.includes("international") || q.includes("wipo") || q.includes("expansion")) {
-    return "🌍 **3-Part PCT Patent Strategy**: Indian Provisional No. 202641077314 is being expanded into 3 distinct international PCT filings: #1 Bionic Controls (Claims 1, 2, 5, 7, 8, 9, 10, 11, 13), #2 Smart Socket Materials & Biofeedback (Claims 3, 4, 6), and #3 CAN-FD Hardware Bus Topology.";
+  if (q.includes("ai") || q.includes("offline") || q.includes("syntiant") || q.includes("chip") || q.includes("latency")) {
+    return "🧠 **Offline Syntiant AI Engine**: Utilizes a palm-embedded **Syntiant NDP120 neural processor (<4.8mW power)** that classifies sEMG gestures in **22ms (SIMULATED)** with **100% offline edge privacy** — zero biometric data is sent to the cloud. Features a Golden Weights rollback protocol for safe nightly retraining.";
   }
-
-  // Hardware & Specs
-  if (q.includes("weight") || q.includes("mass") || q.includes("kg") || q.includes("heavy") || q.includes("battery") || q.includes("runtime") || q.includes("voltage") || q.includes("power")) {
-    return "⚙️ **System Hardware Specifications**: Total Mass = **1.18 kg (MODELED)** (vs Ottobock 1.4-1.8kg). Battery Pack = 22.2V 5000mAh Li-Ion (111Wh) providing **13.2 Hours Runtime (MODELED)** based on 2.5 hours active motor duty + 11 hours background sEMG/AI monitoring. Motor power arbitration firmware caps total system current at **2.5A (55.5W)**.";
+  if (q.includes("cost") || q.includes("price") || q.includes("grant") || q.includes("funding") || q.includes("budget") || q.includes("bom")) {
+    return "💼 **Commercial & Grant Model**: Total funding request is **₹1.25 Crore INR ($150,000 USD)** across BIRAC BIG (₹50L), DST Seed Support (₹50L), and ARTPARK HealthTech (₹25L). Commercial pricing: **Tier 1 Premium Private/Export** (BOM ₹2.5–3.0L / Retail ₹12–15L) and **Tier 2 Government ALIMCO** (BOM ₹80k–1.0L / Retail ₹2.0–2.5L).";
   }
-  if (q.includes("maxon") || q.includes("motor") || q.includes("elbow") || q.includes("worm gear") || q.includes("brake") || q.includes("ec16") || q.includes("ecx")) {
-    return "⚙️ **Motor & Gearbox Architecture**: Transitioned from NRND EC16 to the active **Maxon ECX Speed 16 M BLDC** motor coupled to a **50:1 Non-Backdrivable Worm Gearhead (GP 16 C)** for the elbow. This holds forearm position under gravity loads up to 15 Nm with **0 Watts continuous power draw**, completely eliminating the 1.5W battery drain of a solenoid brake. Digit actuation uses 5x Maxon DCX 6S motors.";
+  if (q.includes("inventor") || q.includes("author") || q.includes("who built") || q.includes("karthick")) {
+    return "👨‍💻 **Inventor & Lead Engineer**: R. Karthick Raja (Sholavandan, Madurai, Tamil Nadu, India - 625214). Built out of personal experience to serve transhumeral amputees with skin-grafted residual limbs.";
   }
-  if (q.includes("can") || q.includes("bus") || q.includes("topology") || q.includes("watchdog") || q.includes("wire") || q.includes("harness")) {
-    return "🔌 **CAN-FD Hardware Bus Topology**: A 2-wire shielded CAN-FD differential bus (1 Mbit/s) connects the Palm Master Rigid-Flex PCB to the Elbow Satellite Driver PCB, saving 85g in wiring harness weight. Features a **50ms watchdog timeout** that locks a mechanical friction detent if the wrist flex cable pair is severed, plus a 4-wire SPI backup bus for IEC 60601-1 safety redundancy.";
+  if (q.includes("roadmap") || q.includes("next step") || q.includes("timeline") || q.includes("clinical") || q.includes("trial")) {
+    return "🚀 **5-Phase Roadmap**: Phase 1 (Provisional Patent - Done) ➔ Phase 2 (Digital Twin Simulation - Done) ➔ Phase 3 (Hardware & PCB Fabrication - Q4 2026) ➔ Phase 4 (Bench HIL Testing - Q1 2027) ➔ Phase 5 (IRB Clinical Pilot Trials n=10 - Q2 2027 with primary wear time >=6.0h/day).";
+  }
+  if (q.includes("weight") || q.includes("battery") || q.includes("spec") || q.includes("maxon") || q.includes("can")) {
+    return "⚙️ **System Hardware Specs**: Total Mass = **1.18 kg (MODELED)**. Battery Pack = 22.2V 5000mAh Li-Ion (111Wh) yielding **13.2 Hours Runtime (MODELED)**. Elbow drive features a Maxon ECX Speed 16 M motor with a 50:1 non-backdrivable GP 16 C worm gear (0W passive power draw) and CAN-FD bus topology with 50ms watchdog timeout.";
   }
 
-  // AI & Firmware
-  if (q.includes("ai") || q.includes("ndp120") || q.includes("syntiant") || q.includes("offline") || q.includes("latency") || q.includes("chip")) {
-    return "🧠 **Offline Syntiant NDP120 AI Processor**: Utilizes a palm-embedded **Syntiant NDP120 neural processor (<4.8mW power)** executing a 4-layer CNN gesture classifier in **22ms (SIMULATED)**. Operates 100% offline on the edge — zero biometric data or EMG waveforms are ever transmitted over the cloud.";
-  }
-  if (q.includes("retrain") || q.includes("golden") || q.includes("rollback") || q.includes("nightly") || q.includes("sgd")) {
-    return "🧠 **Golden Weights Rollback Protocol (Claim 5)**: During 15W Qi wireless charging at night, the STM32H753 MCU executes a host-assisted SGD transfer learning loop. Before writing new neural coefficients to the NDP120 RAM, the MCU evaluates accuracy on a 7-day held-out test set. If validation accuracy is **< Baseline + 2.0%**, the MCU automatically rolls back to the previous Golden Weights matrix stored in external SPI Flash.";
-  }
-
-  // Safety & Socket Biology
-  if (q.includes("pressure") || q.includes("fsr") || q.includes("lock") || q.includes("safety") || q.includes("graft")) {
-    return "🛡️ **Skin Graft Pressure Interlock (Claim 8)**: An 8-point FSR array monitors socket skin pressure every 5ms. If pressure on skin-grafted tissue exceeds **20.0 kPa ± 0.4 kPa**, the STM32 MCU triggers an immediate passive tendon lock in **<10ms**, preventing skin tears or pressure ulcers.";
-  }
-  if (q.includes("sweat") || q.includes("cortisol") || q.includes("stress") || q.includes("microfluidic") || q.includes("fluid")) {
-    return "🧪 **Sweat Cortisol Biosensing (Claim 3)**: Graphene microfluidic channels detect sweat cortisol levels during user anxiety or emotional stress. When cortisol exceeds 0.60 ug/dL, the firmware automatically caps maximum grip torque to 80% as an auxiliary governor, preventing accidental crush injuries.";
-  }
-  if (q.includes("liner") || q.includes("self-healing") || q.includes("sponge") || q.includes("cartridge") || q.includes("kapton") || q.includes("eis")) {
-    return "🛡️ **Tri-Layer Socket Liner & Hygiene**: Consists of an inner platinum silicone layer with silver-cloth TENS pads, middle hydrophobic microfluidic sweat channel, and outer self-healing nickel-particle microcapsule layer separated by a Kapton dielectric shield. Sweat is wicked into a **twist-lock disposable cartridge** with a **Blue → Yellow hydrogel saturation indicator**. Kapton barrier maintains **EIS Impedance > 10 MΩ @ 1 kHz** over 1,000 strain cycles.";
-  }
-  if (q.includes("tens") || q.includes("pain") || q.includes("phantom") || q.includes("gmi") || q.includes("rotation") || q.includes("dermatitis")) {
-    return "⚡ **Phantom Pain TENS Therapy (Claims 6 & 12)**: Bi-phasic TENS pulses (100Hz, 200us) deliver tactile feedback to residual skin grafts, suppressing phantom limb pain by over 70% through background Graded Motor Imagery (GMI). An analog multiplexer automatically rotates stimulation across 3 electrode pad locations every 8 hours, preventing contact dermatitis.";
-  }
-  if (q.includes("donning") || q.includes("redness") || q.includes("melanin") || q.includes("camera") || q.includes("hsv")) {
-    return "👁️ **Pre-Donning Skin Inspection (Claim 10)**: The OV2640 palm camera scans residual limb skin graft redness using HSV color segmentation before donning. To ensure dermatological validity across all skin tones and bilateral amputees, daily scans compute Delta E against the **residual limb's OWN Day 0 baseline image** stored in SPI Flash.";
-  }
-
-  // Commercial & Financial
-  if (q.includes("cost") || q.includes("price") || q.includes("bom") || q.includes("retail") || q.includes("grant") || q.includes("funding") || q.includes("alimco")) {
-    return "💼 **Commercial Model & Funding**: Total Grant Ask = **₹1.25 Crore INR ($150,000 USD)** allocated into BIRAC BIG (₹50L - Prototype), DST Seed (₹50L - Clinical Trials), and ARTPARK (₹25L - PCT Patents). Commercial Tiers: **Tier 1 Premium Private/Export** (BOM ₹2.5–3.0L / Retail ₹12–15L - 70% below US $50k competitors) and **Tier 2 Government ALIMCO** (BOM ₹80k–1.0L / Retail ₹2.0–2.5L).";
-  }
-
-  // Regulatory & Clinical
-  if (q.includes("iso") || q.includes("13485") || q.includes("qms") || q.includes("cdsco") || q.includes("iec") || q.includes("regulatory") || q.includes("62304") || q.includes("14971")) {
-    return "🏥 **Regulatory Pathway & ISO 13485 QMS**: ISO 13485 Design Controls initiated **August 2026** prior to PCB spin #1. Documentation includes SOP-DC-001, DIS-001 (Design Inputs), ISO 14971 Risk File, IEC 62304 Class C Software Plan (SRS-001), and CDSCO Form 44 Clinical Trial Application for Class C/D devices under Indian Medical Device Rules 2017.";
-  }
-  if (q.includes("trial") || q.includes("clinical") || q.includes("endpoint") || q.includes("bbt") || q.includes("vas") || q.includes("patient")) {
-    return "🧪 **Phase 5 Clinical Trial Endpoints (n=10 Patient Pilot)**: Scheduled for Q2 2027 with transhumeral amputees with skin grafts. Primary Endpoint = **Prosthesis Wear Time >= 6.0 hours/day** over 4 weeks. Secondary Endpoints = Box and Block Test (BBT) dexterity improvement, Visual Analog Scale (VAS) phantom pain reduction, and dermatologist skin graft health scores.";
-  }
-  if (q.includes("roadmap") || q.includes("timeline") || q.includes("phase") || q.includes("next step")) {
-    return "🚀 **5-Phase Master Roadmap**: Phase 1 (Provisional Patent - Complete) ➔ Phase 2 (Digital Twin Simulation - Complete) ➔ Phase 3 (Hardware & PCB Fabrication - Q4 2026) ➔ Phase 4 (Bench HIL Testing - Q1 2027) ➔ Phase 5 (IRB Clinical Pilot Trials n=10 - Q2 2027).";
-  }
-
-  // Universal Fallback for any other complex technical query
-  return `⚡ **Project Phoenix Technical Response**: Project Phoenix is an autonomous 1.18kg transhumeral myoelectric prosthesis with Indian Provisional Patent No. 202641077314 (Filed 23 June 2026). Key specifications: 100% offline Syntiant NDP120 neural AI (22ms latency), 20.0 kPa FSR socket pressure safety lock, self-healing silicone liner with Kapton EIS shield (>10 MΩ), non-backdrivable Maxon ECX Speed 16 M worm gear, CAN-FD bus topology with 50ms watchdog lock, ISO 13485 QMS design controls (August 2026), and Phase 5 clinical trials (n=10 amputees, Q2 2027). For query "${question}", all technical specifications are validated via Digital Twin HIL simulation.`;
+  return "⚡ **Project Phoenix AI Assistant**: I can answer questions about our **Patent Claims (Application No. 202641077314)**, **Skin Graft Safety Systems**, **100% Offline NDP120 AI**, **Grant Budget (₹1.25 Cr)**, or **5-Phase Clinical Roadmap**. Feel free to ask!";
 };
 
 export default function App() {
@@ -149,7 +105,7 @@ export default function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [chatInput, setChatInput] = useState("");
   const [chatMessages, setChatMessages] = useState([
-    { sender: "bot", text: "👋 Hello! I am the **Project Phoenix Universal AI Knowledge Engine**. Ask me any basic or complex technical question about our patent, CAN-FD topology, Maxon worm gear, ISO 13485 QMS, Golden Weights rollback, or clinical trial endpoints!" }
+    { sender: "bot", text: "👋 Hello! I am the **Project Phoenix AI Assistant**. Ask me anything about our patent, skin graft safety, offline AI chip, or clinical roadmap!" }
   ]);
 
   // Diagnostic runner states
@@ -271,7 +227,7 @@ export default function App() {
   };
 
   const handleExportCSV = () => {
-    const timeStr = "27-July-2026_20-33-32";
+    const timeStr = "27-July-2026_20-43-57";
     const csvContent = "data:text/csv;charset=utf-8,Claim,Novelty,Evidence,Spec,Result,Status,Timestamp\n" +
       TESTS.map((t, i) => `"${t.claim}","${t.name}","${t.evidence}","${t.sub}","${RESULT_VALS[i]}","SIMULATION VALIDATED","${timeStr}"`).join("\n");
     const encodedUri = encodeURI(csvContent);
@@ -536,7 +492,7 @@ export default function App() {
         </div>
       )}
 
-      {/* 🤖 FLOATING INTERACTIVE UNIVERSAL PHOENIX AI ASSISTANT CHATBOT (ZERO BOT QUESTIONS) 🤖 */}
+      {/* 🤖 FLOATING INTERACTIVE PROJECT PHOENIX AI ASSISTANT CHATBOT (ORIGINAL DESIGN RESTORED) 🤖 */}
       <div style={{ position: "fixed", bottom: 20, right: 20, zIndex: 99999 }}>
         {!isChatOpen ? (
           <button
@@ -552,14 +508,14 @@ export default function App() {
               gap: 8,
             }}
           >
-            <span style={{ fontSize: 18 }}>🤖</span> ASK PHOENIX AI
+            <span style={{ fontSize: 18 }}>🤖</span> ASK PHOENIX AI ASSISTANT
           </button>
         ) : (
           <div
             className="card"
             style={{
-              width: 420,
-              maxHeight: 560,
+              width: 390,
+              maxHeight: 540,
               display: "flex",
               flexDirection: "column",
               border: `1px solid ${P.cyan}`,
@@ -572,15 +528,15 @@ export default function App() {
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <span style={{ fontSize: 18 }}>🤖</span>
                 <div>
-                  <div style={{ fontSize: 12, fontWeight: 800, color: P.cyan }}>PHOENIX AI KNOWLEDGE ENGINE</div>
-                  <div style={{ fontSize: 9, color: P.green }}>● ONLINE · Technical &amp; Regulatory QMS Expert</div>
+                  <div style={{ fontSize: 12, fontWeight: 800, color: P.cyan }}>PROJECT PHOENIX AI</div>
+                  <div style={{ fontSize: 9, color: P.green }}>● ONLINE · Technical Knowledge Engine</div>
                 </div>
               </div>
               <button className="btn btn-outline" style={{ padding: "2px 8px", fontSize: 10 }} onClick={() => setIsChatOpen(false)}>✕</button>
             </div>
 
             {/* Chat Messages Stream */}
-            <div style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: 10, maxHeight: 380, paddingRight: 4, marginBottom: 10 }}>
+            <div style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: 10, maxHeight: 310, paddingRight: 4, marginBottom: 10 }}>
               {chatMessages.map((msg, idx) => (
                 <div
                   key={idx}
@@ -589,11 +545,11 @@ export default function App() {
                     background: msg.sender === "user" ? "rgba(0, 229, 255, 0.15)" : P.bg3,
                     border: `1px solid ${msg.sender === "user" ? P.cyan : P.bd}`,
                     borderRadius: 8,
-                    padding: "10px 14px",
+                    padding: "8px 12px",
                     fontSize: 11,
                     color: P.t1,
-                    maxWidth: "88%",
-                    lineHeight: 1.6,
+                    maxWidth: "85%",
+                    lineHeight: 1.5,
                   }}
                 >
                   {msg.text}
@@ -601,17 +557,26 @@ export default function App() {
               ))}
             </div>
 
-            {/* Input & Send Controls (NO QUESTION CHIPS DISPLAYED) */}
+            {/* Suggested Quick Question Chips (Clean Original Layout) */}
+            <div style={{ display: "flex", gap: 6, overflowX: "auto", paddingBottom: 6, marginBottom: 8 }}>
+              <button className="btn btn-outline" style={{ padding: "3px 8px", fontSize: 9, whiteSpace: "nowrap" }} onClick={() => handleSendMessage("What are the patent claims?")}>📜 Patent Claims</button>
+              <button className="btn btn-outline" style={{ padding: "3px 8px", fontSize: 9, whiteSpace: "nowrap" }} onClick={() => handleSendMessage("How does skin graft safety work?")}>🛡️ Skin Safety</button>
+              <button className="btn btn-outline" style={{ padding: "3px 8px", fontSize: 9, whiteSpace: "nowrap" }} onClick={() => handleSendMessage("What is the grant funding allocation?")}>💼 Grant Funding</button>
+              <button className="btn btn-outline" style={{ padding: "3px 8px", fontSize: 9, whiteSpace: "nowrap" }} onClick={() => handleSendMessage("Tell me about offline AI chip")}>🧠 Offline AI</button>
+              <button className="btn btn-outline" style={{ padding: "3px 8px", fontSize: 9, whiteSpace: "nowrap" }} onClick={() => handleSendMessage("What is the 5-phase roadmap?")}>🚀 Roadmap</button>
+            </div>
+
+            {/* Input & Send Controls */}
             <div style={{ display: "flex", gap: 6 }}>
               <input
                 type="text"
-                placeholder="Ask any basic or complex technical question..."
+                placeholder="Ask about AI, Patent, Safety, Grants..."
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
-                style={{ flex: 1, background: P.bg2, border: `1px solid ${P.bd}`, borderRadius: 6, padding: "10px 14px", color: P.t1, fontSize: 11, outline: "none" }}
+                style={{ flex: 1, background: P.bg2, border: `1px solid ${P.bd}`, borderRadius: 6, padding: "8px 12px", color: P.t1, fontSize: 11, outline: "none" }}
               />
-              <button className="btn btn-primary" style={{ padding: "10px 16px" }} onClick={() => handleSendMessage()}>SEND</button>
+              <button className="btn btn-primary" style={{ padding: "8px 14px" }} onClick={() => handleSendMessage()}>SEND</button>
             </div>
           </div>
         )}
@@ -627,7 +592,7 @@ export default function App() {
         <div style={{ textAlign: "right" }}>
           Indian Provisional Patent Application No.: <strong style={{ color: P.cyan }}>202641077314</strong> (Filed 23 June 2026)  
           <br />
-          Subsystem TRL: <strong style={{ color: P.green }}>3–4 (HIL Simulated)</strong> · Version: <strong>v3.3.0-UniversalAI</strong> · Timestamp: 27 July 2026 20:33:32
+          Subsystem TRL: <strong style={{ color: P.green }}>3–4 (HIL Simulated)</strong> · Version: <strong>v3.4.0-OriginalBotRestored</strong> · Timestamp: 27 July 2026 20:43:57
         </div>
       </footer>
     </div>
