@@ -58,7 +58,7 @@ const RESULT_VALS = [
 
 const EMG_LEN = 80;
 
-// ── Clean & Fast AI Assistant Bot Knowledge Engine ───────────────────────────
+// ── AI Assistant Knowledge Engine (Direct Answers Only - No Suggestions) ────
 const getBotResponse = (question) => {
   const q = question.toLowerCase().trim();
 
@@ -87,7 +87,7 @@ const getBotResponse = (question) => {
     return "⚙️ **System Hardware Specs**: Total Mass = **1.18 kg (MODELED)**. Battery Pack = 22.2V 5000mAh Li-Ion (111Wh) yielding **13.2 Hours Runtime (MODELED)**. Elbow drive features a Maxon ECX Speed 16 M motor with a 50:1 non-backdrivable GP 16 C worm gear (0W passive power draw) and CAN-FD bus topology with 50ms watchdog timeout.";
   }
 
-  return "⚡ **Project Phoenix AI Assistant**: I can answer questions about our **Patent Claims (Application No. 202641077314)**, **Skin Graft Safety Systems**, **100% Offline NDP120 AI**, **Grant Budget (₹1.25 Cr)**, or **5-Phase Clinical Roadmap**. Feel free to ask!";
+  return "⚡ **Project Phoenix AI Assistant**: Project Phoenix is an autonomous 1.18kg transhumeral myoelectric prosthesis with Indian Provisional Patent No. 202641077314 (Filed 23 June 2026). Key specifications include offline Syntiant NDP120 neural AI (22ms latency), 20.0 kPa FSR socket pressure lock, self-healing silicone liner, Maxon worm gear drive, and ISO 13485 QMS design controls.";
 };
 
 export default function App() {
@@ -105,7 +105,7 @@ export default function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [chatInput, setChatInput] = useState("");
   const [chatMessages, setChatMessages] = useState([
-    { sender: "bot", text: "👋 Hello! I am the **Project Phoenix AI Assistant**. Ask me anything about our patent, skin graft safety, offline AI chip, or clinical roadmap!" }
+    { sender: "bot", text: "👋 Hello! I am the **Project Phoenix AI Assistant**. Feel free to type any question about our patent, skin graft safety, offline AI chip, or clinical roadmap." }
   ]);
 
   // Diagnostic runner states
@@ -227,7 +227,7 @@ export default function App() {
   };
 
   const handleExportCSV = () => {
-    const timeStr = "27-July-2026_20-43-57";
+    const timeStr = "27-July-2026_20-46-59";
     const csvContent = "data:text/csv;charset=utf-8,Claim,Novelty,Evidence,Spec,Result,Status,Timestamp\n" +
       TESTS.map((t, i) => `"${t.claim}","${t.name}","${t.evidence}","${t.sub}","${RESULT_VALS[i]}","SIMULATION VALIDATED","${timeStr}"`).join("\n");
     const encodedUri = encodeURI(csvContent);
@@ -492,7 +492,7 @@ export default function App() {
         </div>
       )}
 
-      {/* 🤖 FLOATING INTERACTIVE PROJECT PHOENIX AI ASSISTANT CHATBOT (ORIGINAL DESIGN RESTORED) 🤖 */}
+      {/* 🤖 FLOATING INTERACTIVE PROJECT PHOENIX AI ASSISTANT CHATBOT (ZERO SUGGESTION CHIPS) 🤖 */}
       <div style={{ position: "fixed", bottom: 20, right: 20, zIndex: 99999 }}>
         {!isChatOpen ? (
           <button
@@ -515,7 +515,7 @@ export default function App() {
             className="card"
             style={{
               width: 390,
-              maxHeight: 540,
+              maxHeight: 520,
               display: "flex",
               flexDirection: "column",
               border: `1px solid ${P.cyan}`,
@@ -536,7 +536,7 @@ export default function App() {
             </div>
 
             {/* Chat Messages Stream */}
-            <div style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: 10, maxHeight: 310, paddingRight: 4, marginBottom: 10 }}>
+            <div style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: 10, maxHeight: 380, paddingRight: 4, marginBottom: 12 }}>
               {chatMessages.map((msg, idx) => (
                 <div
                   key={idx}
@@ -545,7 +545,7 @@ export default function App() {
                     background: msg.sender === "user" ? "rgba(0, 229, 255, 0.15)" : P.bg3,
                     border: `1px solid ${msg.sender === "user" ? P.cyan : P.bd}`,
                     borderRadius: 8,
-                    padding: "8px 12px",
+                    padding: "10px 14px",
                     fontSize: 11,
                     color: P.t1,
                     maxWidth: "85%",
@@ -557,16 +557,7 @@ export default function App() {
               ))}
             </div>
 
-            {/* Suggested Quick Question Chips (Clean Original Layout) */}
-            <div style={{ display: "flex", gap: 6, overflowX: "auto", paddingBottom: 6, marginBottom: 8 }}>
-              <button className="btn btn-outline" style={{ padding: "3px 8px", fontSize: 9, whiteSpace: "nowrap" }} onClick={() => handleSendMessage("What are the patent claims?")}>📜 Patent Claims</button>
-              <button className="btn btn-outline" style={{ padding: "3px 8px", fontSize: 9, whiteSpace: "nowrap" }} onClick={() => handleSendMessage("How does skin graft safety work?")}>🛡️ Skin Safety</button>
-              <button className="btn btn-outline" style={{ padding: "3px 8px", fontSize: 9, whiteSpace: "nowrap" }} onClick={() => handleSendMessage("What is the grant funding allocation?")}>💼 Grant Funding</button>
-              <button className="btn btn-outline" style={{ padding: "3px 8px", fontSize: 9, whiteSpace: "nowrap" }} onClick={() => handleSendMessage("Tell me about offline AI chip")}>🧠 Offline AI</button>
-              <button className="btn btn-outline" style={{ padding: "3px 8px", fontSize: 9, whiteSpace: "nowrap" }} onClick={() => handleSendMessage("What is the 5-phase roadmap?")}>🚀 Roadmap</button>
-            </div>
-
-            {/* Input & Send Controls */}
+            {/* Input & Send Controls (ZERO SUGGESTION CHIPS DISPLAYED) */}
             <div style={{ display: "flex", gap: 6 }}>
               <input
                 type="text"
@@ -574,9 +565,9 @@ export default function App() {
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
-                style={{ flex: 1, background: P.bg2, border: `1px solid ${P.bd}`, borderRadius: 6, padding: "8px 12px", color: P.t1, fontSize: 11, outline: "none" }}
+                style={{ flex: 1, background: P.bg2, border: `1px solid ${P.bd}`, borderRadius: 6, padding: "10px 14px", color: P.t1, fontSize: 11, outline: "none" }}
               />
-              <button className="btn btn-primary" style={{ padding: "8px 14px" }} onClick={() => handleSendMessage()}>SEND</button>
+              <button className="btn btn-primary" style={{ padding: "10px 16px" }} onClick={() => handleSendMessage()}>SEND</button>
             </div>
           </div>
         )}
@@ -592,7 +583,7 @@ export default function App() {
         <div style={{ textAlign: "right" }}>
           Indian Provisional Patent Application No.: <strong style={{ color: P.cyan }}>202641077314</strong> (Filed 23 June 2026)  
           <br />
-          Subsystem TRL: <strong style={{ color: P.green }}>3–4 (HIL Simulated)</strong> · Version: <strong>v3.4.0-OriginalBotRestored</strong> · Timestamp: 27 July 2026 20:43:57
+          Subsystem TRL: <strong style={{ color: P.green }}>3–4 (HIL Simulated)</strong> · Version: <strong>v3.5.0-NoQuestionChips</strong> · Timestamp: 27 July 2026 20:46:59
         </div>
       </footer>
     </div>
