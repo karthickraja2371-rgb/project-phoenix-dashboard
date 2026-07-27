@@ -58,6 +58,46 @@ const RESULT_VALS = [
 
 const EMG_LEN = 80;
 
+function GaugeBar({ label, value, max, warn, danger, unit = "", small = false }) {
+  const pct = Math.min(100, Math.max(0, (value / max) * 100));
+  const col = value >= danger ? P.red : value >= warn ? P.amber : P.green;
+  return (
+    <div style={{ marginBottom: small ? 6 : 10 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", fontSize: small ? 10 : 11, marginBottom: 3 }}>
+        <span style={{ color: P.t2 }}>{label}</span>
+        <span style={{ color: col, fontWeight: 700 }}>
+          {value.toFixed(1)}{unit} / {max}{unit}
+        </span>
+      </div>
+      <div style={{ height: small ? 6 : 8, background: P.bg3, borderRadius: 4, overflow: "hidden", position: "relative", border: `1px solid ${P.bd}` }}>
+        {warn && <div style={{ position: "absolute", top: 0, left: `${(warn / max) * 100}%`, width: 1, height: "100%", background: P.amber, opacity: 0.7 }} />}
+        {danger && <div style={{ position: "absolute", top: 0, left: `${(danger / max) * 100}%`, width: 1, height: "100%", background: P.red, opacity: 0.8 }} />}
+        <div style={{ height: "100%", width: `${pct}%`, background: `linear-gradient(90deg, ${col}aa, ${col})`, borderRadius: 4, transition: "width 0.2s ease" }} />
+      </div>
+    </div>
+  );
+}
+
+// ── SVG Waveform Generator for sEMG ──────────────────────────────────────────
+function SVGWaveform({ data, color, height = 36 }) {
+  if (!data || data.length === 0) return null;
+  const width = 280;
+  const maxVal = 1.2;
+  const points = data
+    .map((val, idx) => {
+      const x = (idx / (EMG_LEN - 1)) * width;
+      const y = height - (val / maxVal) * height;
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    })
+    .join(" ");
+
+  return (
+    <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} style={{ overflow: "visible" }}>
+      <polyline fill="none" stroke={color} strokeWidth="1.8" points={points} />
+    </svg>
+  );
+}
+
 // ── AI Assistant Knowledge Engine ────────────────────────────────────────────
 const getBotResponse = (question) => {
   const q = question.toLowerCase().trim();
@@ -91,7 +131,7 @@ const getBotResponse = (question) => {
 };
 
 export default function App() {
-  const [viewMode, setViewMode] = useState("webpage");
+  const [viewMode, setViewMode] = useState("dashboard"); // Default to Dashboard for immediate telemetry inspection
   const [isAutoCycle, setIsAutoCycle] = useState(true);
   const [manualGestureIdx, setManualGestureIdx] = useState(0);
   const [cortisolOverride, setCortisolOverride] = useState(0.28);
@@ -228,7 +268,7 @@ export default function App() {
   };
 
   const handleExportCSV = () => {
-    const timeStr = "27-July-2026_20-56-39";
+    const timeStr = "27-July-2026_21-01-04";
     const csvContent = "data:text/csv;charset=utf-8,Claim,Novelty,Evidence,Spec,Result,Status,Timestamp\n" +
       TESTS.map((t, i) => `"${t.claim}","${t.name}","${t.evidence}","${t.sub}","${RESULT_VALS[i]}","SIMULATION VALIDATED","${timeStr}"`).join("\n");
     const encodedUri = encodeURI(csvContent);
@@ -316,16 +356,15 @@ export default function App() {
             </div>
           </section>
 
-          {/* 🌟 OFFICIAL TECHNICAL VISUAL GALLERY WITH NEW CAD POSTERS 🌟 */}
+          {/* OFFICIAL TECHNICAL VISUAL GALLERY WITH NEW CAD POSTERS */}
           <section className="card" style={{ marginBottom: 24 }}>
             <div className="card-title">
               <span className="icon">🖼️</span> TECHNICAL ENGINEERING POSTERS &amp; CAD SCHEMATICS (CLICK TO ENLARGE)
             </div>
 
-            {/* Top 2 Primary Technical Engineering Posters */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 20, marginBottom: 20 }}>
               <div
-                style={{ background: P.bg3, borderRadius: 12, overflow: "hidden", border: `2px solid ${P.cyan}`, cursor: "pointer", transition: "transform 0.2s ease" }}
+                style={{ background: P.bg3, borderRadius: 12, overflow: "hidden", border: `2px solid ${P.cyan}`, cursor: "pointer" }}
                 onClick={() => setSelectedImageModal({ title: "8-PANEL CAD SCHEMATICS & TENDON ROUTING", src: "/cad_orthographic_schematics.jpg" })}
                 className="table-row-hover"
               >
@@ -337,7 +376,7 @@ export default function App() {
               </div>
 
               <div
-                style={{ background: P.bg3, borderRadius: 12, overflow: "hidden", border: `2px solid ${P.green}`, cursor: "pointer", transition: "transform 0.2s ease" }}
+                style={{ background: P.bg3, borderRadius: 12, overflow: "hidden", border: `2px solid ${P.green}`, cursor: "pointer" }}
                 onClick={() => setSelectedImageModal({ title: "NEURAL-INTEGRATED OFFLINE AI POSTER (81 PARTS / 326 SOLIDS)", src: "/neural_offline_ai_poster.jpg" })}
                 className="table-row-hover"
               >
@@ -346,37 +385,6 @@ export default function App() {
                   <span>🔍 CLICK TO ENLARGE</span>
                 </div>
                 <img src="/neural_offline_ai_poster.jpg" alt="Neural Offline AI Poster" style={{ width: "100%", height: "auto", display: "block" }} />
-              </div>
-            </div>
-
-            {/* Additional Concept Render Cards */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
-              <div style={{ background: P.bg3, borderRadius: 10, overflow: "hidden", border: `1px solid ${P.bd}` }}>
-                <div style={{ padding: 10, background: P.bg2, fontSize: 11, fontWeight: 800, color: P.green }}>5-PANEL TRANSHUMERAL SOCKET &amp; ARM ASSEMBLY</div>
-                <img src="/hero_render_phoenix.jpg" alt="Transhumeral Assembly" loading="lazy" decoding="async" style={{ width: "100%", height: "auto", display: "block" }} />
-              </div>
-
-              <div style={{ background: P.bg3, borderRadius: 10, overflow: "hidden", border: `1px solid ${P.bd}` }}>
-                <div style={{ padding: 10, background: P.bg2, fontSize: 11, fontWeight: 800, color: P.cyan }}>6-PILLAR SYSTEM ARCHITECTURE POSTER</div>
-                <img src="/project_phoenix_engineering_poster.jpg" alt="System Architecture" loading="lazy" decoding="async" style={{ width: "100%", height: "auto", display: "block" }} />
-              </div>
-
-              <div style={{ background: P.bg3, borderRadius: 10, overflow: "hidden", border: `1px solid ${P.bd}` }}>
-                <div style={{ padding: 10, background: P.bg2, fontSize: 11, fontWeight: 800, color: P.purple }}>EXPLODED 3D CAD PALM CHASSIS &amp; ACTUATOR</div>
-                <img src="/prosthetic_arm_render.jpg" alt="Exploded CAD Model" loading="lazy" decoding="async" style={{ width: "100%", height: "auto", display: "block" }} />
-              </div>
-            </div>
-          </section>
-
-          <section className="card" style={{ marginBottom: 24 }}>
-            <div className="card-title"><span className="icon">📄</span> INTELLECTUAL PROPERTY &amp; PATENT PORTFOLIO</div>
-            <div style={{ background: P.bg3, padding: 18, borderRadius: 10, border: `1px solid ${P.bd}` }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10, marginBottom: 8 }}>
-                <div style={{ fontSize: 14, fontWeight: 900, color: P.cyan }}>INDIAN PROVISIONAL PATENT APPLICATION NO. 202641077314</div>
-                <span className="status-badge badge-pass">FILED 23 JUNE 2026</span>
-              </div>
-              <div style={{ fontSize: 11, color: P.t2, lineHeight: 1.6 }}>
-                Title: <em>"AUTONOMOUS MYOELECTRIC PROSTHETIC ARM WITH OFFLINE ARTIFICIAL INTELLIGENCE, BIDIRECTIONAL NEURAL FEEDBACK, EMOTION-AWARE GRIP CONTROL, SELF-PROTECTIVE SAFETY SYSTEMS, AND ADAPTIVE DESIGN FOR TRANSHUMERAL AMPUTEES WITH SKIN-GRAFTED RESIDUAL LIMBS"</em>
               </div>
             </div>
           </section>
@@ -414,6 +422,7 @@ export default function App() {
             </div>
           </header>
 
+          {/* Scenario Presets */}
           <div className="card" style={{ marginBottom: 20, padding: 14 }}>
             <div style={{ fontSize: 11, color: P.cyan, fontWeight: 800, marginBottom: 8, letterSpacing: 1 }}>🧪 SIMULATION SCENARIO PRESETS (HIL TESTING)</div>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
@@ -432,9 +441,11 @@ export default function App() {
             </div>
           </div>
 
+          {/* 🌟 FULL DUAL-COLUMN TELEMETRY GRID (NO BLANK AREAS) 🌟 */}
           <div className="grid-main">
+            {/* Left Column: 3D WebGL Kinematics Model */}
             <div className="col-5">
-              <div className="card" style={{ marginBottom: 20 }}>
+              <div className="card" style={{ marginBottom: 20, height: "100%" }}>
                 <div className="card-title"><span className="icon">🖐</span> KINEMATICS &amp; 3D MODEL (SIMULATED)</div>
                 <div style={{ background: P.bg3, border: `1px solid ${P.bd}`, borderRadius: 10, padding: 16, textAlign: "center" }}>
                   <div style={{ fontSize: 20, fontWeight: 900, color: currentG.color, letterSpacing: 1 }}>{currentG.name} (SIMULATED)</div>
@@ -446,10 +457,12 @@ export default function App() {
               </div>
             </div>
 
+            {/* Right Column: Full Telemetry Stack (sEMG, Pressure, Cortisol, Power) */}
             <div className="col-7">
               <div className="card" style={{ marginBottom: 20 }}>
-                <div className="card-title"><span className="icon">🧠</span> SYNTIANT NDP120 AI ENGINE &amp; PERFORMANCE LIMITS (SIMULATED)</div>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 14 }}>
+                {/* 1. Top Metrics */}
+                <div className="card-title"><span className="icon">🧠</span> SYNTIANT NDP120 AI TELEMETRY &amp; PERFORMANCE</div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 16 }}>
                   <div style={{ background: P.bg3, padding: 10, borderRadius: 6, border: `1px solid ${P.bd}` }}>
                     <div style={{ fontSize: 9, color: P.t2 }}>CONFIDENCE MARGIN</div>
                     <div style={{ fontSize: 14, fontWeight: 900, color: P.cyan }}>92.4% ± 2.1%</div>
@@ -467,9 +480,60 @@ export default function App() {
                     <div style={{ fontSize: 11, fontWeight: 800, color: P.amber }}>{currentG.name}</div>
                   </div>
                 </div>
+
+                {/* 2. sEMG 4-Channel Waveforms (2000Hz) */}
+                <div style={{ background: P.bg3, padding: 14, borderRadius: 8, border: `1px solid ${P.bd}`, marginBottom: 14 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+                    <div style={{ fontSize: 11, fontWeight: 800, color: P.cyan }}>📈 4-CHANNEL sEMG SIGNAL STREAM (2000Hz · PGA460 GAIN +28%)</div>
+                    <span className="status-badge badge-pass">ACTIVE SAMPLING</span>
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 10 }}>
+                    <div style={{ background: P.bg2, padding: 8, borderRadius: 6, border: `1px solid ${P.bd}` }}>
+                      <div style={{ fontSize: 9, color: P.t2, marginBottom: 2 }}>CH 1: BICEPS BRACHII (EMG)</div>
+                      <SVGWaveform data={d.emg[0]} color={P.cyan} />
+                    </div>
+                    <div style={{ background: P.bg2, padding: 8, borderRadius: 6, border: `1px solid ${P.bd}` }}>
+                      <div style={{ fontSize: 9, color: P.t2, marginBottom: 2 }}>CH 2: TRICEPS BRACHII (EMG)</div>
+                      <SVGWaveform data={d.emg[1]} color={P.green} />
+                    </div>
+                    <div style={{ background: P.bg2, padding: 8, borderRadius: 6, border: `1px solid ${P.bd}` }}>
+                      <div style={{ fontSize: 9, color: P.t2, marginBottom: 2 }}>CH 3: ANTERIOR DELTOID (EMG)</div>
+                      <SVGWaveform data={d.emg[2]} color={sensorFailure ? P.red : P.amber} />
+                    </div>
+                    <div style={{ background: P.bg2, padding: 8, borderRadius: 6, border: `1px solid ${P.bd}` }}>
+                      <div style={{ fontSize: 9, color: P.t2, marginBottom: 2 }}>CH 4: BRACHIORADIALIS (EMG)</div>
+                      <SVGWaveform data={d.emg[3]} color={P.purple} />
+                    </div>
+                  </div>
+                </div>
+
+                {/* 3. FSR Socket Pressure & Sweat Cortisol Biofeedback */}
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 14 }}>
+                  <div style={{ background: P.bg3, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                    <div style={{ fontSize: 11, fontWeight: 800, color: P.cyan, marginBottom: 8 }}>
+                      🛡️ SOCKET PRESSURE ARRAY (FSR)
+                    </div>
+                    <GaugeBar label="PEAK SOCKET PRESSURE" value={d.pressure} max={25.0} warn={15.0} danger={20.0} unit=" kPa" />
+                    <div style={{ fontSize: 9, color: d.pressure >= 20.0 ? P.red : P.green, fontWeight: 800 }}>
+                      {d.pressure >= 20.0 ? "⚠ 20.0 kPa PASSIVE LOCK INTERRUPT ENGAGED!" : "✓ Socket Pressure Within Safe Threshold"}
+                    </div>
+                  </div>
+
+                  <div style={{ background: P.bg3, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                    <div style={{ fontSize: 11, fontWeight: 800, color: P.purple, marginBottom: 8 }}>
+                      🧪 SWEAT CORTISOL BIOFEEDBACK
+                    </div>
+                    <GaugeBar label="SWEAT CORTISOL LEVEL" value={d.cortisol} max={1.0} warn={0.5} danger={0.6} unit=" µg/dL" />
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 9, color: P.t2 }}>
+                      <span>GRIP TORQUE CEILING:</span>
+                      <span style={{ color: d.gripCeiling < 100 ? P.amber : P.green, fontWeight: 800 }}>{d.gripCeiling}% CAP</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
+            {/* Patent Table */}
             <div className="col-12">
               <div className="card">
                 <div className="card-title" style={{ justifyContent: "space-between" }}>
@@ -628,7 +692,7 @@ export default function App() {
         <div style={{ textAlign: "right" }}>
           Indian Provisional Patent Application No.: <strong style={{ color: P.cyan }}>202641077314</strong> (Filed 23 June 2026)  
           <br />
-          Subsystem TRL: <strong style={{ color: P.green }}>3–4 (HIL Simulated)</strong> · Version: <strong>v3.7.0-TechnicalPostersIntegrated</strong> · Timestamp: 27 July 2026 20:56:39
+          Subsystem TRL: <strong style={{ color: P.green }}>3–4 (HIL Simulated)</strong> · Version: <strong>v3.8.0-FullTelemetryGrid</strong> · Timestamp: 27 July 2026 21:01:04
         </div>
       </footer>
     </div>
