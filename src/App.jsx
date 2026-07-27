@@ -80,20 +80,9 @@ function GaugeBar({ label, value, max, warn, danger, unit = "", small = false })
 
 export default function App() {
   const [viewMode, setViewMode] = useState("webpage"); // "webpage" | "dashboard"
-  const [themeMode, setThemeMode] = useState("dark"); // "dark" | "clinical" | "tactical"
-  const [isPitchMode, setIsPitchMode] = useState(false);
+  const [activeTab, setActiveTab] = useState("overview");
   const [isAutoCycle, setIsAutoCycle] = useState(true);
   const [manualGestureIdx, setManualGestureIdx] = useState(0);
-
-  // Manual Kinematics Sliders
-  const [customFingers, setCustomFingers] = useState([0, 0, 0, 0, 0]);
-  const [customElbow, setCustomElbow] = useState(45);
-  const [customWrist, setCustomWrist] = useState(12);
-  const [armMaterial, setArmMaterial] = useState("#E2E8F0"); // Platinum
-
-  // Vision Camera Target Object Simulation
-  const [visionObject, setVisionObject] = useState({ name: "Water Bottle", conf: 98, shape: "Cylindrical", preShape: "CYLINDRICAL" });
-
   const [cortisolOverride, setCortisolOverride] = useState(0.28);
   const [pressureSpike, setPressureSpike] = useState(false);
   const [sensorFailure, setSensorFailure] = useState(false);
@@ -110,11 +99,11 @@ export default function App() {
 
   // Event Log stream
   const [eventLogs, setEventLogs] = useState([
-    { time: "18:17:02", msg: "[SYSTEM] Engineering Validation Platform Active · Subsystem TRL 3–4" },
-    { time: "18:17:04", msg: "[STATUS] Prototype Status: Virtual Prototype (Physical Assembly Pending)" },
-    { time: "18:17:10", msg: "[EMG_DSP] sEMG 4-Channel 2000Hz (SIMULATED) · PGA460 gain +28% (SIMULATED)" },
-    { time: "18:17:15", msg: "[SAFETY] FSR Socket pressure normal (9.4 kPa < 20.0 kPa Limit)" },
-    { time: "18:17:22", msg: "[REST_TIMER] 3-Hour Active EMG counter tick: 01h 14m active" },
+    { time: "17:57:02", msg: "[SYSTEM] Engineering Validation Platform Active · Subsystem TRL 3–4" },
+    { time: "17:57:04", msg: "[STATUS] Prototype Status: Virtual Prototype (Physical Assembly Pending)" },
+    { time: "17:57:10", msg: "[EMG_DSP] sEMG 4-Channel 2000Hz (SIMULATED) · PGA460 gain +28% (SIMULATED)" },
+    { time: "17:57:15", msg: "[SAFETY] FSR Socket pressure normal (9.4 kPa < 20.0 kPa Limit)" },
+    { time: "17:57:22", msg: "[REST_TIMER] 3-Hour Active EMG counter tick: 01h 14m active" },
   ]);
 
   const dataRef = useRef({
@@ -131,23 +120,16 @@ export default function App() {
     targetFingers: [0, 0, 0, 0, 0],
     batteryV: 22.4,
     batteryCurrent: 1.85,
-    bmsCells: [3.73, 3.74, 3.73, 3.74, 3.73, 3.73],
     bmsTemp: 31.2,
+    ldoV: 3.31,
     tens: [1.8, 2.1, 1.4, 2.5],
-    tensPosition: 1,
     emg: [[], [], [], []],
-    fft: Array(16).fill(0),
     elbow: 45,
     wrist: 12,
     fsrSensors: [8.2, 9.1, 7.8, 10.4, 8.9, 9.6, 7.2, 8.8],
   });
 
   const intervalRef = useRef(null);
-
-  // Apply Theme CSS class
-  useEffect(() => {
-    document.body.className = themeMode === "clinical" ? "theme-clinical" : themeMode === "tactical" ? "theme-tactical" : "";
-  }, [themeMode]);
 
   // Simulation tick loop
   useEffect(() => {
@@ -166,19 +148,7 @@ export default function App() {
         return next;
       });
 
-      // sEMG FFT Spectrum Simulation (20Hz - 450Hz)
-      d.fft = d.fft.map((_, i) => Math.max(5, Math.min(95, 30 + Math.sin(tick * 0.3 + i) * 25 + Math.random() * 15)));
-
-      if (isAutoCycle) {
-        d.targetFingers = g.fingers.map((f) => Math.max(0, Math.min(100, f + (Math.random() - 0.5) * 2)));
-        d.elbow = Math.round(30 + Math.sin(tick * 0.1) * 45);
-        d.wrist = Math.round(Math.cos(tick * 0.1) * 35);
-      } else {
-        d.targetFingers = customFingers;
-        d.elbow = customElbow;
-        d.wrist = customWrist;
-      }
-
+      d.targetFingers = g.fingers.map((f) => Math.max(0, Math.min(100, f + (Math.random() - 0.5) * 2)));
       d.fingers = d.fingers.map((f, i) => f + (d.targetFingers[i] - f) * 0.25);
 
       d.cortisol = cortisolOverride;
@@ -189,41 +159,30 @@ export default function App() {
       d.pressure = Math.max(...d.fsrSensors);
 
       d.batteryV = lowBattery ? 18.2 : 22.4;
-      d.bmsCells = d.bmsCells.map((_, i) => +( (d.batteryV / 6) + (Math.random() - 0.5) * 0.02 ).toFixed(2));
-
       d.temperature = 34.0 + Math.sin(tick * 0.05) * 1.5;
       d.humidity = 60 + Math.cos(tick * 0.05) * 5;
 
       d.confidence = Math.min(0.99, Math.max(0.75, 0.924 + (Math.random() - 0.5) * 0.04));
       d.latency = Math.round(18 + Math.random() * 8);
-
-      // Rotate TENS position every 100 ticks in simulation
-      if (tick % 100 === 0) {
-        d.tensPosition = (d.tensPosition % 3) + 1;
-      }
+      d.elbow = Math.round(30 + Math.sin(tick * 0.1) * 45);
+      d.wrist = Math.round(Math.cos(tick * 0.1) * 35);
+      d.tens = [0, 1, 2, 3].map((i) => +(1.2 + Math.sin(tick * 0.3 + i) * 1.0).toFixed(1));
 
       if (isAutoCycle && tick % 25 === 0 && tick > 0) {
         d.gIdx = (d.gIdx + 1) % GESTURES.length;
-        const visionTargets = [
-          { name: "Water Bottle", conf: 98, shape: "Cylindrical", preShape: "CYLINDRICAL" },
-          { name: "Door Key", conf: 95, shape: "Lateral Pinch", preShape: "LATERAL" },
-          { name: "Coffee Cup", conf: 92, shape: "Power Wrap", preShape: "POWER GRIP" },
-          { name: "Pen / Stylus", conf: 96, shape: "Precision Tip", preShape: "PINCH" },
-        ];
-        setVisionObject(visionTargets[d.gIdx % visionTargets.length]);
       }
 
       setTick((t) => t + 1);
     }, 150);
 
     return () => clearInterval(intervalRef.current);
-  }, [isAutoCycle, manualGestureIdx, customFingers, customElbow, customWrist, cortisolOverride, pressureSpike, sensorFailure, lowBattery, tick]);
+  }, [isAutoCycle, manualGestureIdx, cortisolOverride, pressureSpike, sensorFailure, lowBattery, tick]);
 
   const triggerScenario = (type) => {
     setIsAutoCycle(false);
-    if (type === "OPEN_HAND") { setManualGestureIdx(4); setCustomFingers([0,0,0,0,0]); setPressureSpike(false); setSensorFailure(false); setLowBattery(false); }
-    else if (type === "HOOK_GRIP") { setManualGestureIdx(6); setCustomFingers([20,75,75,75,70]); setPressureSpike(false); setSensorFailure(false); setLowBattery(false); }
-    else if (type === "PINCH_GRIP") { setManualGestureIdx(1); setCustomFingers([85,90,15,10,5]); setPressureSpike(false); setSensorFailure(false); setLowBattery(false); }
+    if (type === "OPEN_HAND") { setManualGestureIdx(4); setPressureSpike(false); setSensorFailure(false); setLowBattery(false); }
+    else if (type === "HOOK_GRIP") { setManualGestureIdx(6); setPressureSpike(false); setSensorFailure(false); setLowBattery(false); }
+    else if (type === "PINCH_GRIP") { setManualGestureIdx(1); setPressureSpike(false); setSensorFailure(false); setLowBattery(false); }
     else if (type === "PRESSURE_SPIKE") { setPressureSpike(true); }
     else if (type === "SENSOR_FAILURE") { setSensorFailure(true); }
     else if (type === "LOW_BATTERY") { setLowBattery(true); }
@@ -269,7 +228,7 @@ export default function App() {
   };
 
   const handleExportCSV = () => {
-    const timeStr = "27-July-2026_18-17-29";
+    const timeStr = "27-July-2026_17-57-39";
     const csvContent = "data:text/csv;charset=utf-8,Claim,Novelty,Evidence,Spec,Result,Status,Timestamp\n" +
       TESTS.map((t, i) => `"${t.claim}","${t.name}","${t.evidence}","${t.sub}","${RESULT_VALS[i]}","SIMULATION VALIDATED","${timeStr}"`).join("\n");
     const encodedUri = encodeURI(csvContent);
@@ -279,10 +238,6 @@ export default function App() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  };
-
-  const handlePrintPDF = () => {
-    window.print();
   };
 
   const d = dataRef.current;
@@ -300,8 +255,8 @@ export default function App() {
 
   return (
     <div className="dashboard-container">
-      {/* ── Top Navigation Bar (Switch between Web Landing Page, Dashboard, Themes & Pitch Mode) ── */}
-      <nav style={{ display: "flex", justifyContent: "space-between", alignItems: "center", background: "rgba(10, 20, 36, 0.9)", backdropFilter: "blur(16px)", border: `1px solid ${P.bd}`, borderRadius: 12, padding: "14px 24px", marginBottom: 20, flexWrap: "wrap", gap: 12 }}>
+      {/* ── Top Navigation Bar (Switch between Web Landing Page & Live Dashboard) ── */}
+      <nav style={{ display: "flex", justifyContent: "space-between", alignItems: "center", background: "rgba(10, 20, 36, 0.9)", backdropFilter: "blur(16px)", border: `1px solid ${P.bd}`, borderRadius: 12, padding: "14px 24px", marginBottom: 20 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <span style={{ fontSize: 22 }}>⚡</span>
           <div>
@@ -310,32 +265,18 @@ export default function App() {
           </div>
         </div>
 
-        {/* Theme & Controls Switchers */}
-        <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
-          <select
-            value={themeMode}
-            onChange={(e) => setThemeMode(e.target.value)}
-            style={{ background: P.bg3, color: P.t1, border: `1px solid ${P.bd}`, padding: "6px 12px", borderRadius: 6, fontSize: 10, fontWeight: 700 }}
-          >
-            <option value="dark">🎨 CYBERPUNK DARK</option>
-            <option value="clinical">🏥 CLINICAL WHITE</option>
-            <option value="tactical">🎯 TACTICAL GREEN</option>
-          </select>
-
-          <button className="btn btn-outline" style={{ padding: "6px 12px", fontSize: 10 }} onClick={() => setIsPitchMode(true)}>
-            🖥️ PITCH MODE
-          </button>
+        <div style={{ display: "flex", gap: 10 }}>
           <button
             className={`btn ${viewMode === "webpage" ? "btn-primary" : "btn-outline"}`}
             onClick={() => setViewMode("webpage")}
           >
-            🌐 SHOWCASE
+            🌐 PRODUCT SHOWCASE
           </button>
           <button
             className={`btn ${viewMode === "dashboard" ? "btn-primary" : "btn-outline"}`}
             onClick={() => setViewMode("dashboard")}
           >
-            ⚡ DASHBOARD
+            ⚡ DIGITAL TWIN DASHBOARD
           </button>
         </div>
       </nav>
@@ -363,7 +304,7 @@ export default function App() {
               "BUILT FROM EXPERIENCE. DRIVEN BY ENGINEERING."
             </div>
 
-            {/* Short Bullet Points */}
+            {/* Short Bullet Points (No Wall of Text & Cost Line Removed) */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14, maxWidth: 950, margin: "0 auto 28px auto", textAlign: "left" }}>
               <div style={{ background: P.bg3, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
                 <strong style={{ color: P.green }}>• Socket Pressure Lock:</strong> FSR array automatically locks at 20.0 kPa to protect skin-grafted tissue.
@@ -434,6 +375,87 @@ export default function App() {
                 Title: <em>"AUTONOMOUS MYOELECTRIC PROSTHETIC ARM WITH OFFLINE ARTIFICIAL INTELLIGENCE, BIDIRECTIONAL NEURAL FEEDBACK, EMOTION-AWARE GRIP CONTROL, SELF-PROTECTIVE SAFETY SYSTEMS, AND ADAPTIVE DESIGN FOR TRANSHUMERAL AMPUTEES WITH SKIN-GRAFTED RESIDUAL LIMBS"</em>
               </div>
             </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12, fontSize: 11 }}>
+              <div style={{ background: P.bg2, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                <strong style={{ color: P.green }}>• 13 Novel Claims:</strong> Covering offline AI, microfluidics, self-healing liners, and rest timers.
+              </div>
+              <div style={{ background: P.bg2, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                <strong style={{ color: P.cyan }}>• Freedom to Operate:</strong> Zero IP infringement on legacy body-powered or high-cost prosthetics.
+              </div>
+              <div style={{ background: P.bg2, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                <strong style={{ color: P.amber }}>• PCT Expansion Ready:</strong> Formatted for international WIPO, US, and EU patent filings.
+              </div>
+            </div>
+          </section>
+
+          {/* Validation Results & Subsystem TRL Section */}
+          <section className="card" style={{ marginBottom: 24 }}>
+            <div className="card-title">
+              <span className="icon">📊</span> SUBSYSTEM TRL VALIDATION RESULTS (SIMULATED)
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, textAlign: "center" }}>
+              <div style={{ background: P.bg3, padding: 14, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                <div style={{ fontSize: 10, color: P.cyan, fontWeight: 800 }}>sEMG BIOSENSING</div>
+                <div style={{ fontSize: 18, fontWeight: 900, color: P.green, margin: "6px 0" }}>TRL 4</div>
+                <div style={{ fontSize: 10, color: P.t2 }}>2000Hz Filter Validated</div>
+              </div>
+              <div style={{ background: P.bg3, padding: 14, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                <div style={{ fontSize: 10, color: P.cyan, fontWeight: 800 }}>NDP120 AI ENGINE</div>
+                <div style={{ fontSize: 18, fontWeight: 900, color: P.green, margin: "6px 0" }}>TRL 4</div>
+                <div style={{ fontSize: 10, color: P.t2 }}>HIL Model Validated</div>
+              </div>
+              <div style={{ background: P.bg3, padding: 14, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                <div style={{ fontSize: 10, color: P.amber, fontWeight: 800 }}>ACTUATION KINEMATICS</div>
+                <div style={{ fontSize: 18, fontWeight: 900, color: P.amber, margin: "6px 0" }}>TRL 3</div>
+                <div style={{ fontSize: 10, color: P.t2 }}>KCL CAD Assembly</div>
+              </div>
+              <div style={{ background: P.bg3, padding: 14, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                <div style={{ fontSize: 10, color: P.amber, fontWeight: 800 }}>SOCKET &amp; SAFETY</div>
+                <div style={{ fontSize: 18, fontWeight: 900, color: P.amber, margin: "6px 0" }}>TRL 3</div>
+                <div style={{ fontSize: 10, color: P.t2 }}>Algorithmic Model</div>
+              </div>
+            </div>
+          </section>
+
+          {/* 5-Phase Clinical Roadmap */}
+          <section className="card" style={{ marginBottom: 24 }}>
+            <div className="card-title">
+              <span className="icon">🚀</span> 5-PHASE CLINICAL &amp; HARDWARE ROADMAP
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 12, textAlign: "center" }}>
+              <div style={{ background: "rgba(0, 230, 118, 0.15)", padding: 12, borderRadius: 8, border: `1px solid ${P.green}` }}>
+                <div style={{ fontSize: 9, color: P.green, fontWeight: 800 }}>PHASE 1 (DONE)</div>
+                <div style={{ fontSize: 11, fontWeight: 800, color: P.t1, marginTop: 4 }}>PROVISIONAL PATENT</div>
+                <div style={{ fontSize: 9, color: P.t2, marginTop: 2 }}>App No. 202641077314 (23 June)</div>
+              </div>
+
+              <div style={{ background: "rgba(0, 229, 255, 0.15)", padding: 12, borderRadius: 8, border: `1px solid ${P.cyan}` }}>
+                <div style={{ fontSize: 9, color: P.cyan, fontWeight: 800 }}>PHASE 2 (CURRENT)</div>
+                <div style={{ fontSize: 11, fontWeight: 800, color: P.t1, marginTop: 4 }}>DIGITAL TWIN (TRL 3-4)</div>
+                <div style={{ fontSize: 9, color: P.t2, marginTop: 2 }}>Vite + WebGL HIL Model</div>
+              </div>
+
+              <div style={{ background: P.bg3, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                <div style={{ fontSize: 9, color: P.t3, fontWeight: 800 }}>PHASE 3 (Q4 2026)</div>
+                <div style={{ fontSize: 11, fontWeight: 800, color: P.t2, marginTop: 4 }}>HARDWARE ASSEMBLY</div>
+                <div style={{ fontSize: 9, color: P.t3, marginTop: 2 }}>STM32 + Maxon EC16</div>
+              </div>
+
+              <div style={{ background: P.bg3, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                <div style={{ fontSize: 9, color: P.t3, fontWeight: 800 }}>PHASE 4 (Q1 2027)</div>
+                <div style={{ fontSize: 11, fontWeight: 800, color: P.t2, marginTop: 4 }}>BENCH HIL TEST</div>
+                <div style={{ fontSize: 9, color: P.t3, marginTop: 2 }}>PGA460 + FSR Load Cell</div>
+              </div>
+
+              <div style={{ background: P.bg3, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                <div style={{ fontSize: 9, color: P.t3, fontWeight: 800 }}>PHASE 5 (Q2 2027)</div>
+                <div style={{ fontSize: 11, fontWeight: 800, color: P.t2, marginTop: 4 }}>CLINICAL TRIALS</div>
+                <div style={{ fontSize: 9, color: P.t3, marginTop: 2 }}>n=10 Patient Fittings</div>
+              </div>
+            </div>
           </section>
         </div>
       )}
@@ -443,6 +465,14 @@ export default function App() {
       {/* ════════════════════════════════════════════════════════════════════════ */}
       {viewMode === "dashboard" && (
         <div>
+          {/* Strict Simulation Disclaimer Banner */}
+          <div style={{ background: "rgba(0, 229, 255, 0.08)", border: `1px solid ${P.cyan}`, borderRadius: 8, padding: "10px 18px", marginBottom: 14, fontSize: 11, color: P.cyan, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10 }}>
+            <span>⚠️ <strong>ENGINEERING VALIDATION SIMULATION DISCLAIMER:</strong> All live telemetry, sEMG signals, and motor kinematics are <strong>SIMULATED</strong> via a Hardware-in-the-Loop (HIL) Digital Twin model. Physical bench validation is pending.</span>
+            <span style={{ fontWeight: 800, background: P.bg2, padding: "4px 10px", borderRadius: 4, border: `1px solid ${P.bd}` }}>
+              PROTOTYPE STATUS: VIRTUAL PROTOTYPE (NO PHYSICAL ASSEMBLY YET)
+            </span>
+          </div>
+
           {/* Header Banner */}
           <header className="header-banner">
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
@@ -455,17 +485,17 @@ export default function App() {
                 <div className="header-subtitle">
                   Digital Twin &amp; Hardware-in-the-Loop Simulation · Transhumeral Myoelectric Prosthesis
                 </div>
+                <div className="header-meta">
+                  Inventor &amp; Lead Engineer: <strong>R. Karthick Raja</strong> · Sholavandan, Madurai, TN, India - 625214
+                </div>
               </div>
 
-              <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
                 <button className="btn btn-primary" onClick={runInteractiveDiagnosticSuite} disabled={isDiagnosticRunning}>
                   {isDiagnosticRunning ? `⏳ TESTING (${diagnosticProgress}%)` : "▶ RUN DIAGNOSTIC SUITE"}
                 </button>
                 <button className="btn btn-outline" onClick={handleExportCSV}>
-                  📥 EXPORT CSV
-                </button>
-                <button className="btn btn-outline" onClick={handlePrintPDF}>
-                  📄 PRINT PDF
+                  📥 EXPORT REPORT (CSV)
                 </button>
               </div>
             </div>
@@ -490,9 +520,9 @@ export default function App() {
               🧪 SIMULATION SCENARIO PRESETS (HIL TESTING)
             </div>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-              <button className="btn btn-outline" onClick={() => triggerScenario("OPEN_HAND")}>🖐 Open Hand</button>
-              <button className="btn btn-outline" onClick={() => triggerScenario("HOOK_GRIP")}>👜 Hook Grip</button>
-              <button className="btn btn-outline" onClick={() => triggerScenario("PINCH_GRIP")}>🤏 Tip Pinch</button>
+              <button className="btn btn-outline" onClick={() => triggerScenario("OPEN_HAND")}>🖐 Open Hand (Simulated)</button>
+              <button className="btn btn-outline" onClick={() => triggerScenario("HOOK_GRIP")}>👜 Hook Grip (Simulated)</button>
+              <button className="btn btn-outline" onClick={() => triggerScenario("PINCH_GRIP")}>🤏 Tip Pinch (Simulated)</button>
               <button className={`btn ${pressureSpike ? "btn-danger" : "btn-outline"}`} onClick={() => triggerScenario("PRESSURE_SPIKE")}>
                 {pressureSpike ? "⚠ Resolve Pressure Spike" : "⚡ Pressure Spike (>20 kPa)"}
               </button>
@@ -505,114 +535,50 @@ export default function App() {
             </div>
           </div>
 
-          {/* Main Grid Layout */}
+          {/* Main Tab Grid */}
           <div className="grid-main">
-            {/* Left Column: 3D Model, Kinematics Sliders & Vision Feed */}
+            {/* Left Column: 3D Model & Motor Status */}
             <div className="col-5">
               <div className="card" style={{ marginBottom: 20 }}>
-                <div className="card-title" style={{ justifyContent: "space-between" }}>
-                  <div><span className="icon">🖐</span> 3D MODEL TELEMETRY &amp; MATERIAL</div>
-                  <select
-                    value={armMaterial}
-                    onChange={(e) => setArmMaterial(e.target.value)}
-                    style={{ background: P.bg3, color: P.cyan, border: `1px solid ${P.bd}`, borderRadius: 4, padding: "2px 8px", fontSize: 10, fontWeight: 700 }}
-                  >
-                    <option value="#E2E8F0">Titanium Platinum</option>
-                    <option value="#1E293B">Matte Carbon</option>
-                    <option value="#38BDF8">Translucent Silicone</option>
-                    <option value="#00E5FF">Cyberpunk Neon</option>
-                  </select>
+                <div className="card-title">
+                  <span className="icon">🖐</span> KINEMATICS &amp; 3D MODEL (SIMULATED)
                 </div>
 
                 <div style={{ background: P.bg3, border: `1px solid ${P.bd}`, borderRadius: 10, padding: 16, textAlign: "center" }}>
-                  <div style={{ fontSize: 18, fontWeight: 900, color: currentG.color, letterSpacing: 1 }}>{currentG.name} (SIMULATED)</div>
-                  
-                  {/* 3D WebGL Arm Viewer */}
-                  <div style={{ margin: "10px 0" }}>
-                    <Arm3DViewer fingers={d.fingers} elbow={d.elbow} wrist={d.wrist} color={armMaterial} />
+                  <div style={{ fontSize: 20, fontWeight: 900, color: currentG.color, letterSpacing: 1 }}>{currentG.name} (SIMULATED)</div>
+                  <div style={{ fontSize: 11, color: P.t2, marginTop: 4 }}>{currentG.desc}</div>
+
+                  {/* 3D WebGL Arm Model Viewer */}
+                  <div style={{ margin: "14px 0" }}>
+                    <div style={{ fontSize: 10, color: P.cyan, fontWeight: 800, marginBottom: 6, letterSpacing: 1 }}>3D WEBGL MODEL TELEMETRY (SIMULATED ROTATION)</div>
+                    <Arm3DViewer fingers={d.fingers} elbow={d.elbow} wrist={d.wrist} color={currentG.color} />
                   </div>
                 </div>
               </div>
 
-              {/* 🎮 MANUAL KINEMATICS CONTROL SLIDERS PANEL */}
-              <div className="card" style={{ marginBottom: 20 }}>
-                <div className="card-title" style={{ justifyContent: "space-between" }}>
-                  <div><span className="icon">🎮</span> MANUAL KINEMATIC SLIDERS</div>
-                  <button
-                    className={`btn ${!isAutoCycle ? "btn-primary" : "btn-outline"}`}
-                    style={{ padding: "4px 10px", fontSize: 9 }}
-                    onClick={() => setIsAutoCycle(!isAutoCycle)}
-                  >
-                    {isAutoCycle ? "Auto Cycle ON" : "Manual Sliders ON"}
-                  </button>
-                </div>
-
-                <div style={{ opacity: isAutoCycle ? 0.6 : 1, transition: "opacity 0.2s ease" }}>
-                  {["Thumb", "Index", "Middle", "Ring", "Little"].map((fName, i) => (
-                    <div key={fName} style={{ marginBottom: 8 }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: P.t2 }}>
-                        <span>{fName} Finger Flex</span>
-                        <span style={{ color: P.cyan, fontWeight: 700 }}>{customFingers[i]}%</span>
-                      </div>
-                      <input
-                        type="range"
-                        min="0"
-                        max="100"
-                        disabled={isAutoCycle}
-                        value={customFingers[i]}
-                        onChange={(e) => {
-                          const next = [...customFingers];
-                          next[i] = parseInt(e.target.value);
-                          setCustomFingers(next);
-                        }}
-                      />
-                    </div>
-                  ))}
-
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginTop: 10 }}>
-                    <div>
-                      <div style={{ fontSize: 10, color: P.t2 }}>Elbow Flex: <strong style={{ color: P.green }}>{customElbow}°</strong></div>
-                      <input type="range" min="0" max="90" disabled={isAutoCycle} value={customElbow} onChange={(e) => setCustomElbow(parseInt(e.target.value))} />
-                    </div>
-                    <div>
-                      <div style={{ fontSize: 10, color: P.t2 }}>Wrist Pitch: <strong style={{ color: P.amber }}>{customWrist}°</strong></div>
-                      <input type="range" min="-45" max="45" disabled={isAutoCycle} value={customWrist} onChange={(e) => setCustomWrist(parseInt(e.target.value))} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* 👁️ OV2640 PALM CAMERA VISION SIMULATOR */}
+              {/* Motor Status Matrix Card */}
               <div className="card">
                 <div className="card-title">
-                  <span className="icon">👁️</span> PALM CAMERA VISION SIMULATOR (OV2640)
+                  <span className="icon">⚙️</span> MOTOR STATUS &amp; JOINT KINEMATICS (SIMULATED)
                 </div>
 
-                <div style={{ background: "#02060D", border: `1px solid ${P.bd}`, borderRadius: 8, padding: 12, position: "relative" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, marginBottom: 8 }}>
-                    <span style={{ color: P.green, fontWeight: 800 }}>● CAM 1 ONLINE (30 FPS)</span>
-                    <span style={{ color: P.cyan, fontWeight: 700 }}>PRE-SHAPE: {visionObject.preShape}</span>
-                  </div>
-
-                  <div style={{ border: `1px dashed ${P.cyan}`, borderRadius: 6, padding: 14, textAlign: "center", background: "rgba(0, 229, 255, 0.05)" }}>
-                    <div style={{ fontSize: 12, color: P.t1, fontWeight: 800 }}>OBJECT: {visionObject.name}</div>
-                    <div style={{ fontSize: 10, color: P.t2, marginTop: 2 }}>
-                      Confidence: <strong style={{ color: P.green }}>{visionObject.conf}%</strong> · Geometry: <strong>{visionObject.shape}</strong>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                  {["Thumb (DCX 6S)", "Index (DCX 6S)", "Middle (DCX 6S)", "Ring (DCX 6S)", "Little (DCX 6S)", "Wrist (EC13)", "Elbow (EC16 40W)"].map((mName) => (
+                    <div key={mName} style={{ background: P.bg3, padding: 8, borderRadius: 6, border: `1px solid ${P.bd}`, fontSize: 10 }}>
+                      <div style={{ color: P.t2, fontSize: 9 }}>{mName}</div>
+                      <div style={{ fontWeight: 800, color: P.green, marginTop: 2 }}>● KINEMATICS OK</div>
+                      <div style={{ fontSize: 9, color: P.t3 }}>Tendon Lock: SIMULATED</div>
                     </div>
-                    <div style={{ fontSize: 9, color: P.cyan, marginTop: 6, fontWeight: 700 }}>
-                      ⚡ Vision-EMG Intent Fusion pre-shaped fingers 300ms before muscle finish.
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
 
-            {/* Right Column: AI Telemetry, sEMG FFT, Battery BMS & Safety */}
+            {/* Right Column: AI Performance Limits, sEMG & Socket Safety */}
             <div className="col-7">
-              {/* Syntiant NDP120 AI Telemetry */}
               <div className="card" style={{ marginBottom: 20 }}>
                 <div className="card-title">
-                  <span className="icon">🧠</span> SYNTIANT NDP120 AI TELEMETRY (SIMULATED)
+                  <span className="icon">🧠</span> SYNTIANT NDP120 AI ENGINE &amp; PERFORMANCE LIMITS (SIMULATED)
                 </div>
 
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 14 }}>
@@ -637,76 +603,90 @@ export default function App() {
                     <div style={{ fontSize: 8, color: P.t3 }}>{(d.confidence * 100).toFixed(1)}% Conf.</div>
                   </div>
                 </div>
-              </div>
-
-              {/* sEMG FFT FREQUENCY SPECTRUM ANALYZER (20Hz - 450Hz) */}
-              <div className="card" style={{ marginBottom: 20 }}>
-                <div className="card-title">
-                  <span className="icon">📊</span> sEMG FFT FREQUENCY SPECTRUM (20 Hz – 450 Hz)
-                </div>
 
                 <div style={{ background: P.bg2, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
-                  <div style={{ display: "flex", alignItems: "flex-end", gap: 6, height: 60 }}>
-                    {d.fft.map((h, i) => (
-                      <div
-                        key={i}
-                        style={{
-                          flex: 1,
-                          height: `${h}%`,
-                          background: `linear-gradient(180deg, ${P.cyan}, ${P.blue})`,
-                          borderRadius: "2px 2px 0 0",
-                          transition: "height 0.15s ease",
-                        }}
-                      />
-                    ))}
-                  </div>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 9, color: P.t3, marginTop: 4 }}>
-                    <span>20 Hz</span>
-                    <span>120 Hz</span>
-                    <span>250 Hz</span>
-                    <span>450 Hz (Nyquist Limit 1000Hz)</span>
+                  <div style={{ fontSize: 10, color: P.t2, marginBottom: 8, fontWeight: 700 }}>GESTURE CLASSIFICATION PROBABILITY DISTRIBUTION</div>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                    <GaugeBar label="Power Grip" value={parseFloat(probPowerGrip)} max={100} unit="%" small />
+                    <GaugeBar label="Precision Pinch" value={parseFloat(probPinch)} max={100} unit="%" small />
+                    <GaugeBar label="Lateral Key Grip" value={parseFloat(probLateral)} max={100} unit="%" small />
+                    <GaugeBar label="Open Hand (Rest)" value={parseFloat(probOpenHand)} max={100} unit="%" small />
                   </div>
                 </div>
               </div>
 
-              {/* 6-CELL BMS LI-ION BATTERY TELEMETRY GRID */}
+              {/* sEMG Signal Channels */}
               <div className="card" style={{ marginBottom: 20 }}>
                 <div className="card-title">
-                  <span className="icon">🔋</span> 6-CELL BMS LI-ION BATTERY TELEMETRY (MODELED)
-                </div>
-
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 8, textAlign: "center" }}>
-                  {d.bmsCells.map((v, i) => (
-                    <div key={i} style={{ background: P.bg3, padding: 8, borderRadius: 6, border: `1px solid ${P.bd}` }}>
-                      <div style={{ fontSize: 9, color: P.t2 }}>CELL {i + 1}</div>
-                      <div style={{ fontSize: 12, fontWeight: 800, color: P.green }}>{v}V</div>
-                      <div style={{ fontSize: 8, color: P.t3 }}>Balanced</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* TENS ELECTRODE ROTATION MULTIPLEXER & REST TIMER */}
-              <div className="card" style={{ marginBottom: 20 }}>
-                <div className="card-title" style={{ justifyContent: "space-between" }}>
-                  <div><span className="icon">🛡️</span> TENS ROTATION &amp; 3-HOUR REST TIMER</div>
-                  <span className="status-badge badge-pass">TENS POS #{d.tensPosition} ACTIVE</span>
+                  <span className="icon">📈</span> 4-CHANNEL sEMG SIGNAL ACQUISITION (SIMULATED 2000 Hz)
                 </div>
 
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-                  <div style={{ background: P.bg3, padding: 10, borderRadius: 8, border: `1px solid ${P.bd}` }}>
-                    <div style={{ fontSize: 10, color: P.cyan, fontWeight: 800 }}>TENS MULTIPLEXER ROTATION</div>
-                    <div style={{ fontSize: 10, color: P.t2, marginTop: 4 }}>
-                      • Pos #1 (0–8h): <strong style={{ color: d.tensPosition === 1 ? P.green : P.t3 }}>{d.tensPosition === 1 ? "ACTIVE" : "IDLE"}</strong><br />
-                      • Pos #2 (8–16h): <strong style={{ color: d.tensPosition === 2 ? P.green : P.t3 }}>{d.tensPosition === 2 ? "ACTIVE" : "SCHEDULED"}</strong><br />
-                      • Pos #3 (16–24h): <strong style={{ color: d.tensPosition === 3 ? P.green : P.t3 }}>{d.tensPosition === 3 ? "ACTIVE" : "SCHEDULED"}</strong>
-                    </div>
+                  {["Biceps Brachii", "Triceps Brachii", "Pectoralis Minor", "Anterior Deltoid"].map((chName, ci) => {
+                    const emgData = d.emg[ci] || [];
+                    const stepX = 180 / EMG_LEN;
+                    const pathD = emgData
+                      .map((v, i) => `${i === 0 ? "M" : "L"} ${(i * stepX).toFixed(1)}, ${(22 - v * 15).toFixed(1)}`)
+                      .join(" ");
+
+                    return (
+                      <div key={chName} style={{ background: P.bg3, padding: 10, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, marginBottom: 6 }}>
+                          <span style={{ color: P.t1, fontWeight: 700 }}>{chName} (SIMULATED)</span>
+                          <span style={{ color: sensorFailure && ci === 2 ? P.red : P.green, fontWeight: 800 }}>
+                            {sensorFailure && ci === 2 ? "⚠ SENSOR DISCONNECTED" : "ACTIVE (+28% Gain)"}
+                          </span>
+                        </div>
+                        <svg width="100%" height="45" viewBox="0 0 180 45" style={{ background: P.bg2, borderRadius: 6 }}>
+                          <path d={pathD} fill="none" stroke={ci === 0 ? P.cyan : ci === 1 ? P.green : ci === 2 ? P.amber : P.purple} strokeWidth="2" />
+                        </svg>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Skin-Graft Socket Safety & Graft Health Score */}
+              <div className="card" style={{ marginBottom: 20 }}>
+                <div className="card-title" style={{ justifyContent: "space-between" }}>
+                  <div>
+                    <span className="icon">🛡</span> SKIN-GRAFT SOCKET SAFETY (SIMULATED)
+                  </div>
+                  <span className={`status-badge ${comfortScore > 80 ? "badge-pass" : "badge-warn"}`}>
+                    GRAFT HEALTH SCORE: {comfortScore} / 100
+                  </span>
+                </div>
+
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                  <div>
+                    <GaugeBar label="Peak Socket Pressure" value={d.pressure} max={25} warn={15} danger={20} unit=" kPa" />
+                    <button
+                      className={`btn ${pressureSpike ? "btn-danger" : "btn-outline"}`}
+                      style={{ width: "100%", fontSize: 10, padding: 8 }}
+                      onClick={() => setPressureSpike(!pressureSpike)}
+                    >
+                      {pressureSpike ? "⚠ RESOLVE PRESSURE SPIKE" : "⚡ SIMULATE >20 kPa PRESSURE SPIKE"}
+                    </button>
                   </div>
 
-                  <div style={{ background: P.bg3, padding: 10, borderRadius: 8, border: `1px solid ${P.bd}` }}>
-                    <div style={{ fontSize: 10, color: P.amber, fontWeight: 800 }}>MANDATORY REST COUNTER</div>
-                    <div style={{ fontSize: 16, fontWeight: 900, color: P.t1, margin: "4px 0" }}>01h 14m 22s</div>
-                    <div style={{ fontSize: 9, color: P.t2 }}>15-min rest cycle triggers in 01h 45m</div>
+                  <div>
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, marginBottom: 4 }}>
+                      <span style={{ color: P.t2 }}>Sweat Cortisol (Stress)</span>
+                      <span style={{ color: cortisolOverride > 0.6 ? P.red : P.green, fontWeight: 800 }}>
+                        {cortisolOverride.toFixed(2)} ug/dL ({d.gripCeiling}% Ceiling)
+                      </span>
+                    </div>
+                    <input
+                      type="range"
+                      min="0.1"
+                      max="1.0"
+                      step="0.05"
+                      value={cortisolOverride}
+                      onChange={(e) => setCortisolOverride(parseFloat(e.target.value))}
+                    />
+                    <div style={{ fontSize: 9, color: P.t3, marginTop: 6 }}>
+                      {cortisolOverride > 0.6 ? "⚠ Cortisol Spike: Grip ceiling reduced to 80%" : "Cortisol Normal: Full 100% torque available"}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -727,11 +707,13 @@ export default function App() {
               </div>
             </div>
 
-            {/* Bottom Column: Patent Specification Table */}
+            {/* Bottom Column: Interactive Clickable Patent Specification Validation Table */}
             <div className="col-12">
               <div className="card">
                 <div className="card-title" style={{ justifyContent: "space-between" }}>
-                  <div><span className="icon">📋</span> PATENT SPECIFICATION VALIDATION SUITE</div>
+                  <div>
+                    <span className="icon">📋</span> PATENT SPECIFICATION VALIDATION SUITE (CLICK ANY CLAIM FOR EVIDENCE)
+                  </div>
                   <div style={{ fontSize: 11, color: P.t2, fontWeight: 700 }}>
                     {testResults.filter((r) => r.status.includes("VALIDATED")).length} / {TESTS.length} CLAIMS SIMULATION VALIDATED
                   </div>
@@ -790,33 +772,9 @@ export default function App() {
               <div style={{ fontSize: 11, color: P.cyan, fontWeight: 800, marginBottom: 4 }}>TECHNICAL EVIDENCE &amp; SIMULATION SPEC</div>
               <div style={{ fontSize: 11, color: P.t1, lineHeight: 1.6 }}>{selectedClaim.detail}</div>
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* ── 🖥️ INVESTOR PITCH MODE SLIDE TOUR MODAL ── */}
-      {isPitchMode && (
-        <div style={{ position: "fixed", top: 0, left: 0, width: "100vw", height: "100vh", background: "rgba(3, 8, 18, 0.95)", backdropFilter: "blur(20px)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 99999 }}>
-          <div className="card" style={{ maxWidth: 850, width: "90%", padding: 30, border: `1px solid ${P.cyan}`, boxShadow: "0 0 60px rgba(0, 229, 255, 0.4)" }}>
-            <div className="card-title" style={{ justifyContent: "space-between" }}>
-              <div><span className="icon">🖥️</span> INVESTOR PITCH SLIDE PRESENTATION</div>
-              <button className="btn btn-outline" onClick={() => setIsPitchMode(false)}>✕ EXIT PITCH MODE</button>
-            </div>
-
-            <div style={{ background: P.bg3, padding: 20, borderRadius: 10, margin: "16px 0", border: `1px solid ${P.bd}` }}>
-              <div style={{ fontSize: 12, color: P.cyan, fontWeight: 800, marginBottom: 6 }}>EXECUTIVE VALUE PROPOSITION</div>
-              <h2 style={{ fontSize: 22, color: P.t1, fontWeight: 900, marginBottom: 12 }}>PROJECT PHOENIX: AUTONOMOUS TRANSHUMERAL PROSTHESIS</h2>
-              <ul style={{ paddingLeft: 18, fontSize: 12, color: P.t2, lineHeight: 1.8 }}>
-                <li><strong>Unmet Clinical Need</strong>: Transhumeral amputees with skin grafts suffer from high socket shear pain (&gt;15 kPa).</li>
-                <li><strong>100% Offline Syntiant AI</strong>: 22ms gesture classification with 0 bytes cloud data risk.</li>
-                <li><strong>Patent Protection</strong>: Indian Provisional Patent Application No. 202641077314 (Filed 23 June 2026).</li>
-                <li><strong>Funding Ask</strong>: ₹1.25 Crore INR across BIRAC BIG (₹50L), DST Seed (₹50L), and ARTPARK (₹25L).</li>
-              </ul>
-            </div>
-
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ fontSize: 11, color: P.t3 }}>Inventor: R. Karthick Raja (Madurai, TN, India)</span>
-              <button className="btn btn-primary" onClick={() => setIsPitchMode(false)}>CONTINUE TO DEMO DASHBOARD ▶</button>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, fontSize: 10 }}>
+              <div><span style={{ color: P.t2 }}>Evidence Type:</span> <strong style={{ color: P.purple }}>{selectedClaim.evidence}</strong></div>
+              <div><span style={{ color: P.t2 }}>Validation Status:</span> <strong style={{ color: P.green }}>✓ {selectedClaim.status}</strong></div>
             </div>
           </div>
         </div>
@@ -832,7 +790,7 @@ export default function App() {
         <div style={{ textAlign: "right" }}>
           Indian Provisional Patent Application No.: <strong style={{ color: P.cyan }}>202641077314</strong> (Filed 23 June 2026)  
           <br />
-          Subsystem TRL: <strong style={{ color: P.green }}>3–4 (HIL Simulated)</strong> · Version: <strong>v3.2.0-DigitalTwin</strong>
+          Subsystem TRL: <strong style={{ color: P.green }}>3–4 (HIL Simulated)</strong> · Version: <strong>v3.2.0-DigitalTwin</strong> · Timestamp: 27 July 2026 17:57:39
         </div>
       </footer>
     </div>
