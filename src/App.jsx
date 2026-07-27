@@ -149,6 +149,10 @@ export default function App() {
   const [selectedImageModal, setSelectedImageModal] = useState(null);
   const [tick, setTick] = useState(0);
 
+  // Digital Twin Real-Time Log State
+  const [telemetryLogs, setTelemetryLogs] = useState([]);
+  const logContainerRef = useRef(null);
+
   // Chatbot State
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [chatInput, setChatInput] = useState("");
@@ -224,6 +228,39 @@ export default function App() {
       d.wrist = Math.round(Math.cos(tick * 0.1) * 35);
       d.tens = [0, 1, 2, 3].map((i) => +(1.2 + Math.sin(tick * 0.3 + i) * 1.0).toFixed(1));
 
+      // Append Real-Time Telemetry Log Line
+      const now = new Date();
+      const timeStr = now.toTimeString().split(' ')[0] + '.' + String(now.getMilliseconds()).padStart(3, '0');
+      let logMsg = "";
+      let logColor = P.green;
+
+      if (pressureSpike) {
+        logMsg = `[FSR WARN] Socket Pressure Spike: ${d.pressure.toFixed(1)} kPa (>20.0 kPa Limit) → PASSIVE LOCK ENGAGED`;
+        logColor = P.red;
+      } else if (sensorFailure) {
+        logMsg = `[EMG WARN] Channel 3 Sensor Disconnect Detected → PGA460 AFE Auto-Recalibrating 3-Channel Fallback`;
+        logColor = P.amber;
+      } else if (lowBattery) {
+        logMsg = `[POWER WARN] Low Pack Voltage: ${d.batteryV.toFixed(1)}V (<15%) → Power Saver Mode Activated`;
+        logColor = P.amber;
+      } else {
+        const categories = [
+          `[AI] NDP120 Neural Inference: ${g.name} (${(d.confidence * 100).toFixed(1)}% Conf, ${d.latency}ms Latency)`,
+          `[CAN-FD] Differential Bus TX: Palm Master → Elbow Satellite | Payload 0x2A4 OK`,
+          `[EMG] 2000Hz PGA460 Sampling | CH1: ${d.emg[0][d.emg[0].length-1]?.toFixed(2)}mV, CH2: ${d.emg[1][d.emg[1].length-1]?.toFixed(2)}mV`,
+          `[SOCKET] FSR Array Peak Pressure: ${d.pressure.toFixed(1)} kPa | SHT31 Temp: ${d.temperature.toFixed(1)}°C, RH: ${d.humidity.toFixed(0)}%`,
+          `[BIO] Sweat Cortisol: ${d.cortisol.toFixed(2)} ug/dL | Grip Ceiling: ${d.gripCeiling}% Cap | TENS 100Hz Active`,
+        ];
+        logMsg = categories[tick % categories.length];
+        logColor = tick % 2 === 0 ? P.cyan : P.green;
+      }
+
+      setTelemetryLogs((prev) => {
+        const nextLogs = [...prev, { time: timeStr, text: logMsg, color: logColor }];
+        if (nextLogs.length > 50) nextLogs.shift();
+        return nextLogs;
+      });
+
       if (isAutoCycle && tick % 25 === 0 && tick > 0) {
         d.gIdx = (d.gIdx + 1) % GESTURES.length;
       }
@@ -233,6 +270,13 @@ export default function App() {
 
     return () => clearInterval(intervalRef.current);
   }, [isAutoCycle, manualGestureIdx, cortisolOverride, pressureSpike, sensorFailure, lowBattery, tick]);
+
+  // Auto-scroll telemetry log to bottom
+  useEffect(() => {
+    if (logContainerRef.current) {
+      logContainerRef.current.scrollTop = logContainerRef.current.scrollHeight;
+    }
+  }, [telemetryLogs]);
 
   const triggerScenario = (type) => {
     setIsAutoCycle(false);
@@ -275,7 +319,7 @@ export default function App() {
   };
 
   const handleExportCSV = () => {
-    const timeStr = "27-July-2026_21-11-10";
+    const timeStr = "27-July-2026_21-14-42";
     const csvContent = "data:text/csv;charset=utf-8,Claim,Novelty,Evidence,Spec,Result,Status,Timestamp\n" +
       TESTS.map((t, i) => `"${t.claim}","${t.name}","${t.evidence}","${t.sub}","${RESULT_VALS[i]}","SIMULATION VALIDATED","${timeStr}"`).join("\n");
     const encodedUri = encodeURI(csvContent);
@@ -448,7 +492,7 @@ export default function App() {
             </div>
           </div>
 
-          {/* 🌟 100% PERFECTLY BALANCED DUAL-COLUMN TELEMETRY GRID 🌟 */}
+          {/* DUAL-COLUMN TELEMETRY GRID */}
           <div className="grid-main">
             {/* Left Column: 3D WebGL Kinematics Model */}
             <div className="col-5">
@@ -495,7 +539,7 @@ export default function App() {
               </div>
             </div>
 
-            {/* Right Column: Complete Telemetry Stack (Aligned Height with Left Column) */}
+            {/* Right Column: Complete Telemetry Stack */}
             <div className="col-7">
               <div className="card" style={{ marginBottom: 20, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                 <div>
@@ -571,7 +615,7 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* 4. Power System & Clinical Microclimate (Fills Bottom Space Perfectly) */}
+                {/* 4. Power System & Clinical Microclimate */}
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 12, borderTop: `1px solid ${P.bd}`, paddingTop: 10 }}>
                   <div style={{ background: P.bg3, padding: 10, borderRadius: 8, border: `1px solid ${P.bd}` }}>
                     <div style={{ fontSize: 10, fontWeight: 800, color: P.amber, marginBottom: 4 }}>⚡ POWER &amp; BATTERY HEALTH</div>
@@ -604,6 +648,49 @@ export default function App() {
                       <strong style={{ color: P.purple }}>Pos #1 Active · 100Hz</strong>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 🌟 NEW: DIGITAL TWIN REAL-TIME TELEMETRY LOG STREAM (FULL WIDTH) 🌟 */}
+            <div className="col-12" style={{ marginBottom: 20 }}>
+              <div className="card" style={{ border: `1px solid ${P.cyan}`, boxShadow: "0 0 20px rgba(0,229,255,0.12)" }}>
+                <div className="card-title" style={{ justifyContent: "space-between" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <span className="icon">📟</span>
+                    <span>DIGITAL TWIN REAL-TIME TELEMETRY LOG STREAM (2000Hz)</span>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                    <span className="status-badge badge-pass">● LIVE STREAMING</span>
+                    <button className="btn btn-outline" style={{ padding: "2px 8px", fontSize: 10 }} onClick={() => setTelemetryLogs([])}>
+                      🗑 CLEAR LOG
+                    </button>
+                  </div>
+                </div>
+
+                <div
+                  ref={logContainerRef}
+                  style={{
+                    background: "#010409",
+                    borderRadius: 8,
+                    padding: 12,
+                    fontFamily: "monospace",
+                    fontSize: 11,
+                    height: 140,
+                    overflowY: "auto",
+                    border: `1px solid ${P.bd}`,
+                  }}
+                >
+                  {telemetryLogs.length === 0 ? (
+                    <div style={{ color: P.t3 }}>Initializing telemetry log stream...</div>
+                  ) : (
+                    telemetryLogs.map((log, i) => (
+                      <div key={i} style={{ marginBottom: 4, display: "flex", gap: 10, lineHeight: 1.4 }}>
+                        <span style={{ color: P.t3 }}>[{log.time}]</span>
+                        <span style={{ color: log.color, fontWeight: 600 }}>{log.text}</span>
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
             </div>
@@ -767,7 +854,7 @@ export default function App() {
         <div style={{ textAlign: "right" }}>
           Indian Provisional Patent Application No.: <strong style={{ color: P.cyan }}>202641077314</strong> (Filed 23 June 2026)  
           <br />
-          Subsystem TRL: <strong style={{ color: P.green }}>3–4 (HIL Simulated)</strong> · Version: <strong>v4.0.0-BalancedLayout</strong> · Timestamp: 27 July 2026 21:11:10
+          Subsystem TRL: <strong style={{ color: P.green }}>3–4 (HIL Simulated)</strong> · Version: <strong>v4.1.0-RealTimeLogStream</strong> · Timestamp: 27 July 2026 21:14:42
         </div>
       </footer>
     </div>
