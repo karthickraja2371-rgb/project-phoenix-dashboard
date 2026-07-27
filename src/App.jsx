@@ -58,7 +58,7 @@ const RESULT_VALS = [
 
 const EMG_LEN = 80;
 
-// ── AI Assistant Knowledge Engine (Direct Answers Only - No Suggestions) ────
+// ── AI Assistant Knowledge Engine ────────────────────────────────────────────
 const getBotResponse = (question) => {
   const q = question.toLowerCase().trim();
 
@@ -75,7 +75,7 @@ const getBotResponse = (question) => {
     return "🧠 **Offline Syntiant AI Engine**: Utilizes a palm-embedded **Syntiant NDP120 neural processor (<4.8mW power)** that classifies sEMG gestures in **22ms (SIMULATED)** with **100% offline edge privacy** — zero biometric data is sent to the cloud. Features a Golden Weights rollback protocol for safe nightly retraining.";
   }
   if (q.includes("cost") || q.includes("price") || q.includes("grant") || q.includes("funding") || q.includes("budget") || q.includes("bom")) {
-    return "💼 **Commercial & Grant Model**: Total funding request is **₹1.25 Crore INR ($150,000 USD)** across BIRAC BIG (₹50L), DST Seed Support (₹50L), and ARTPARK HealthTech (₹25L). Commercial pricing: **Tier 1 Premium Private/Export** (BOM ₹2.5–3.0L / Retail ₹12–15L) and **Tier 2 Government ALIMCO** (BOM ₹80k–1.0L / Retail ₹2.0–2.5L).";
+    return "💼 **Commercial Pricing & Funding**: Total funding request is **₹1.25 Crore INR ($150,000 USD)** across BIRAC BIG (₹50L), DST Seed Support (₹50L), and ARTPARK HealthTech (₹25L). Commercial pricing: **Tier 1 Premium Private/Export** (BOM ₹2.5–3.0L / Retail ₹12–15L) and **Tier 2 Government ALIMCO** (BOM ₹80k–1.0L / Retail ₹2.0–2.5L).";
   }
   if (q.includes("inventor") || q.includes("author") || q.includes("who built") || q.includes("karthick")) {
     return "👨‍💻 **Inventor & Lead Engineer**: R. Karthick Raja (Sholavandan, Madurai, Tamil Nadu, India - 625214). Built out of personal experience to serve transhumeral amputees with skin-grafted residual limbs.";
@@ -105,7 +105,7 @@ export default function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [chatInput, setChatInput] = useState("");
   const [chatMessages, setChatMessages] = useState([
-    { sender: "bot", text: "👋 Hello! I am the **Project Phoenix AI Assistant**. Feel free to type any question about our patent, skin graft safety, offline AI chip, or clinical roadmap." }
+    { sender: "bot", text: "👋 Hello! I am the **Project Phoenix AI Assistant**. How can I help you explore our bionic prosthesis system today?" }
   ]);
 
   // Diagnostic runner states
@@ -227,7 +227,7 @@ export default function App() {
   };
 
   const handleExportCSV = () => {
-    const timeStr = "27-July-2026_20-46-59";
+    const timeStr = "27-July-2026_20-50-05";
     const csvContent = "data:text/csv;charset=utf-8,Claim,Novelty,Evidence,Spec,Result,Status,Timestamp\n" +
       TESTS.map((t, i) => `"${t.claim}","${t.name}","${t.evidence}","${t.sub}","${RESULT_VALS[i]}","SIMULATION VALIDATED","${timeStr}"`).join("\n");
     const encodedUri = encodeURI(csvContent);
@@ -561,7 +561,7 @@ export default function App() {
             <div style={{ display: "flex", gap: 6 }}>
               <input
                 type="text"
-                placeholder="Ask about AI, Patent, Safety, Grants..."
+                placeholder="Ask about AI, Patent, Safety..."
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
@@ -583,7 +583,7 @@ export default function App() {
         <div style={{ textAlign: "right" }}>
           Indian Provisional Patent Application No.: <strong style={{ color: P.cyan }}>202641077314</strong> (Filed 23 June 2026)  
           <br />
-          Subsystem TRL: <strong style={{ color: P.green }}>3–4 (HIL Simulated)</strong> · Version: <strong>v3.5.0-NoQuestionChips</strong> · Timestamp: 27 July 2026 20:46:59
+          Subsystem TRL: <strong style={{ color: P.green }}>3–4 (HIL Simulated)</strong> · Version: <strong>v3.6.0-NoGrantSuggestions</strong> · Timestamp: 27 July 2026 20:50:05
         </div>
       </footer>
     </div>
