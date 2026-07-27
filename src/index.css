@@ -9,7 +9,7 @@
   --border-glow: #00E5FF;
   
   --text-primary: #FFFFFF;
-  --text-secondary: #B0C4DE;
+  --text-secondary: #CBD5E1;
   --text-muted: #64748B;
   
   --accent-cyan: #00E5FF;
@@ -21,6 +21,32 @@
   
   --font-heading: 'Outfit', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* Clinical Light Theme Overrides */
+body.theme-clinical {
+  --bg-dark: #F8FAFC;
+  --bg-card: rgba(255, 255, 255, 0.9);
+  --bg-card-hover: #FFFFFF;
+  --bg-input: #E2E8F0;
+  --border-color: #CBD5E1;
+  --text-primary: #0F172A;
+  --text-secondary: #334155;
+  --text-muted: #64748B;
+  background: radial-gradient(circle at 50% 0%, #E2E8F0 0%, #F8FAFC 75%);
+}
+
+/* Tactical High-Contrast Overrides */
+body.theme-tactical {
+  --bg-dark: #000000;
+  --bg-card: #050505;
+  --bg-card-hover: #0D0D0D;
+  --bg-input: #121212;
+  --border-color: #333333;
+  --text-primary: #00FF66;
+  --text-secondary: #00CC52;
+  --text-muted: #008837;
+  background: #000000;
 }
 
 * {
@@ -83,7 +109,7 @@ body {
 
 .card-title {
   font-family: var(--font-heading);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 800;
   color: var(--text-primary);
   text-transform: uppercase;
@@ -95,7 +121,7 @@ body {
 }
 
 .card-title .icon {
-  font-size: 20px;
+  font-size: 18px;
   filter: drop-shadow(0 0 8px var(--accent-cyan));
 }
 
@@ -132,7 +158,7 @@ body {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1px;
-  padding: 11px 22px;
+  padding: 10px 20px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
@@ -167,6 +193,13 @@ body {
   background: linear-gradient(135deg, #FF3D00 0%, #DD2C00 100%);
   color: #fff;
   box-shadow: 0 0 20px rgba(255, 61, 0, 0.4);
+}
+
+/* Range Inputs */
+input[type=range] {
+  width: 100%;
+  accent-color: var(--accent-cyan);
+  cursor: pointer;
 }
 
 /* Grid Layouts */
@@ -205,17 +238,6 @@ body {
 .badge-warn { background: rgba(255, 179, 0, 0.2); color: var(--accent-amber); border: 1px solid var(--accent-amber); }
 .badge-danger { background: rgba(255, 61, 0, 0.2); color: var(--accent-red); border: 1px solid var(--accent-red); }
 .badge-info { background: rgba(0, 229, 255, 0.2); color: var(--accent-cyan); border: 1px solid var(--accent-cyan); }
-
-/* Blinking Animation */
-@keyframes pulseGlow {
-  0% { opacity: 0.5; }
-  50% { opacity: 1; }
-  100% { opacity: 0.5; }
-}
-
-.pulsing {
-  animation: pulseGlow 1.2s infinite ease-in-out;
-}
 
 /* Progress Bar */
 .progress-container {
