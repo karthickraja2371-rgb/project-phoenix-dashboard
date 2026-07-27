@@ -4,7 +4,7 @@ import Arm3DViewer from './components/Arm3DViewer';
 // ── Palette & Constants ───────────────────────────────────────────────────────
 const P = {
   bg: "#030812", bg2: "#0A1424", bg3: "#101F36", bd: "#172A45",
-  t1: "#F0F6FF", t2: "#8DA9C4", t3: "#4F6D91",
+  t1: "#FFFFFF", t2: "#B0C4DE", t3: "#64748B",
   cyan: "#00E5FF", green: "#00E676", amber: "#FFB300",
   red: "#FF3D00", blue: "#2979FF", purple: "#E040FB",
 };
@@ -99,11 +99,11 @@ export default function App() {
 
   // Event Log stream
   const [eventLogs, setEventLogs] = useState([
-    { time: "15:53:02", msg: "[SYSTEM] Engineering Validation Platform Active · Subsystem TRL 3–4" },
-    { time: "15:53:04", msg: "[STATUS] Prototype Status: Virtual Prototype (Physical Assembly Pending)" },
-    { time: "15:53:10", msg: "[EMG_DSP] sEMG 4-Channel 2000Hz (SIMULATED) · PGA460 gain +28%" },
-    { time: "15:53:15", msg: "[SAFETY] FSR Socket pressure normal (9.4 kPa < 20.0 kPa Limit)" },
-    { time: "15:53:22", msg: "[REST_TIMER] 3-Hour Active EMG counter tick: 01h 14m active" },
+    { time: "16:40:02", msg: "[SYSTEM] Engineering Validation Platform Active · Subsystem TRL 3–4" },
+    { time: "16:40:04", msg: "[STATUS] Prototype Status: Virtual Prototype (Physical Assembly Pending)" },
+    { time: "16:40:10", msg: "[EMG_DSP] sEMG 4-Channel 2000Hz (SIMULATED) · PGA460 gain +28%" },
+    { time: "16:40:15", msg: "[SAFETY] FSR Socket pressure normal (9.4 kPa < 20.0 kPa Limit)" },
+    { time: "16:40:22", msg: "[REST_TIMER] 3-Hour Active EMG counter tick: 01h 14m active" },
   ]);
 
   const dataRef = useRef({
@@ -228,7 +228,7 @@ export default function App() {
   };
 
   const handleExportCSV = () => {
-    const timeStr = "27-July-2026_15-53-42";
+    const timeStr = "27-July-2026_16-42-11";
     const csvContent = "data:text/csv;charset=utf-8,Claim,Novelty,Evidence,Spec,Result,Status,Timestamp\n" +
       TESTS.map((t, i) => `"${t.claim}","${t.name}","${t.evidence}","${t.sub}","${RESULT_VALS[i]}","SIMULATION VALIDATED","${timeStr}"`).join("\n");
     const encodedUri = encodeURI(csvContent);
@@ -256,11 +256,11 @@ export default function App() {
   return (
     <div className="dashboard-container">
       {/* ── Top Navigation Bar (Switch between Web Landing Page & Live Dashboard) ── */}
-      <nav style={{ display: "flex", justifyContent: "space-between", alignItems: "center", background: "rgba(10, 20, 36, 0.9)", backdropFilter: "blur(16px)", border: `1px solid ${P.bd}`, borderRadius: 12, padding: "12px 24px", marginBottom: 20 }}>
+      <nav style={{ display: "flex", justifyContent: "space-between", alignItems: "center", background: "rgba(10, 20, 36, 0.9)", backdropFilter: "blur(16px)", border: `1px solid ${P.bd}`, borderRadius: 12, padding: "14px 24px", marginBottom: 20 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <span style={{ fontSize: 20 }}>⚡</span>
+          <span style={{ fontSize: 22 }}>⚡</span>
           <div>
-            <div style={{ fontSize: 14, fontWeight: 900, color: P.cyan, letterSpacing: 1 }}>PROJECT PHOENIX</div>
+            <div style={{ fontSize: 16, fontWeight: 900, color: P.cyan, letterSpacing: 1 }}>PROJECT PHOENIX</div>
             <div style={{ fontSize: 10, color: P.t2 }}>Autonomous Transhumeral Myoelectric Prosthetic System</div>
           </div>
         </div>
@@ -270,71 +270,95 @@ export default function App() {
             className={`btn ${viewMode === "webpage" ? "btn-primary" : "btn-outline"}`}
             onClick={() => setViewMode("webpage")}
           >
-            🌐 PRODUCT WEB SHOWCASE
+            🌐 PRODUCT SHOWCASE
           </button>
           <button
             className={`btn ${viewMode === "dashboard" ? "btn-primary" : "btn-outline"}`}
             onClick={() => setViewMode("dashboard")}
           >
-            ⚡ LIVE DIGITAL TWIN DASHBOARD
+            ⚡ DIGITAL TWIN DASHBOARD
           </button>
         </div>
       </nav>
 
       {/* ════════════════════════════════════════════════════════════════════════ */}
-      {/* MODE 1: PRODUCT WEB SHOWCASE / LANDING PAGE                              */}
+      {/* MODE 1: HIGH-IMPACT PRODUCT SHOWCASE LANDING PAGE                       */}
       {/* ════════════════════════════════════════════════════════════════════════ */}
       {viewMode === "webpage" && (
         <div>
-          {/* Hero Section */}
-          <section className="card" style={{ padding: 40, textAlign: "center", marginBottom: 24, border: `1px solid ${P.cyan}`, boxShadow: "0 0 50px rgba(0,229,255,0.15)" }}>
-            <span className="status-badge badge-pass" style={{ marginBottom: 16 }}>
-              PATENT FILED · APPLICATION NO. 202641077314
-            </span>
-            
-            <h1 style={{ fontFamily: "Outfit", fontSize: 42, fontWeight: 900, background: "linear-gradient(90deg, #FFF 0%, #00E5FF 50%, #00E676 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", margin: "12px 0", letterSpacing: 1 }}>
+          {/* High-Impact Hero Section */}
+          <section className="card" style={{ padding: "44px 30px", textAlign: "center", marginBottom: 24, border: `1px solid ${P.cyan}`, boxShadow: "0 0 50px rgba(0,229,255,0.18)" }}>
+            <div style={{ display: "flex", justifyContent: "center", gap: 10, flexWrap: "wrap", marginBottom: 16 }}>
+              <span className="status-badge badge-pass">
+                INDIAN PROVISIONAL PATENT NO. 202641077314
+              </span>
+              <span className="status-badge badge-info">
+                SUBSYSTEM TRL 3–4 VALIDATED
+              </span>
+            </div>
+
+            <h1 style={{ fontFamily: "Outfit", fontSize: 44, fontWeight: 900, color: "#FFFFFF", margin: "12px 0", letterSpacing: 1 }}>
               PROJECT PHOENIX
             </h1>
-            <div style={{ fontSize: 18, color: P.cyan, fontWeight: 700, letterSpacing: 2, marginBottom: 12 }}>
+            <div style={{ fontSize: 18, color: P.cyan, fontWeight: 700, letterSpacing: 2, marginBottom: 16 }}>
               "BUILT FROM EXPERIENCE. DRIVEN BY ENGINEERING."
             </div>
-            <p style={{ maxWidth: 850, margin: "0 auto 24px auto", color: P.t2, fontSize: 13, lineHeight: 1.8 }}>
-              The world's first autonomous transhumeral (above-elbow) myoelectric prosthetic arm specifically designed for amputees with <strong>skin-grafted residual limbs</strong>. Featuring 100% offline neural AI processing, microfluidic stress biosensing, self-healing polymer sockets, and deterministic safety locks.
-            </p>
 
-            <div style={{ display: "flex", justifyContent: "center", gap: 14, flexWrap: "wrap" }}>
-              <button className="btn btn-primary" onClick={() => setViewMode("dashboard")} style={{ padding: "14px 28px", fontSize: 12 }}>
+            {/* Short Punchy Bullet Points (No Wall of Text) */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14, maxWidth: 950, margin: "0 auto 28px auto", textAlign: "left" }}>
+              <div style={{ background: P.bg3, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                <strong style={{ color: P.green }}>✓ Skin-Graft Socket Safety:</strong> Automatic 20.0 kPa FSR pressure locks protect sensitive residual tissue.
+              </div>
+              <div style={{ background: P.bg3, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                <strong style={{ color: P.cyan }}>✓ 100% Offline Edge AI:</strong> Syntiant NDP120 neural chip classifies gestures in 22ms with zero cloud data risks.
+              </div>
+              <div style={{ background: P.bg3, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                <strong style={{ color: P.amber }}>✓ Accessible $2,500 Cost:</strong> 10x cost reduction compared to legacy $50k prosthetics.
+              </div>
+            </div>
+
+            {/* Clear Primary CTAs */}
+            <div style={{ display: "flex", justifyContent: "center", gap: 16, flexWrap: "wrap" }}>
+              <button className="btn btn-primary" onClick={() => setViewMode("dashboard")} style={{ padding: "15px 32px", fontSize: 13 }}>
                 ⚡ LAUNCH LIVE DIGITAL TWIN DASHBOARD
               </button>
-              <button className="btn btn-outline" onClick={handleExportCSV} style={{ padding: "14px 28px", fontSize: 12 }}>
-                📄 DOWNLOAD VALIDATION REPORT (CSV)
+              <button className="btn btn-outline" onClick={handleExportCSV} style={{ padding: "15px 32px", fontSize: 13 }}>
+                📥 DOWNLOAD VALIDATION REPORT (CSV)
               </button>
             </div>
           </section>
 
-          {/* Official Media Render Gallery */}
+          {/* Expanded Project Visuals Gallery (CAD, Wiring, Posters) */}
           <section className="card" style={{ marginBottom: 24 }}>
             <div className="card-title">
-              <span className="icon">🖼️</span> OFFICIAL PROJECT PHOENIX CONCEPT SHOWCASE &amp; CAD RENDERS
+              <span className="icon">🖼️</span> PROJECT VISUAL GALLERY (CAD ASSEMBLY, POSTERS &amp; RENDERS)
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
               <div style={{ background: P.bg3, borderRadius: 10, overflow: "hidden", border: `1px solid ${P.bd}` }}>
                 <div style={{ padding: 10, background: P.bg2, fontSize: 11, fontWeight: 800, color: P.green }}>
-                  HERO RENDER: 5-PANEL TRANSHUMERAL ASSEMBLY &amp; SOCKET
+                  HERO RENDER: 5-PANEL TRANSHUMERAL SOCKET &amp; ARM
                 </div>
-                <img src="/hero_render_phoenix.jpg" alt="Official Hero Render" style={{ width: "100%", height: "auto", display: "block" }} />
+                <img src="/hero_render_phoenix.jpg" alt="Transhumeral Assembly" loading="lazy" decoding="async" style={{ width: "100%", height: "auto", display: "block" }} />
               </div>
 
               <div style={{ background: P.bg3, borderRadius: 10, overflow: "hidden", border: `1px solid ${P.bd}` }}>
                 <div style={{ padding: 10, background: P.bg2, fontSize: 11, fontWeight: 800, color: P.cyan }}>
-                  ENGINEERING POSTER: 6 TECHNOLOGICAL PILLARS &amp; HARDWARE ARCHITECTURE
+                  ENGINEERING POSTER: 6 TECHNOLOGICAL PILLARS
                 </div>
-                <img src="/project_phoenix_engineering_poster.jpg" alt="Engineering Poster" style={{ width: "100%", height: "auto", display: "block" }} />
+                <img src="/project_phoenix_engineering_poster.jpg" alt="Engineering Architecture" loading="lazy" decoding="async" style={{ width: "100%", height: "auto", display: "block" }} />
+              </div>
+
+              <div style={{ background: P.bg3, borderRadius: 10, overflow: "hidden", border: `1px solid ${P.bd}` }}>
+                <div style={{ padding: 10, background: P.bg2, fontSize: 11, fontWeight: 800, color: P.purple }}>
+                  CAD COMPONENT MODEL: PALM CHASSIS &amp; ACTUATOR
+                </div>
+                <img src="/prosthetic_arm_render.jpg" alt="CAD Component Model" loading="lazy" decoding="async" style={{ width: "100%", height: "auto", display: "block" }} />
               </div>
             </div>
           </section>
 
-          {/* 6 Key Technological Pillars */}
+          {/* 6 Core Technological Innovations */}
           <section className="card" style={{ marginBottom: 24 }}>
             <div className="card-title">
               <span className="icon">🧬</span> 6 CORE TECHNOLOGICAL INNOVATIONS (PATENT SPECIFICATION)
@@ -666,7 +690,7 @@ export default function App() {
                   {/* Official Project Phoenix Hero Render Banner */}
                   <div style={{ margin: "14px 0", borderRadius: 8, overflow: "hidden", border: `1px solid ${P.bd}` }}>
                     <div style={{ fontSize: 10, color: P.green, fontWeight: 800, padding: "6px 0", background: P.bg2, letterSpacing: 1 }}>PROJECT PHOENIX CONCEPT MODEL</div>
-                    <img src="/hero_render_phoenix.jpg" alt="Project Phoenix Hero Render" style={{ width: "100%", height: "auto", display: "block" }} />
+                    <img src="/hero_render_phoenix.jpg" alt="Project Phoenix Hero Render" loading="lazy" decoding="async" style={{ width: "100%", height: "auto", display: "block" }} />
                   </div>
                 </div>
               </div>
@@ -905,7 +929,7 @@ export default function App() {
         <div style={{ textAlign: "right" }}>
           Indian Provisional Patent Application No.: <strong style={{ color: P.cyan }}>202641077314</strong> (Filed 20 June 2026)  
           <br />
-          Subsystem TRL: <strong style={{ color: P.green }}>3–4 (HIL Simulated)</strong> · Version: <strong>v3.2.0-DigitalTwin</strong> · Timestamp: 27 July 2026 15:53:42
+          Subsystem TRL: <strong style={{ color: P.green }}>3–4 (HIL Simulated)</strong> · Version: <strong>v3.2.0-DigitalTwin</strong> · Timestamp: 27 July 2026 16:42:11
         </div>
       </footer>
     </div>
