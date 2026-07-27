@@ -99,6 +99,7 @@ export default function App() {
   const [sensorFailure, setSensorFailure] = useState(false);
   const [lowBattery, setLowBattery] = useState(false);
   const [selectedClaim, setSelectedClaim] = useState(null);
+  const [selectedImageModal, setSelectedImageModal] = useState(null);
   const [tick, setTick] = useState(0);
 
   // Chatbot State
@@ -227,7 +228,7 @@ export default function App() {
   };
 
   const handleExportCSV = () => {
-    const timeStr = "27-July-2026_20-50-05";
+    const timeStr = "27-July-2026_20-56-39";
     const csvContent = "data:text/csv;charset=utf-8,Claim,Novelty,Evidence,Spec,Result,Status,Timestamp\n" +
       TESTS.map((t, i) => `"${t.claim}","${t.name}","${t.evidence}","${t.sub}","${RESULT_VALS[i]}","SIMULATION VALIDATED","${timeStr}"`).join("\n");
     const encodedUri = encodeURI(csvContent);
@@ -315,8 +316,40 @@ export default function App() {
             </div>
           </section>
 
+          {/* 🌟 OFFICIAL TECHNICAL VISUAL GALLERY WITH NEW CAD POSTERS 🌟 */}
           <section className="card" style={{ marginBottom: 24 }}>
-            <div className="card-title"><span className="icon">🖼️</span> TECHNICAL VISUAL GALLERY (CAD SCHEMATICS &amp; RENDERS)</div>
+            <div className="card-title">
+              <span className="icon">🖼️</span> TECHNICAL ENGINEERING POSTERS &amp; CAD SCHEMATICS (CLICK TO ENLARGE)
+            </div>
+
+            {/* Top 2 Primary Technical Engineering Posters */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 20, marginBottom: 20 }}>
+              <div
+                style={{ background: P.bg3, borderRadius: 12, overflow: "hidden", border: `2px solid ${P.cyan}`, cursor: "pointer", transition: "transform 0.2s ease" }}
+                onClick={() => setSelectedImageModal({ title: "8-PANEL CAD SCHEMATICS & TENDON ROUTING", src: "/cad_orthographic_schematics.jpg" })}
+                className="table-row-hover"
+              >
+                <div style={{ padding: 12, background: P.bg2, fontSize: 12, fontWeight: 900, color: P.cyan, display: "flex", justifyContent: "space-between" }}>
+                  <span>📐 8-PANEL CAD SCHEMATICS &amp; TENDON ROUTING</span>
+                  <span>🔍 CLICK TO ENLARGE</span>
+                </div>
+                <img src="/cad_orthographic_schematics.jpg" alt="8-Panel CAD Schematics" style={{ width: "100%", height: "auto", display: "block" }} />
+              </div>
+
+              <div
+                style={{ background: P.bg3, borderRadius: 12, overflow: "hidden", border: `2px solid ${P.green}`, cursor: "pointer", transition: "transform 0.2s ease" }}
+                onClick={() => setSelectedImageModal({ title: "NEURAL-INTEGRATED OFFLINE AI POSTER (81 PARTS / 326 SOLIDS)", src: "/neural_offline_ai_poster.jpg" })}
+                className="table-row-hover"
+              >
+                <div style={{ padding: 12, background: P.bg2, fontSize: 12, fontWeight: 900, color: P.green, display: "flex", justifyContent: "space-between" }}>
+                  <span>🧠 NEURAL OFFLINE AI POSTER (326 TOTAL SOLIDS)</span>
+                  <span>🔍 CLICK TO ENLARGE</span>
+                </div>
+                <img src="/neural_offline_ai_poster.jpg" alt="Neural Offline AI Poster" style={{ width: "100%", height: "auto", display: "block" }} />
+              </div>
+            </div>
+
+            {/* Additional Concept Render Cards */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
               <div style={{ background: P.bg3, borderRadius: 10, overflow: "hidden", border: `1px solid ${P.bd}` }}>
                 <div style={{ padding: 10, background: P.bg2, fontSize: 11, fontWeight: 800, color: P.green }}>5-PANEL TRANSHUMERAL SOCKET &amp; ARM ASSEMBLY</div>
@@ -492,7 +525,22 @@ export default function App() {
         </div>
       )}
 
-      {/* 🤖 FLOATING INTERACTIVE PROJECT PHOENIX AI ASSISTANT CHATBOT (ZERO SUGGESTION CHIPS) 🤖 */}
+      {/* Full-Screen High-Resolution Image Viewer Modal */}
+      {selectedImageModal && (
+        <div style={{ position: "fixed", top: 0, left: 0, width: "100vw", height: "100vh", background: "rgba(3, 8, 18, 0.92)", backdropFilter: "blur(16px)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", zIndex: 99999, padding: 20 }}>
+          <div style={{ width: "95%", maxWidth: 1200, background: P.bg2, border: `1px solid ${P.cyan}`, borderRadius: 12, overflow: "hidden", boxShadow: "0 0 50px rgba(0, 229, 255, 0.4)", display: "flex", flexDirection: "column", maxHeight: "90vh" }}>
+            <div style={{ padding: "14px 20px", background: P.bg3, borderBottom: `1px solid ${P.bd}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div style={{ fontSize: 14, fontWeight: 900, color: P.cyan }}>{selectedImageModal.title}</div>
+              <button className="btn btn-primary" style={{ padding: "6px 16px" }} onClick={() => setSelectedImageModal(null)}>✕ CLOSE FULLSCREEN</button>
+            </div>
+            <div style={{ overflow: "auto", padding: 10, textAlign: "center", background: P.bg }}>
+              <img src={selectedImageModal.src} alt={selectedImageModal.title} style={{ maxWidth: "100%", height: "auto", borderRadius: 8 }} />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 🤖 FLOATING INTERACTIVE CHATBOT 🤖 */}
       <div style={{ position: "fixed", bottom: 20, right: 20, zIndex: 99999 }}>
         {!isChatOpen ? (
           <button
@@ -523,7 +571,6 @@ export default function App() {
               padding: 16,
             }}
           >
-            {/* Chatbot Header */}
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: `1px solid ${P.bd}`, paddingBottom: 10, marginBottom: 10 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <span style={{ fontSize: 18 }}>🤖</span>
@@ -535,7 +582,6 @@ export default function App() {
               <button className="btn btn-outline" style={{ padding: "2px 8px", fontSize: 10 }} onClick={() => setIsChatOpen(false)}>✕</button>
             </div>
 
-            {/* Chat Messages Stream */}
             <div style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: 10, maxHeight: 380, paddingRight: 4, marginBottom: 12 }}>
               {chatMessages.map((msg, idx) => (
                 <div
@@ -557,7 +603,6 @@ export default function App() {
               ))}
             </div>
 
-            {/* Input & Send Controls (ZERO SUGGESTION CHIPS DISPLAYED) */}
             <div style={{ display: "flex", gap: 6 }}>
               <input
                 type="text"
@@ -583,7 +628,7 @@ export default function App() {
         <div style={{ textAlign: "right" }}>
           Indian Provisional Patent Application No.: <strong style={{ color: P.cyan }}>202641077314</strong> (Filed 23 June 2026)  
           <br />
-          Subsystem TRL: <strong style={{ color: P.green }}>3–4 (HIL Simulated)</strong> · Version: <strong>v3.6.0-NoGrantSuggestions</strong> · Timestamp: 27 July 2026 20:50:05
+          Subsystem TRL: <strong style={{ color: P.green }}>3–4 (HIL Simulated)</strong> · Version: <strong>v3.7.0-TechnicalPostersIntegrated</strong> · Timestamp: 27 July 2026 20:56:39
         </div>
       </footer>
     </div>
