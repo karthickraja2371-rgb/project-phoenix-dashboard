@@ -275,7 +275,7 @@ export default function App() {
   };
 
   const handleExportCSV = () => {
-    const timeStr = "27-July-2026_21-07-29";
+    const timeStr = "27-July-2026_21-11-10";
     const csvContent = "data:text/csv;charset=utf-8,Claim,Novelty,Evidence,Spec,Result,Status,Timestamp\n" +
       TESTS.map((t, i) => `"${t.claim}","${t.name}","${t.evidence}","${t.sub}","${RESULT_VALS[i]}","SIMULATION VALIDATED","${timeStr}"`).join("\n");
     const encodedUri = encodeURI(csvContent);
@@ -448,26 +448,29 @@ export default function App() {
             </div>
           </div>
 
-          {/* FULL DUAL-COLUMN TELEMETRY GRID WITH 16 GESTURE CONTROLS */}
+          {/* 🌟 100% PERFECTLY BALANCED DUAL-COLUMN TELEMETRY GRID 🌟 */}
           <div className="grid-main">
             {/* Left Column: 3D WebGL Kinematics Model */}
             <div className="col-5">
-              <div className="card" style={{ marginBottom: 20, height: "100%" }}>
+              <div className="card" style={{ marginBottom: 20, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                 <div className="card-title" style={{ justifyContent: "space-between" }}>
                   <div><span className="icon">🖐</span> 3D MODEL &amp; 16 GESTURE SELECTOR</div>
                   <button className="btn btn-outline" style={{ padding: "3px 8px", fontSize: 10 }} onClick={() => setIsAutoCycle(!isAutoCycle)}>
                     {isAutoCycle ? "⏸ Pause Auto-Cycle" : "▶ Resume Auto-Cycle"}
                   </button>
                 </div>
-                <div style={{ background: P.bg3, border: `1px solid ${P.bd}`, borderRadius: 10, padding: 16, textAlign: "center" }}>
-                  <div style={{ fontSize: 20, fontWeight: 900, color: currentG.color, letterSpacing: 1 }}>{currentG.name} (SIMULATED)</div>
-                  <div style={{ fontSize: 11, color: P.t2, marginTop: 4 }}>{currentG.desc}</div>
+                <div style={{ background: P.bg3, border: `1px solid ${P.bd}`, borderRadius: 10, padding: 16, textAlign: "center", flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                  <div>
+                    <div style={{ fontSize: 20, fontWeight: 900, color: currentG.color, letterSpacing: 1 }}>{currentG.name} (SIMULATED)</div>
+                    <div style={{ fontSize: 11, color: P.t2, marginTop: 4 }}>{currentG.desc}</div>
+                  </div>
+
                   <div style={{ margin: "14px 0" }}>
                     <Arm3DViewer fingers={d.fingers} elbow={d.elbow} wrist={d.wrist} color={currentG.color} />
                   </div>
 
                   {/* 16 Interactive Gesture Selector Grid */}
-                  <div style={{ marginTop: 12 }}>
+                  <div>
                     <div style={{ fontSize: 10, color: P.cyan, fontWeight: 800, marginBottom: 8, letterSpacing: 1 }}>SELECT FROM 16 FUNCTIONAL &amp; EXPRESSIVE GESTURES</div>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 6 }}>
                       {GESTURES.map((g, idx) => (
@@ -492,76 +495,113 @@ export default function App() {
               </div>
             </div>
 
-            {/* Right Column: Full Telemetry Stack */}
+            {/* Right Column: Complete Telemetry Stack (Aligned Height with Left Column) */}
             <div className="col-7">
-              <div className="card" style={{ marginBottom: 20 }}>
-                {/* 1. Top Metrics */}
-                <div className="card-title"><span className="icon">🧠</span> SYNTIANT NDP120 AI TELEMETRY &amp; PERFORMANCE</div>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 16 }}>
-                  <div style={{ background: P.bg3, padding: 10, borderRadius: 6, border: `1px solid ${P.bd}` }}>
-                    <div style={{ fontSize: 9, color: P.t2 }}>CONFIDENCE MARGIN</div>
-                    <div style={{ fontSize: 14, fontWeight: 900, color: P.cyan }}>92.4% ± 2.1%</div>
+              <div className="card" style={{ marginBottom: 20, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                <div>
+                  {/* 1. Top Metrics */}
+                  <div className="card-title"><span className="icon">🧠</span> SYNTIANT NDP120 AI TELEMETRY &amp; PERFORMANCE</div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 14 }}>
+                    <div style={{ background: P.bg3, padding: 10, borderRadius: 6, border: `1px solid ${P.bd}` }}>
+                      <div style={{ fontSize: 9, color: P.t2 }}>CONFIDENCE MARGIN</div>
+                      <div style={{ fontSize: 14, fontWeight: 900, color: P.cyan }}>92.4% ± 2.1%</div>
+                    </div>
+                    <div style={{ background: P.bg3, padding: 10, borderRadius: 6, border: `1px solid ${P.bd}` }}>
+                      <div style={{ fontSize: 9, color: P.t2 }}>LATENCY JITTER</div>
+                      <div style={{ fontSize: 14, fontWeight: 900, color: P.green }}>22 ms ± 3 ms</div>
+                    </div>
+                    <div style={{ background: P.bg3, padding: 10, borderRadius: 6, border: `1px solid ${P.bd}` }}>
+                      <div style={{ fontSize: 9, color: P.t2 }}>TOTAL INFERENCES</div>
+                      <div style={{ fontSize: 14, fontWeight: 900, color: P.green }}>1,420</div>
+                    </div>
+                    <div style={{ background: P.bg3, padding: 10, borderRadius: 6, border: `1px solid ${P.bd}` }}>
+                      <div style={{ fontSize: 9, color: P.t2 }}>PREDICTED POSE</div>
+                      <div style={{ fontSize: 11, fontWeight: 800, color: P.amber }}>{currentG.name}</div>
+                    </div>
                   </div>
-                  <div style={{ background: P.bg3, padding: 10, borderRadius: 6, border: `1px solid ${P.bd}` }}>
-                    <div style={{ fontSize: 9, color: P.t2 }}>LATENCY JITTER</div>
-                    <div style={{ fontSize: 14, fontWeight: 900, color: P.green }}>22 ms ± 3 ms</div>
+
+                  {/* 2. sEMG 4-Channel Waveforms (2000Hz) */}
+                  <div style={{ background: P.bg3, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}`, marginBottom: 12 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+                      <div style={{ fontSize: 11, fontWeight: 800, color: P.cyan }}>📈 4-CHANNEL sEMG SIGNAL STREAM (2000Hz · PGA460 GAIN +28%)</div>
+                      <span className="status-badge badge-pass">ACTIVE SAMPLING</span>
+                    </div>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 8 }}>
+                      <div style={{ background: P.bg2, padding: 6, borderRadius: 6, border: `1px solid ${P.bd}` }}>
+                        <div style={{ fontSize: 9, color: P.t2, marginBottom: 2 }}>CH 1: BICEPS BRACHII (EMG)</div>
+                        <SVGWaveform data={d.emg[0]} color={P.cyan} />
+                      </div>
+                      <div style={{ background: P.bg2, padding: 6, borderRadius: 6, border: `1px solid ${P.bd}` }}>
+                        <div style={{ fontSize: 9, color: P.t2, marginBottom: 2 }}>CH 2: TRICEPS BRACHII (EMG)</div>
+                        <SVGWaveform data={d.emg[1]} color={P.green} />
+                      </div>
+                      <div style={{ background: P.bg2, padding: 6, borderRadius: 6, border: `1px solid ${P.bd}` }}>
+                        <div style={{ fontSize: 9, color: P.t2, marginBottom: 2 }}>CH 3: ANTERIOR DELTOID (EMG)</div>
+                        <SVGWaveform data={d.emg[2]} color={sensorFailure ? P.red : P.amber} />
+                      </div>
+                      <div style={{ background: P.bg2, padding: 6, borderRadius: 6, border: `1px solid ${P.bd}` }}>
+                        <div style={{ fontSize: 9, color: P.t2, marginBottom: 2 }}>CH 4: BRACHIORADIALIS (EMG)</div>
+                        <SVGWaveform data={d.emg[3]} color={P.purple} />
+                      </div>
+                    </div>
                   </div>
-                  <div style={{ background: P.bg3, padding: 10, borderRadius: 6, border: `1px solid ${P.bd}` }}>
-                    <div style={{ fontSize: 9, color: P.t2 }}>TOTAL INFERENCES</div>
-                    <div style={{ fontSize: 14, fontWeight: 900, color: P.green }}>1,420</div>
-                  </div>
-                  <div style={{ background: P.bg3, padding: 10, borderRadius: 6, border: `1px solid ${P.bd}` }}>
-                    <div style={{ fontSize: 9, color: P.t2 }}>PREDICTED POSE</div>
-                    <div style={{ fontSize: 11, fontWeight: 800, color: P.amber }}>{currentG.name}</div>
+
+                  {/* 3. FSR Socket Pressure & Sweat Cortisol Biofeedback */}
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 12, marginBottom: 12 }}>
+                    <div style={{ background: P.bg3, padding: 10, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                      <div style={{ fontSize: 10, fontWeight: 800, color: P.cyan, marginBottom: 6 }}>
+                        🛡️ SOCKET PRESSURE ARRAY (FSR)
+                      </div>
+                      <GaugeBar label="PEAK PRESSURE" value={d.pressure} max={25.0} warn={15.0} danger={20.0} unit=" kPa" small={true} />
+                      <div style={{ fontSize: 9, color: d.pressure >= 20.0 ? P.red : P.green, fontWeight: 800 }}>
+                        {d.pressure >= 20.0 ? "⚠ 20.0 kPa PASSIVE LOCK INTERRUPT ENGAGED!" : "✓ Socket Pressure Normal"}
+                      </div>
+                    </div>
+
+                    <div style={{ background: P.bg3, padding: 10, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                      <div style={{ fontSize: 10, fontWeight: 800, color: P.purple, marginBottom: 6 }}>
+                        🧪 SWEAT CORTISOL BIOFEEDBACK
+                      </div>
+                      <GaugeBar label="CORTISOL LEVEL" value={d.cortisol} max={1.0} warn={0.5} danger={0.6} unit=" µg/dL" small={true} />
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 9, color: P.t2 }}>
+                        <span>TORQUE CEILING:</span>
+                        <span style={{ color: d.gripCeiling < 100 ? P.amber : P.green, fontWeight: 800 }}>{d.gripCeiling}% CAP</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                {/* 2. sEMG 4-Channel Waveforms (2000Hz) */}
-                <div style={{ background: P.bg3, padding: 14, borderRadius: 8, border: `1px solid ${P.bd}`, marginBottom: 14 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
-                    <div style={{ fontSize: 11, fontWeight: 800, color: P.cyan }}>📈 4-CHANNEL sEMG SIGNAL STREAM (2000Hz · PGA460 GAIN +28%)</div>
-                    <span className="status-badge badge-pass">ACTIVE SAMPLING</span>
-                  </div>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 10 }}>
-                    <div style={{ background: P.bg2, padding: 8, borderRadius: 6, border: `1px solid ${P.bd}` }}>
-                      <div style={{ fontSize: 9, color: P.t2, marginBottom: 2 }}>CH 1: BICEPS BRACHII (EMG)</div>
-                      <SVGWaveform data={d.emg[0]} color={P.cyan} />
+                {/* 4. Power System & Clinical Microclimate (Fills Bottom Space Perfectly) */}
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 12, borderTop: `1px solid ${P.bd}`, paddingTop: 10 }}>
+                  <div style={{ background: P.bg3, padding: 10, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                    <div style={{ fontSize: 10, fontWeight: 800, color: P.amber, marginBottom: 4 }}>⚡ POWER &amp; BATTERY HEALTH</div>
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: P.t2 }}>
+                      <span>PACK VOLTAGE:</span>
+                      <strong style={{ color: lowBattery ? P.red : P.green }}>{d.batteryV.toFixed(1)}V (22.2V Li-Ion)</strong>
                     </div>
-                    <div style={{ background: P.bg2, padding: 8, borderRadius: 6, border: `1px solid ${P.bd}` }}>
-                      <div style={{ fontSize: 9, color: P.t2, marginBottom: 2 }}>CH 2: TRICEPS BRACHII (EMG)</div>
-                      <SVGWaveform data={d.emg[1]} color={P.green} />
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: P.t2, marginTop: 2 }}>
+                      <span>CURRENT DRAIN:</span>
+                      <strong style={{ color: P.cyan }}>{d.batteryCurrent.toFixed(2)}A (2.5A MAX Cap)</strong>
                     </div>
-                    <div style={{ background: P.bg2, padding: 8, borderRadius: 6, border: `1px solid ${P.bd}` }}>
-                      <div style={{ fontSize: 9, color: P.t2, marginBottom: 2 }}>CH 3: ANTERIOR DELTOID (EMG)</div>
-                      <SVGWaveform data={d.emg[2]} color={sensorFailure ? P.red : P.amber} />
-                    </div>
-                    <div style={{ background: P.bg2, padding: 8, borderRadius: 6, border: `1px solid ${P.bd}` }}>
-                      <div style={{ fontSize: 9, color: P.t2, marginBottom: 2 }}>CH 4: BRACHIORADIALIS (EMG)</div>
-                      <SVGWaveform data={d.emg[3]} color={P.purple} />
-                    </div>
-                  </div>
-                </div>
-
-                {/* 3. FSR Socket Pressure & Sweat Cortisol Biofeedback */}
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 14 }}>
-                  <div style={{ background: P.bg3, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
-                    <div style={{ fontSize: 11, fontWeight: 800, color: P.cyan, marginBottom: 8 }}>
-                      🛡️ SOCKET PRESSURE ARRAY (FSR)
-                    </div>
-                    <GaugeBar label="PEAK SOCKET PRESSURE" value={d.pressure} max={25.0} warn={15.0} danger={20.0} unit=" kPa" />
-                    <div style={{ fontSize: 9, color: d.pressure >= 20.0 ? P.red : P.green, fontWeight: 800 }}>
-                      {d.pressure >= 20.0 ? "⚠ 20.0 kPa PASSIVE LOCK INTERRUPT ENGAGED!" : "✓ Socket Pressure Within Safe Threshold"}
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: P.t2, marginTop: 2 }}>
+                      <span>MODELED RUNTIME:</span>
+                      <strong style={{ color: P.green }}>13.2 Hours (111Wh)</strong>
                     </div>
                   </div>
 
-                  <div style={{ background: P.bg3, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
-                    <div style={{ fontSize: 11, fontWeight: 800, color: P.purple, marginBottom: 8 }}>
-                      🧪 SWEAT CORTISOL BIOFEEDBACK
+                  <div style={{ background: P.bg3, padding: 10, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                    <div style={{ fontSize: 10, fontWeight: 800, color: P.green, marginBottom: 4 }}>🌡️ SOCKET MICROCLIMATE (SHT31)</div>
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: P.t2 }}>
+                      <span>TEMPERATURE:</span>
+                      <strong style={{ color: P.green }}>{d.temperature.toFixed(1)}°C (&lt;38.0°C Limit)</strong>
                     </div>
-                    <GaugeBar label="SWEAT CORTISOL LEVEL" value={d.cortisol} max={1.0} warn={0.5} danger={0.6} unit=" µg/dL" />
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 9, color: P.t2 }}>
-                      <span>GRIP TORQUE CEILING:</span>
-                      <span style={{ color: d.gripCeiling < 100 ? P.amber : P.green, fontWeight: 800 }}>{d.gripCeiling}% CAP</span>
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: P.t2, marginTop: 2 }}>
+                      <span>SWEAT HUMIDITY:</span>
+                      <strong style={{ color: P.cyan }}>{d.humidity.toFixed(0)}% RH (Normal)</strong>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: P.t2, marginTop: 2 }}>
+                      <span>TENS THERAPY:</span>
+                      <strong style={{ color: P.purple }}>Pos #1 Active · 100Hz</strong>
                     </div>
                   </div>
                 </div>
@@ -727,7 +767,7 @@ export default function App() {
         <div style={{ textAlign: "right" }}>
           Indian Provisional Patent Application No.: <strong style={{ color: P.cyan }}>202641077314</strong> (Filed 23 June 2026)  
           <br />
-          Subsystem TRL: <strong style={{ color: P.green }}>3–4 (HIL Simulated)</strong> · Version: <strong>v3.9.0-16GesturesLibrary</strong> · Timestamp: 27 July 2026 21:07:29
+          Subsystem TRL: <strong style={{ color: P.green }}>3–4 (HIL Simulated)</strong> · Version: <strong>v4.0.0-BalancedLayout</strong> · Timestamp: 27 July 2026 21:11:10
         </div>
       </footer>
     </div>
