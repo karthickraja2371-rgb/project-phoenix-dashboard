@@ -4,7 +4,7 @@ import Arm3DViewer from './components/Arm3DViewer';
 // ── Palette & Constants ───────────────────────────────────────────────────────
 const P = {
   bg: "#030812", bg2: "#0A1424", bg3: "#101F36", bd: "#172A45",
-  t1: "#FFFFFF", t2: "#B0C4DE", t3: "#64748B",
+  t1: "#FFFFFF", t2: "#CBD5E1", t3: "#64748B",
   cyan: "#00E5FF", green: "#00E676", amber: "#FFB300",
   red: "#FF3D00", blue: "#2979FF", purple: "#E040FB",
 };
@@ -41,7 +41,7 @@ const TESTS = [
 ];
 
 const RESULT_VALS = [
-  "92.4% accuracy · 22ms latency · 4.8mW · FULLY OFFLINE",
+  "92.4% (SIMULATED) · 22ms latency · 4.8mW · OFFLINE",
   "28ms fused latency (vs 300ms traditional) · 91% reduction",
   "Cortisol 0.28 ug/dL · Grip ceiling 100% (Spike >0.6 → 80%)",
   "Micro-cracks repaired in 10 mins @ room temperature",
@@ -53,7 +53,7 @@ const RESULT_VALS = [
   "Graft skin color scan normal · Zero discolouration detected",
   "Active timer 01h 14m · Rest cycle scheduled in 01h 46m",
   "Position #1 active · Rotation to Position #2 scheduled",
-  "Weight 1.18 kg · 22.2V 111Wh Battery · Runtime 13.2 hours",
+  "Weight 1.18 kg (MODELED) · 22.2V Battery · Runtime 13.2h (MODELED)",
 ];
 
 const EMG_LEN = 80;
@@ -99,11 +99,11 @@ export default function App() {
 
   // Event Log stream
   const [eventLogs, setEventLogs] = useState([
-    { time: "16:40:02", msg: "[SYSTEM] Engineering Validation Platform Active · Subsystem TRL 3–4" },
-    { time: "16:40:04", msg: "[STATUS] Prototype Status: Virtual Prototype (Physical Assembly Pending)" },
-    { time: "16:40:10", msg: "[EMG_DSP] sEMG 4-Channel 2000Hz (SIMULATED) · PGA460 gain +28%" },
-    { time: "16:40:15", msg: "[SAFETY] FSR Socket pressure normal (9.4 kPa < 20.0 kPa Limit)" },
-    { time: "16:40:22", msg: "[REST_TIMER] 3-Hour Active EMG counter tick: 01h 14m active" },
+    { time: "17:29:02", msg: "[SYSTEM] Engineering Validation Platform Active · Subsystem TRL 3–4" },
+    { time: "17:29:04", msg: "[STATUS] Prototype Status: Virtual Prototype (Physical Assembly Pending)" },
+    { time: "17:29:10", msg: "[EMG_DSP] sEMG 4-Channel 2000Hz (SIMULATED) · PGA460 gain +28% (SIMULATED)" },
+    { time: "17:29:15", msg: "[SAFETY] FSR Socket pressure normal (9.4 kPa < 20.0 kPa Limit)" },
+    { time: "17:29:22", msg: "[REST_TIMER] 3-Hour Active EMG counter tick: 01h 14m active" },
   ]);
 
   const dataRef = useRef({
@@ -228,7 +228,7 @@ export default function App() {
   };
 
   const handleExportCSV = () => {
-    const timeStr = "27-July-2026_16-42-11";
+    const timeStr = "27-July-2026_17-29-49";
     const csvContent = "data:text/csv;charset=utf-8,Claim,Novelty,Evidence,Spec,Result,Status,Timestamp\n" +
       TESTS.map((t, i) => `"${t.claim}","${t.name}","${t.evidence}","${t.sub}","${RESULT_VALS[i]}","SIMULATION VALIDATED","${timeStr}"`).join("\n");
     const encodedUri = encodeURI(csvContent);
@@ -290,7 +290,7 @@ export default function App() {
           <section className="card" style={{ padding: "44px 30px", textAlign: "center", marginBottom: 24, border: `1px solid ${P.cyan}`, boxShadow: "0 0 50px rgba(0,229,255,0.18)" }}>
             <div style={{ display: "flex", justifyContent: "center", gap: 10, flexWrap: "wrap", marginBottom: 16 }}>
               <span className="status-badge badge-pass">
-                INDIAN PROVISIONAL PATENT NO. 202641077314
+                INDIAN PROVISIONAL PATENT NO. 202641077314 (FILED 23 JUNE 2026)
               </span>
               <span className="status-badge badge-info">
                 SUBSYSTEM TRL 3–4 VALIDATED
@@ -304,160 +304,157 @@ export default function App() {
               "BUILT FROM EXPERIENCE. DRIVEN BY ENGINEERING."
             </div>
 
-            {/* Short Punchy Bullet Points (No Wall of Text) */}
+            {/* Short Bullet Points (No Wall of Text) */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14, maxWidth: 950, margin: "0 auto 28px auto", textAlign: "left" }}>
               <div style={{ background: P.bg3, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
-                <strong style={{ color: P.green }}>✓ Skin-Graft Socket Safety:</strong> Automatic 20.0 kPa FSR pressure locks protect sensitive residual tissue.
+                <strong style={{ color: P.green }}>• Socket Pressure Lock:</strong> FSR array automatically locks at 20.0 kPa to protect skin-grafted tissue.
               </div>
               <div style={{ background: P.bg3, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
-                <strong style={{ color: P.cyan }}>✓ 100% Offline Edge AI:</strong> Syntiant NDP120 neural chip classifies gestures in 22ms with zero cloud data risks.
+                <strong style={{ color: P.cyan }}>• Offline Syntiant AI:</strong> On-chip gesture classification in 22ms with 0 bytes cloud biometric risk.
               </div>
               <div style={{ background: P.bg3, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
-                <strong style={{ color: P.amber }}>✓ Accessible $2,500 Cost:</strong> 10x cost reduction compared to legacy $50k prosthetics.
+                <strong style={{ color: P.amber }}>• Accessible $2,500 Cost:</strong> 10x cost reduction compared to legacy $50,000 devices.
               </div>
             </div>
 
-            {/* Clear Primary CTAs */}
+            {/* Prominent Call to Action Buttons */}
             <div style={{ display: "flex", justifyContent: "center", gap: 16, flexWrap: "wrap" }}>
-              <button className="btn btn-primary" onClick={() => setViewMode("dashboard")} style={{ padding: "15px 32px", fontSize: 13 }}>
-                ⚡ LAUNCH LIVE DIGITAL TWIN DASHBOARD
+              <button className="btn btn-primary" onClick={() => setViewMode("dashboard")} style={{ padding: "16px 36px", fontSize: 13, background: "linear-gradient(135deg, #00E676 0%, #00C853 100%)" }}>
+                ▶ WATCH DEMO &amp; VIEW PROTOTYPE
               </button>
-              <button className="btn btn-outline" onClick={handleExportCSV} style={{ padding: "15px 32px", fontSize: 13 }}>
-                📥 DOWNLOAD VALIDATION REPORT (CSV)
+              <button className="btn btn-outline" onClick={() => setViewMode("dashboard")} style={{ padding: "16px 36px", fontSize: 13 }}>
+                ⚡ LAUNCH DIGITAL TWIN DASHBOARD
               </button>
             </div>
           </section>
 
-          {/* Expanded Project Visuals Gallery (CAD, Wiring, Posters) */}
+          {/* Technical Visuals Gallery (CAD, Exploded Views, Architecture) */}
           <section className="card" style={{ marginBottom: 24 }}>
             <div className="card-title">
-              <span className="icon">🖼️</span> PROJECT VISUAL GALLERY (CAD ASSEMBLY, POSTERS &amp; RENDERS)
+              <span className="icon">🖼️</span> TECHNICAL VISUAL GALLERY (CAD SCHEMATICS &amp; RENDERS)
             </div>
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
               <div style={{ background: P.bg3, borderRadius: 10, overflow: "hidden", border: `1px solid ${P.bd}` }}>
                 <div style={{ padding: 10, background: P.bg2, fontSize: 11, fontWeight: 800, color: P.green }}>
-                  HERO RENDER: 5-PANEL TRANSHUMERAL SOCKET &amp; ARM
+                  5-PANEL TRANSHUMERAL SOCKET &amp; ARM ASSEMBLY
                 </div>
                 <img src="/hero_render_phoenix.jpg" alt="Transhumeral Assembly" loading="lazy" decoding="async" style={{ width: "100%", height: "auto", display: "block" }} />
               </div>
 
               <div style={{ background: P.bg3, borderRadius: 10, overflow: "hidden", border: `1px solid ${P.bd}` }}>
                 <div style={{ padding: 10, background: P.bg2, fontSize: 11, fontWeight: 800, color: P.cyan }}>
-                  ENGINEERING POSTER: 6 TECHNOLOGICAL PILLARS
+                  6-PILLAR SYSTEM ARCHITECTURE POSTER
                 </div>
-                <img src="/project_phoenix_engineering_poster.jpg" alt="Engineering Architecture" loading="lazy" decoding="async" style={{ width: "100%", height: "auto", display: "block" }} />
+                <img src="/project_phoenix_engineering_poster.jpg" alt="System Architecture" loading="lazy" decoding="async" style={{ width: "100%", height: "auto", display: "block" }} />
               </div>
 
               <div style={{ background: P.bg3, borderRadius: 10, overflow: "hidden", border: `1px solid ${P.bd}` }}>
                 <div style={{ padding: 10, background: P.bg2, fontSize: 11, fontWeight: 800, color: P.purple }}>
-                  CAD COMPONENT MODEL: PALM CHASSIS &amp; ACTUATOR
+                  EXPLODED 3D CAD PALM CHASSIS &amp; ACTUATOR
                 </div>
-                <img src="/prosthetic_arm_render.jpg" alt="CAD Component Model" loading="lazy" decoding="async" style={{ width: "100%", height: "auto", display: "block" }} />
+                <img src="/prosthetic_arm_render.jpg" alt="Exploded CAD Model" loading="lazy" decoding="async" style={{ width: "100%", height: "auto", display: "block" }} />
               </div>
             </div>
           </section>
 
-          {/* 6 Core Technological Innovations */}
+          {/* Patent Portfolio Section */}
           <section className="card" style={{ marginBottom: 24 }}>
             <div className="card-title">
-              <span className="icon">🧬</span> 6 CORE TECHNOLOGICAL INNOVATIONS (PATENT SPECIFICATION)
+              <span className="icon">📄</span> INTELLECTUAL PROPERTY &amp; PATENT PORTFOLIO
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
-              <div style={{ background: P.bg3, padding: 16, borderRadius: 10, border: `1px solid ${P.bd}` }}>
-                <div style={{ fontSize: 24, marginBottom: 8 }}>🧠</div>
-                <div style={{ fontSize: 13, fontWeight: 800, color: P.cyan, marginBottom: 4 }}>100% OFFLINE NEURAL AI CHIP</div>
-                <div style={{ fontSize: 11, color: P.t2, lineHeight: 1.6 }}>
-                  Syntiant NDP120 neural processor (&lt;4.8mW power) classifies gestures locally inside the palm chassis, eliminating cloud latency and GDPR biometric privacy risks.
+            <div style={{ background: P.bg3, padding: 18, borderRadius: 10, border: `1px solid ${P.bd}`, marginBottom: 16 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10, marginBottom: 8 }}>
+                <div style={{ fontSize: 14, fontWeight: 900, color: P.cyan }}>
+                  INDIAN PROVISIONAL PATENT APPLICATION NO. 202641077314
                 </div>
+                <span className="status-badge badge-pass">FILED 23 JUNE 2026</span>
               </div>
-
-              <div style={{ background: P.bg3, padding: 16, borderRadius: 10, border: `1px solid ${P.bd}` }}>
-                <div style={{ fontSize: 24, marginBottom: 8 }}>👁️</div>
-                <div style={{ fontSize: 13, fontWeight: 800, color: P.green, marginBottom: 4 }}>VISION-EMG INTENT FUSION</div>
-                <div style={{ fontSize: 11, color: P.t2, lineHeight: 1.6 }}>
-                  OV2640 camera captures target object geometry 300ms prior to contact, pre-shaping hand fingers before sEMG muscle contraction finishes (91% latency reduction).
-                </div>
+              <div style={{ fontSize: 11, color: P.t2, lineHeight: 1.6 }}>
+                Title: <em>"AUTONOMOUS MYOELECTRIC PROSTHETIC ARM WITH OFFLINE ARTIFICIAL INTELLIGENCE, BIDIRECTIONAL NEURAL FEEDBACK, EMOTION-AWARE GRIP CONTROL, SELF-PROTECTIVE SAFETY SYSTEMS, AND ADAPTIVE DESIGN FOR TRANSHUMERAL AMPUTEES WITH SKIN-GRAFTED RESIDUAL LIMBS"</em>
               </div>
+            </div>
 
-              <div style={{ background: P.bg3, padding: 16, borderRadius: 10, border: `1px solid ${P.bd}` }}>
-                <div style={{ fontSize: 24, marginBottom: 8 }}>🧪</div>
-                <div style={{ fontSize: 13, fontWeight: 800, color: P.amber, marginBottom: 4 }}>SWEAT CORTISOL BIOSENSING</div>
-                <div style={{ fontSize: 11, color: P.t2, lineHeight: 1.6 }}>
-                  Microfluidic sweat sensors measure cortisol levels (&gt;0.60 ug/dL) during user anxiety, automatically capping grip torque to 80% to prevent object damage.
-                </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12, fontSize: 11 }}>
+              <div style={{ background: P.bg2, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                <strong style={{ color: P.green }}>• 13 Novel Claims:</strong> Covering offline AI, microfluidics, self-healing liners, and rest timers.
               </div>
-
-              <div style={{ background: P.bg3, padding: 16, borderRadius: 10, border: `1px solid ${P.bd}` }}>
-                <div style={{ fontSize: 24, marginBottom: 8 }}>🛡️</div>
-                <div style={{ fontSize: 13, fontWeight: 800, color: P.purple, marginBottom: 4 }}>SELF-HEALING LINER SOCKET</div>
-                <div style={{ fontSize: 11, color: P.t2, lineHeight: 1.6 }}>
-                  Liquid-filled microcapsules within platinum silicone socket automatically repair micro-cracks within 10 minutes at room temperature, protecting fragile skin grafts.
-                </div>
+              <div style={{ background: P.bg2, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                <strong style={{ color: P.cyan }}>• Freedom to Operate:</strong> Zero IP infringement on legacy body-powered or high-cost prosthetics.
               </div>
-
-              <div style={{ background: P.bg3, padding: 16, borderRadius: 10, border: `1px solid ${P.bd}` }}>
-                <div style={{ fontSize: 24, marginBottom: 8 }}>⚡</div>
-                <div style={{ fontSize: 13, fontWeight: 800, color: P.cyan, marginBottom: 4 }}>NIGHTLY ON-DEVICE RETRAINING</div>
-                <div style={{ fontSize: 11, color: P.t2, lineHeight: 1.6 }}>
-                  During 15W Qi wireless charging at night, accumulated gesture variations update local neural weights without server updates, eliminating cyberattack risks.
-                </div>
-              </div>
-
-              <div style={{ background: P.bg3, padding: 16, borderRadius: 10, border: `1px solid ${P.bd}` }}>
-                <div style={{ fontSize: 24, marginBottom: 8 }}>⚡</div>
-                <div style={{ fontSize: 13, fontWeight: 800, color: P.red, marginBottom: 4 }}>PHANTOM PAIN TENS THERAPY</div>
-                <div style={{ fontSize: 11, color: P.t2, lineHeight: 1.6 }}>
-                  Bi-phasic TENS pulses (100Hz, 200us) deliver tactile feedback to residual skin grafts, suppressing phantom limb pain by over 70%.
-                </div>
+              <div style={{ background: P.bg2, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                <strong style={{ color: P.amber }}>• PCT Expansion Ready:</strong> Formatted for international WIPO, US, and EU patent filings.
               </div>
             </div>
           </section>
 
-          {/* Clinical Comparison Table */}
+          {/* Validation Results & Subsystem TRL Section */}
           <section className="card" style={{ marginBottom: 24 }}>
             <div className="card-title">
-              <span className="icon">📊</span> CLINICAL COMPARISON: CONVENTIONAL PROSTHETICS VS. PROJECT PHOENIX
+              <span className="icon">📊</span> SUBSYSTEM TRL VALIDATION RESULTS (SIMULATED)
             </div>
 
-            <div style={{ overflowX: "auto" }}>
-              <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left", fontSize: 11 }}>
-                <thead>
-                  <tr style={{ borderBottom: `1px solid ${P.bd}`, color: P.t2 }}>
-                    <th style={{ padding: "12px" }}>CLINICAL FEATURE</th>
-                    <th style={{ padding: "12px" }}>CONVENTIONAL PROSTHETICS</th>
-                    <th style={{ padding: "12px", color: P.cyan }}>PROJECT PHOENIX (GEN 2)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr style={{ borderBottom: `1px solid ${P.bg3}` }}>
-                    <td style={{ padding: "12px", fontWeight: 700, color: P.t1 }}>Target Patient Population</td>
-                    <td style={{ padding: "12px", color: P.red }}>Standard Amputees (Skin-Graft Intolerant)</td>
-                    <td style={{ padding: "12px", color: P.green, fontWeight: 800 }}>Transhumeral Amputees with Skin Grafts</td>
-                  </tr>
-                  <tr style={{ borderBottom: `1px solid ${P.bg3}` }}>
-                    <td style={{ padding: "12px", fontWeight: 700, color: P.t1 }}>Socket Shear Force Protection</td>
-                    <td style={{ padding: "12px", color: P.red }}>None (Causes Skin Tear &amp; Abandonment)</td>
-                    <td style={{ padding: "12px", color: P.green, fontWeight: 800 }}>FSR 20.0 kPa Auto Passive Lock Interrupt</td>
-                  </tr>
-                  <tr style={{ borderBottom: `1px solid ${P.bg3}` }}>
-                    <td style={{ padding: "12px", fontWeight: 700, color: P.t1 }}>AI Latency &amp; Data Privacy</td>
-                    <td style={{ padding: "12px", color: P.red }}>300ms Latency · Cloud Data Breach Risk</td>
-                    <td style={{ padding: "12px", color: P.green, fontWeight: 800 }}>22ms Latency · 100% Offline NDP120 Processor</td>
-                  </tr>
-                  <tr style={{ borderBottom: `1px solid ${P.bg3}` }}>
-                    <td style={{ padding: "12px", fontWeight: 700, color: P.t1 }}>Dermatitis Prevention</td>
-                    <td style={{ padding: "12px", color: P.red }}>Fixed Electrode Pads (Causes Skin Blisters)</td>
-                    <td style={{ padding: "12px", color: P.green, fontWeight: 800 }}>3-Position Daily TENS Pad Rotation Multiplexer</td>
-                  </tr>
-                  <tr style={{ borderBottom: `1px solid ${P.bg3}` }}>
-                    <td style={{ padding: "12px", fontWeight: 700, color: P.t1 }}>Unit Bill of Materials (BOM) Cost</td>
-                    <td style={{ padding: "12px", color: P.red }}>$35,000 – $75,000 USD (Inaccessible)</td>
-                    <td style={{ padding: "12px", color: P.green, fontWeight: 800 }}>$2,500 USD (~₹2.1 Lakhs INR)</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, textAlign: "center" }}>
+              <div style={{ background: P.bg3, padding: 14, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                <div style={{ fontSize: 10, color: P.cyan, fontWeight: 800 }}>sEMG BIOSENSING</div>
+                <div style={{ fontSize: 18, fontWeight: 900, color: P.green, margin: "6px 0" }}>TRL 4</div>
+                <div style={{ fontSize: 10, color: P.t2 }}>2000Hz Filter Validated</div>
+              </div>
+              <div style={{ background: P.bg3, padding: 14, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                <div style={{ fontSize: 10, color: P.cyan, fontWeight: 800 }}>NDP120 AI ENGINE</div>
+                <div style={{ fontSize: 18, fontWeight: 900, color: P.green, margin: "6px 0" }}>TRL 4</div>
+                <div style={{ fontSize: 10, color: P.t2 }}>HIL Model Validated</div>
+              </div>
+              <div style={{ background: P.bg3, padding: 14, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                <div style={{ fontSize: 10, color: P.amber, fontWeight: 800 }}>ACTUATION KINEMATICS</div>
+                <div style={{ fontSize: 18, fontWeight: 900, color: P.amber, margin: "6px 0" }}>TRL 3</div>
+                <div style={{ fontSize: 10, color: P.t2 }}>KCL CAD Assembly</div>
+              </div>
+              <div style={{ background: P.bg3, padding: 14, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                <div style={{ fontSize: 10, color: P.amber, fontWeight: 800 }}>SOCKET &amp; SAFETY</div>
+                <div style={{ fontSize: 18, fontWeight: 900, color: P.amber, margin: "6px 0" }}>TRL 3</div>
+                <div style={{ fontSize: 10, color: P.t2 }}>Algorithmic Model</div>
+              </div>
+            </div>
+          </section>
+
+          {/* 5-Phase Clinical Roadmap */}
+          <section className="card" style={{ marginBottom: 24 }}>
+            <div className="card-title">
+              <span className="icon">🚀</span> 5-PHASE CLINICAL &amp; HARDWARE ROADMAP
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 12, textAlign: "center" }}>
+              <div style={{ background: "rgba(0, 230, 118, 0.15)", padding: 12, borderRadius: 8, border: `1px solid ${P.green}` }}>
+                <div style={{ fontSize: 9, color: P.green, fontWeight: 800 }}>PHASE 1 (DONE)</div>
+                <div style={{ fontSize: 11, fontWeight: 800, color: P.t1, marginTop: 4 }}>PROVISIONAL PATENT</div>
+                <div style={{ fontSize: 9, color: P.t2, marginTop: 2 }}>App No. 202641077314 (23 June)</div>
+              </div>
+
+              <div style={{ background: "rgba(0, 229, 255, 0.15)", padding: 12, borderRadius: 8, border: `1px solid ${P.cyan}` }}>
+                <div style={{ fontSize: 9, color: P.cyan, fontWeight: 800 }}>PHASE 2 (CURRENT)</div>
+                <div style={{ fontSize: 11, fontWeight: 800, color: P.t1, marginTop: 4 }}>DIGITAL TWIN (TRL 3-4)</div>
+                <div style={{ fontSize: 9, color: P.t2, marginTop: 2 }}>Vite + WebGL HIL Model</div>
+              </div>
+
+              <div style={{ background: P.bg3, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                <div style={{ fontSize: 9, color: P.t3, fontWeight: 800 }}>PHASE 3 (Q4 2026)</div>
+                <div style={{ fontSize: 11, fontWeight: 800, color: P.t2, marginTop: 4 }}>HARDWARE ASSEMBLY</div>
+                <div style={{ fontSize: 9, color: P.t3, marginTop: 2 }}>STM32 + Maxon EC16</div>
+              </div>
+
+              <div style={{ background: P.bg3, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                <div style={{ fontSize: 9, color: P.t3, fontWeight: 800 }}>PHASE 4 (Q1 2027)</div>
+                <div style={{ fontSize: 11, fontWeight: 800, color: P.t2, marginTop: 4 }}>BENCH HIL TEST</div>
+                <div style={{ fontSize: 9, color: P.t3, marginTop: 2 }}>PGA460 + FSR Load Cell</div>
+              </div>
+
+              <div style={{ background: P.bg3, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+                <div style={{ fontSize: 9, color: P.t3, fontWeight: 800 }}>PHASE 5 (Q2 2027)</div>
+                <div style={{ fontSize: 11, fontWeight: 800, color: P.t2, marginTop: 4 }}>CLINICAL TRIALS</div>
+                <div style={{ fontSize: 9, color: P.t3, marginTop: 2 }}>n=10 Patient Fittings</div>
+              </div>
             </div>
           </section>
         </div>
@@ -517,56 +514,6 @@ export default function App() {
             </div>
           </header>
 
-          {/* Subsystem TRL Breakdown & Next Milestone Grid */}
-          <div className="grid-main" style={{ marginBottom: 20 }}>
-            <div className="col-8">
-              <div className="card">
-                <div className="card-title">
-                  <span className="icon">📊</span> SUBSYSTEM TRL BREAKDOWN (SIMULATION vs HARDWARE)
-                </div>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, fontSize: 10 }}>
-                  <div style={{ background: P.bg3, padding: 10, borderRadius: 6, border: `1px solid ${P.bd}` }}>
-                    <div style={{ color: P.cyan, fontWeight: 800 }}>sEMG BIOSENSING</div>
-                    <div style={{ fontSize: 13, fontWeight: 900, color: P.green, margin: "4px 0" }}>TRL 4</div>
-                    <div style={{ color: P.t2, fontSize: 9 }}>Bench Filter Validated</div>
-                  </div>
-                  <div style={{ background: P.bg3, padding: 10, borderRadius: 6, border: `1px solid ${P.bd}` }}>
-                    <div style={{ color: P.cyan, fontWeight: 800 }}>NDP120 AI ENGINE</div>
-                    <div style={{ fontSize: 13, fontWeight: 900, color: P.green, margin: "4px 0" }}>TRL 4</div>
-                    <div style={{ color: P.t2, fontSize: 9 }}>HIL Model Validated</div>
-                  </div>
-                  <div style={{ background: P.bg3, padding: 10, borderRadius: 6, border: `1px solid ${P.bd}` }}>
-                    <div style={{ color: P.amber, fontWeight: 800 }}>ACTUATION KINEMATICS</div>
-                    <div style={{ fontSize: 13, fontWeight: 900, color: P.amber, margin: "4px 0" }}>TRL 3</div>
-                    <div style={{ color: P.t2, fontSize: 9 }}>KCL CAD Assembly</div>
-                  </div>
-                  <div style={{ background: P.bg3, padding: 10, borderRadius: 6, border: `1px solid ${P.bd}` }}>
-                    <div style={{ color: P.amber, fontWeight: 800 }}>SOCKET &amp; SAFETY</div>
-                    <div style={{ fontSize: 13, fontWeight: 900, color: P.amber, margin: "4px 0" }}>TRL 3</div>
-                    <div style={{ color: P.t2, fontSize: 9 }}>Algorithmic Model</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-4">
-              <div className="card">
-                <div className="card-title">
-                  <span className="icon">🎯</span> NEXT MILESTONE
-                </div>
-                <div style={{ fontSize: 11, color: P.t1, fontWeight: 700 }}>
-                  Physical Hardware Assembly &amp; PCB Fabrication
-                </div>
-                <div style={{ fontSize: 10, color: P.t2, marginTop: 4, lineHeight: 1.5 }}>
-                  Flash C/C++ firmware onto STM32H753 MCU and integrate physical PGA460 sEMG front-end with Maxon EC16 motor.
-                </div>
-                <div style={{ marginTop: 8, fontSize: 9, color: P.cyan, fontWeight: 800 }}>
-                  TARGET DATE: Q4 2026
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* Interactive Simulation Scenario Presets */}
           <div className="card" style={{ marginBottom: 20, padding: 14 }}>
             <div style={{ fontSize: 11, color: P.cyan, fontWeight: 800, marginBottom: 8, letterSpacing: 1 }}>
@@ -588,86 +535,6 @@ export default function App() {
             </div>
           </div>
 
-          {/* Currently Validated vs Planned Hardware Matrix */}
-          <div className="grid-main" style={{ marginBottom: 20 }}>
-            <div className="col-6">
-              <div className="card">
-                <div className="card-title">
-                  <span className="icon">🟢</span> CURRENTLY VALIDATED (DIGITAL TWIN &amp; HIL)
-                </div>
-                <ul style={{ paddingLeft: 16, fontSize: 11, color: P.t2, lineHeight: 1.8 }}>
-                  <li><strong>STM32H753 MCU Firmware</strong>: 2000Hz sEMG DSP &amp; 20.0 kPa safety interlock.</li>
-                  <li><strong>Syntiant NDP120 AI Engine</strong>: On-chip gesture classifier (&lt;30ms latency).</li>
-                  <li><strong>PGA460 AFE Model</strong>: 20–450Hz bandpass filter &amp; +28% gain compensation.</li>
-                  <li><strong>FSR Socket Safety Array</strong>: 8-sensor pressure mapping &amp; passive lock trigger.</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="col-6">
-              <div className="card">
-                <div className="card-title">
-                  <span className="icon">🟡</span> PLANNED PHYSICAL HARDWARE (ASSEMBLY PENDING)
-                </div>
-                <ul style={{ paddingLeft: 16, fontSize: 11, color: P.t2, lineHeight: 1.8 }}>
-                  <li><strong>Maxon EC16 (40W) &amp; EC13 Motors</strong>: Brushless DC motors with AS5048A encoders.</li>
-                  <li><strong>Dyneema 0.8mm Tendon Cables</strong>: High-tensile finger actuation cables.</li>
-                  <li><strong>Platinum-Cured Silicone Socket</strong>: Inner self-healing nickel-particle liner.</li>
-                  <li><strong>OV2640 Palm Camera</strong>: Hardware vision pre-shaping camera integration.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          {/* System Architecture & Power/Weight Budget Grid */}
-          <div className="grid-main" style={{ marginBottom: 20 }}>
-            <div className="col-7">
-              <div className="card">
-                <div className="card-title">
-                  <span className="icon">⚖️</span> POWER, WEIGHT &amp; BATTERY BUDGET SUMMARY
-                </div>
-
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
-                  <div style={{ background: P.bg3, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
-                    <div style={{ fontSize: 10, color: P.cyan, fontWeight: 800 }}>SYSTEM WEIGHT BUDGET</div>
-                    <div style={{ fontSize: 18, fontWeight: 900, color: P.green, margin: "4px 0" }}>1.18 kg</div>
-                    <div style={{ fontSize: 9, color: P.t2 }}>Socket: 280g · Chassis: 420g · Hand: 480g</div>
-                  </div>
-                  <div style={{ background: P.bg3, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
-                    <div style={{ fontSize: 10, color: P.cyan, fontWeight: 800 }}>POWER CONSUMPTION</div>
-                    <div style={{ fontSize: 18, fontWeight: 900, color: P.green, margin: "4px 0" }}>8.4 W</div>
-                    <div style={{ fontSize: 9, color: P.t2 }}>NDP120: &lt;4.8mW · STM32: 320mW · Motors: 8W</div>
-                  </div>
-                  <div style={{ background: P.bg3, padding: 12, borderRadius: 8, border: `1px solid ${P.bd}` }}>
-                    <div style={{ fontSize: 10, color: P.cyan, fontWeight: 800 }}>BATTERY CAPACITY</div>
-                    <div style={{ fontSize: 18, fontWeight: 900, color: P.green, margin: "4px 0" }}>111 Wh</div>
-                    <div style={{ fontSize: 9, color: P.t2 }}>22.2V 5000mAh · 13.2h Estimated Runtime</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-5">
-              <div className="card">
-                <div className="card-title">
-                  <span className="icon">⚠️</span> RISKS &amp; ENGINEERING LIMITATIONS
-                </div>
-
-                <div style={{ fontSize: 10, color: P.t2, lineHeight: 1.6 }}>
-                  <div style={{ marginBottom: 6 }}>
-                    <strong style={{ color: P.amber }}>• Sweat Contamination:</strong> High humidity (&gt;85% RH) attenuates sEMG amplitude by up to 14%.
-                  </div>
-                  <div style={{ marginBottom: 6 }}>
-                    <strong style={{ color: P.amber }}>• Skin Graft Impedance Shift:</strong> Graft tissue impedance varies by +28%, compensated by AGC.
-                  </div>
-                  <div>
-                    <strong style={{ color: P.amber }}>• Thermal Protection:</strong> Motor duty cycle capped at 85% when ambient temp &gt;35°C.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* Main Tab Grid */}
           <div className="grid-main">
             {/* Left Column: 3D Model & Motor Status */}
@@ -685,12 +552,6 @@ export default function App() {
                   <div style={{ margin: "14px 0" }}>
                     <div style={{ fontSize: 10, color: P.cyan, fontWeight: 800, marginBottom: 6, letterSpacing: 1 }}>3D WEBGL MODEL TELEMETRY (SIMULATED ROTATION)</div>
                     <Arm3DViewer fingers={d.fingers} elbow={d.elbow} wrist={d.wrist} color={currentG.color} />
-                  </div>
-
-                  {/* Official Project Phoenix Hero Render Banner */}
-                  <div style={{ margin: "14px 0", borderRadius: 8, overflow: "hidden", border: `1px solid ${P.bd}` }}>
-                    <div style={{ fontSize: 10, color: P.green, fontWeight: 800, padding: "6px 0", background: P.bg2, letterSpacing: 1 }}>PROJECT PHOENIX CONCEPT MODEL</div>
-                    <img src="/hero_render_phoenix.jpg" alt="Project Phoenix Hero Render" loading="lazy" decoding="async" style={{ width: "100%", height: "auto", display: "block" }} />
                   </div>
                 </div>
               </div>
@@ -717,7 +578,7 @@ export default function App() {
             <div className="col-7">
               <div className="card" style={{ marginBottom: 20 }}>
                 <div className="card-title">
-                  <span className="icon">🧠</span> SYNTIANT NDP120 AI ENGINE &amp; PERFORMANCE LIMITS
+                  <span className="icon">🧠</span> SYNTIANT NDP120 AI ENGINE &amp; PERFORMANCE LIMITS (SIMULATED)
                 </div>
 
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 14 }}>
@@ -927,9 +788,9 @@ export default function App() {
           Lead Engineer &amp; Inventor: <strong>R. Karthick Raja</strong> (Sholavandan, Madurai, TN, India - 625214)
         </div>
         <div style={{ textAlign: "right" }}>
-          Indian Provisional Patent Application No.: <strong style={{ color: P.cyan }}>202641077314</strong> (Filed 20 June 2026)  
+          Indian Provisional Patent Application No.: <strong style={{ color: P.cyan }}>202641077314</strong> (Filed 23 June 2026)  
           <br />
-          Subsystem TRL: <strong style={{ color: P.green }}>3–4 (HIL Simulated)</strong> · Version: <strong>v3.2.0-DigitalTwin</strong> · Timestamp: 27 July 2026 16:42:11
+          Subsystem TRL: <strong style={{ color: P.green }}>3–4 (HIL Simulated)</strong> · Version: <strong>v3.2.0-DigitalTwin</strong> · Timestamp: 27 July 2026 17:29:49
         </div>
       </footer>
     </div>
