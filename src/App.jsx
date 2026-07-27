@@ -9,6 +9,7 @@ const P = {
   red: "#FF3D00", blue: "#2979FF", purple: "#E040FB",
 };
 
+// Expanded to 16 Functional & Expressive Bionic Gestures
 const GESTURES = [
   { name: "POWER GRIP",     fingers: [80, 85, 85, 80, 75], color: "#FF3D00", desc: "Full fist closure for heavy tools / weight" },
   { name: "PINCH",          fingers: [85, 90, 15, 10,  5], color: "#FF9100", desc: "Thumb + Index precision tip pinch" },
@@ -22,6 +23,10 @@ const GESTURES = [
   { name: "THUMBS UP",      fingers: [ 0, 70, 70, 70, 65], color: "#76FF03", desc: "Thumb extended upward gesture" },
   { name: "PRECISION PINCH",fingers: [90, 90, 15, 10,  5], color: "#00E5FF", desc: "Fine object manipulation under 5mm" },
   { name: "WAVE",           fingers: [ 0, 10, 10, 10, 10], color: "#E040FB", desc: "Slight finger flex expressive pose" },
+  { name: "PEACE SIGN",     fingers: [75,  0,  0, 70, 65], color: "#1DE9B6", desc: "Extended index + middle peace gesture" },
+  { name: "SPHERICAL GRIP", fingers: [50, 55, 55, 50, 45], color: "#FFD600", desc: "Cupped palm for holding spherical objects/balls" },
+  { name: "TWEEZER GRIP",   fingers: [60, 65, 65, 15, 10], color: "#00B0FF", desc: "Parallel alignment for ultra-thin items" },
+  { name: "OK SIGN",        fingers: [90, 90,  0,  0,  0], color: "#D500F9", desc: "Thumb + Index tip circle with extended fingers" },
 ];
 
 const TESTS = [
@@ -78,7 +83,6 @@ function GaugeBar({ label, value, max, warn, danger, unit = "", small = false })
   );
 }
 
-// ── SVG Waveform Generator for sEMG ──────────────────────────────────────────
 function SVGWaveform({ data, color, height = 36 }) {
   if (!data || data.length === 0) return null;
   const width = 280;
@@ -105,6 +109,9 @@ const getBotResponse = (question) => {
   if (q.includes("hi") || q.includes("hello") || q.includes("hey")) {
     return "👋 Hello! I am the **Project Phoenix AI Assistant**. How can I help you explore our bionic prosthesis system today?";
   }
+  if (q.includes("gesture") || q.includes("pose") || q.includes("how many")) {
+    return "🖐️ **16 Gesture Library**: Project Phoenix supports 16 functional & expressive gestures: Power Grip, Tip Pinch, Cylindrical, Lateral (Key), Open Hand, Tripod, Hook, Point, Key Grip, Thumbs Up, Precision Pinch, Wave, Peace Sign (✌️), Spherical Grip (⚽), Tweezer Grip (🥢), and OK Sign (👌).";
+  }
   if (q.includes("patent") || q.includes("claim") || q.includes("number")) {
     return "📜 **Patent Information**: Project Phoenix holds Indian Provisional Patent Application No. **202641077314** (Filed **23 June 2026**). It features **13 Novel Claims** starting from **Claim 1 through Claim 13**, covering offline Syntiant AI, microfluidic sweat cortisol capping, self-healing socket liners, 20.0 kPa FSR pressure locks, and 3-position TENS rotation.";
   }
@@ -127,11 +134,11 @@ const getBotResponse = (question) => {
     return "⚙️ **System Hardware Specs**: Total Mass = **1.18 kg (MODELED)**. Battery Pack = 22.2V 5000mAh Li-Ion (111Wh) yielding **13.2 Hours Runtime (MODELED)**. Elbow drive features a Maxon ECX Speed 16 M motor with a 50:1 non-backdrivable GP 16 C worm gear (0W passive power draw) and CAN-FD bus topology with 50ms watchdog timeout.";
   }
 
-  return "⚡ **Project Phoenix AI Assistant**: Project Phoenix is an autonomous 1.18kg transhumeral myoelectric prosthesis with Indian Provisional Patent No. 202641077314 (Filed 23 June 2026). Key specifications include offline Syntiant NDP120 neural AI (22ms latency), 20.0 kPa FSR socket pressure lock, self-healing silicone liner, Maxon worm gear drive, and ISO 13485 QMS design controls.";
+  return "⚡ **Project Phoenix AI Assistant**: Project Phoenix is an autonomous 1.18kg transhumeral myoelectric prosthesis with Indian Provisional Patent No. 202641077314 (Filed 23 June 2026). Key specifications include 16 gesture classes, offline Syntiant NDP120 neural AI (22ms latency), 20.0 kPa FSR socket pressure lock, self-healing silicone liner, Maxon worm gear drive, and ISO 13485 QMS design controls.";
 };
 
 export default function App() {
-  const [viewMode, setViewMode] = useState("dashboard"); // Default to Dashboard for immediate telemetry inspection
+  const [viewMode, setViewMode] = useState("dashboard");
   const [isAutoCycle, setIsAutoCycle] = useState(true);
   const [manualGestureIdx, setManualGestureIdx] = useState(0);
   const [cortisolOverride, setCortisolOverride] = useState(0.28);
@@ -146,7 +153,7 @@ export default function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [chatInput, setChatInput] = useState("");
   const [chatMessages, setChatMessages] = useState([
-    { sender: "bot", text: "👋 Hello! I am the **Project Phoenix AI Assistant**. How can I help you explore our bionic prosthesis system today?" }
+    { sender: "bot", text: "👋 Hello! I am the **Project Phoenix AI Assistant**. How can I help you explore our 16 bionic gestures, patent, or clinical roadmap today?" }
   ]);
 
   // Diagnostic runner states
@@ -268,7 +275,7 @@ export default function App() {
   };
 
   const handleExportCSV = () => {
-    const timeStr = "27-July-2026_21-01-04";
+    const timeStr = "27-July-2026_21-07-29";
     const csvContent = "data:text/csv;charset=utf-8,Claim,Novelty,Evidence,Spec,Result,Status,Timestamp\n" +
       TESTS.map((t, i) => `"${t.claim}","${t.name}","${t.evidence}","${t.sub}","${RESULT_VALS[i]}","SIMULATION VALIDATED","${timeStr}"`).join("\n");
     const encodedUri = encodeURI(csvContent);
@@ -356,7 +363,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* OFFICIAL TECHNICAL VISUAL GALLERY WITH NEW CAD POSTERS */}
+          {/* TECHNICAL VISUAL GALLERY WITH NEW CAD POSTERS */}
           <section className="card" style={{ marginBottom: 24 }}>
             <div className="card-title">
               <span className="icon">🖼️</span> TECHNICAL ENGINEERING POSTERS &amp; CAD SCHEMATICS (CLICK TO ENLARGE)
@@ -441,23 +448,51 @@ export default function App() {
             </div>
           </div>
 
-          {/* 🌟 FULL DUAL-COLUMN TELEMETRY GRID (NO BLANK AREAS) 🌟 */}
+          {/* FULL DUAL-COLUMN TELEMETRY GRID WITH 16 GESTURE CONTROLS */}
           <div className="grid-main">
             {/* Left Column: 3D WebGL Kinematics Model */}
             <div className="col-5">
               <div className="card" style={{ marginBottom: 20, height: "100%" }}>
-                <div className="card-title"><span className="icon">🖐</span> KINEMATICS &amp; 3D MODEL (SIMULATED)</div>
+                <div className="card-title" style={{ justifyContent: "space-between" }}>
+                  <div><span className="icon">🖐</span> 3D MODEL &amp; 16 GESTURE SELECTOR</div>
+                  <button className="btn btn-outline" style={{ padding: "3px 8px", fontSize: 10 }} onClick={() => setIsAutoCycle(!isAutoCycle)}>
+                    {isAutoCycle ? "⏸ Pause Auto-Cycle" : "▶ Resume Auto-Cycle"}
+                  </button>
+                </div>
                 <div style={{ background: P.bg3, border: `1px solid ${P.bd}`, borderRadius: 10, padding: 16, textAlign: "center" }}>
                   <div style={{ fontSize: 20, fontWeight: 900, color: currentG.color, letterSpacing: 1 }}>{currentG.name} (SIMULATED)</div>
                   <div style={{ fontSize: 11, color: P.t2, marginTop: 4 }}>{currentG.desc}</div>
                   <div style={{ margin: "14px 0" }}>
                     <Arm3DViewer fingers={d.fingers} elbow={d.elbow} wrist={d.wrist} color={currentG.color} />
                   </div>
+
+                  {/* 16 Interactive Gesture Selector Grid */}
+                  <div style={{ marginTop: 12 }}>
+                    <div style={{ fontSize: 10, color: P.cyan, fontWeight: 800, marginBottom: 8, letterSpacing: 1 }}>SELECT FROM 16 FUNCTIONAL &amp; EXPRESSIVE GESTURES</div>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 6 }}>
+                      {GESTURES.map((g, idx) => (
+                        <button
+                          key={idx}
+                          className="btn btn-outline"
+                          style={{
+                            padding: "6px 4px",
+                            fontSize: 9,
+                            borderColor: idx === (isAutoCycle ? d.gIdx : manualGestureIdx) % GESTURES.length ? P.cyan : P.bd,
+                            background: idx === (isAutoCycle ? d.gIdx : manualGestureIdx) % GESTURES.length ? "rgba(0, 229, 255, 0.2)" : P.bg2,
+                            color: P.t1,
+                          }}
+                          onClick={() => { setIsAutoCycle(false); setManualGestureIdx(idx); }}
+                        >
+                          {g.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Right Column: Full Telemetry Stack (sEMG, Pressure, Cortisol, Power) */}
+            {/* Right Column: Full Telemetry Stack */}
             <div className="col-7">
               <div className="card" style={{ marginBottom: 20 }}>
                 {/* 1. Top Metrics */}
@@ -670,7 +705,7 @@ export default function App() {
             <div style={{ display: "flex", gap: 6 }}>
               <input
                 type="text"
-                placeholder="Ask about AI, Patent, Safety..."
+                placeholder="Ask about AI, 16 Gestures, Patent..."
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
@@ -692,7 +727,7 @@ export default function App() {
         <div style={{ textAlign: "right" }}>
           Indian Provisional Patent Application No.: <strong style={{ color: P.cyan }}>202641077314</strong> (Filed 23 June 2026)  
           <br />
-          Subsystem TRL: <strong style={{ color: P.green }}>3–4 (HIL Simulated)</strong> · Version: <strong>v3.8.0-FullTelemetryGrid</strong> · Timestamp: 27 July 2026 21:01:04
+          Subsystem TRL: <strong style={{ color: P.green }}>3–4 (HIL Simulated)</strong> · Version: <strong>v3.9.0-16GesturesLibrary</strong> · Timestamp: 27 July 2026 21:07:29
         </div>
       </footer>
     </div>
