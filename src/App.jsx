@@ -153,6 +153,18 @@ export default function App() {
   const [telemetryLogs, setTelemetryLogs] = useState([]);
   const logContainerRef = useRef(null);
 
+  // 3D Video Storyboard Player State
+  const [activeVideoLoop, setActiveVideoLoop] = useState(0);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(true);
+
+  useEffect(() => {
+    if (!isVideoPlaying) return;
+    const interval = setInterval(() => {
+      setActiveVideoLoop((prev) => (prev + 1) % 3);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [isVideoPlaying]);
+
   // Chatbot State
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [chatInput, setChatInput] = useState("");
@@ -489,6 +501,115 @@ export default function App() {
               <button className={`btn ${lowBattery ? "btn-warn" : "btn-outline"}`} onClick={() => triggerScenario("LOW_BATTERY")}>
                 {lowBattery ? "⚠ Recharge Battery" : "🔋 Low Battery (<15%)"}
               </button>
+            </div>
+          </div>
+
+          {/* 🎬 INTERACTIVE 3D VIDEO & STORYBOARD ANIMATION PLAYER 🎬 */}
+          <div className="card" style={{ marginBottom: 20, padding: 16, border: `1px solid ${P.purple}`, boxShadow: "0 0 30px rgba(224, 64, 251, 0.15)" }}>
+            <div className="card-title" style={{ justifyContent: "space-between" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span className="icon">🎬</span>
+                <span style={{ color: P.purple }}>INTERACTIVE 3D DIGITAL TWIN ANIMATION &amp; VIDEO STORYBOARD (4.0s SEAMLESS LOOPS)</span>
+              </div>
+              <div style={{ display: "flex", gap: 8 }}>
+                <button
+                  className="btn btn-outline"
+                  style={{ padding: "4px 10px", fontSize: 10, borderColor: activeVideoLoop === 0 ? P.purple : P.bd, background: activeVideoLoop === 0 ? "rgba(224, 64, 251, 0.2)" : P.bg2 }}
+                  onClick={() => { setActiveVideoLoop(0); setIsVideoPlaying(false); }}
+                >
+                  🔴 Scene 1: Safety Lock (20.0 kPa)
+                </button>
+                <button
+                  className="btn btn-outline"
+                  style={{ padding: "4px 10px", fontSize: 10, borderColor: activeVideoLoop === 1 ? P.purple : P.bd, background: activeVideoLoop === 1 ? "rgba(224, 64, 251, 0.2)" : P.bg2 }}
+                  onClick={() => { setActiveVideoLoop(1); setIsVideoPlaying(false); }}
+                >
+                  ⚡ Scene 2: High-Speed (78ms)
+                </button>
+                <button
+                  className="btn btn-outline"
+                  style={{ padding: "4px 10px", fontSize: 10, borderColor: activeVideoLoop === 2 ? P.purple : P.bd, background: activeVideoLoop === 2 ? "rgba(224, 64, 251, 0.2)" : P.bg2 }}
+                  onClick={() => { setActiveVideoLoop(2); setIsVideoPlaying(false); }}
+                >
+                  🧠 Scene 3: NDP120 AI Fusion
+                </button>
+                <button className="btn btn-primary" style={{ padding: "4px 12px", fontSize: 10 }} onClick={() => setIsVideoPlaying(!isVideoPlaying)}>
+                  {isVideoPlaying ? "⏸ PAUSE ANIMATION" : "▶ PLAY 3D VIDEO LOOPS"}
+                </button>
+              </div>
+            </div>
+
+            {/* Video Viewport Container */}
+            <div style={{ position: "relative", width: "100%", height: 380, borderRadius: 10, overflow: "hidden", background: "#010409", border: `1px solid ${P.bd}`, display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <img
+                src={
+                  activeVideoLoop === 0
+                    ? "/loop1_safety_lock.jpg"
+                    : activeVideoLoop === 1
+                    ? "/loop2_precision_actuation.jpg"
+                    : "/loop3_logic_fusion.jpg"
+                }
+                alt="3D Digital Twin Video Animation Frame"
+                style={{ width: "100%", height: "100%", objectFit: "cover", transition: "opacity 0.5s ease" }}
+              />
+
+              {/* Reactive Telemetry HUD Overlay in Viewport Lower Third */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 14,
+                  left: 14,
+                  right: 14,
+                  background: "rgba(10, 20, 36, 0.88)",
+                  backdropFilter: "blur(12px)",
+                  border: `1px solid ${activeVideoLoop === 0 ? P.red : activeVideoLoop === 1 ? P.cyan : P.green}`,
+                  borderRadius: 8,
+                  padding: "10px 16px",
+                  display: "flex",
+                  justify: "space-between",
+                  alignItems: "center",
+                  boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
+                }}
+              >
+                {activeVideoLoop === 0 && (
+                  <>
+                    <div>
+                      <div style={{ fontSize: 10, color: P.t2 }}>LOOP 1: TRIPLE BARRIER SAFETY FAILSAFE</div>
+                      <div style={{ fontSize: 13, fontWeight: 900, color: P.red }}>Pressure: 21.8 kPa (ALARM threshold: 20.0 kPa)</div>
+                    </div>
+                    <div style={{ textAlign: "right" }}>
+                      <span className="status-badge badge-warn">⚠️ PASSIVE TENDON LOCK ENGAGED</span>
+                      <div style={{ fontSize: 9, color: P.t2, marginTop: 4 }}>MCU Signal: IRQ_HIGH · Motor Power: 0.0mW</div>
+                    </div>
+                  </>
+                )}
+
+                {activeVideoLoop === 1 && (
+                  <>
+                    <div>
+                      <div style={{ fontSize: 10, color: P.t2 }}>LOOP 2: NEURAL-INTEGRATED TENDON ACTUATION</div>
+                      <div style={{ fontSize: 13, fontWeight: 900, color: P.cyan }}>Actuation Latency: 78 ms · Sub-80ms Snap</div>
+                    </div>
+                    <div style={{ textAlign: "right" }}>
+                      <span className="status-badge badge-pass">⚡ 5x Maxon DCX 6 S @ 12,200 RPM</span>
+                      <div style={{ fontSize: 9, color: P.t2, marginTop: 4 }}>Transmission: Dyneema Braided Tendons</div>
+                    </div>
+                  </>
+                )}
+
+                {activeVideoLoop === 2 && (
+                  <>
+                    <div>
+                      <div style={{ fontSize: 10, color: P.t2 }}>LOOP 3: PALM-BRAIN LOGIC FUSION (OFFLINE EDGE AI)</div>
+                      <div style={{ fontSize: 13, fontWeight: 900, color: P.green }}>73% Latency Reduction (300ms → 78ms)</div>
+                    </div>
+                    <div style={{ textAlign: "right" }}>
+                      <span className="status-badge badge-pass">🧠 Syntiant NDP120 · Power: 5mW</span>
+                      <div style={{ fontSize: 9, color: P.t2, marginTop: 4 }}>Vision: OV2640 + sEMG PGA460 Calibrated</div>
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
           </div>
 
