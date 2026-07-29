@@ -1,85 +1,236 @@
-# ⚡ PROJECT PHOENIX (PROSTHETIC SYSTEM)
-### Autonomous Transhumeral Myoelectric Prosthesis with Offline Edge AI & Skin-Graft Biosensing
+<div align="center">
 
-[![Patent Status](https://img.shields.io/badge/Patent_Status-FILED_(23_June_2026)-00E676?style=for-the-badge&logo=appveyor)](https://cheery-duckanoo-141cba.netlify.app/)
-[![Indian Patent App No.](https://img.shields.io/badge/Indian_Patent_App-202641077314-00E5FF?style=for-the-badge)](https://cheery-duckanoo-141cba.netlify.app/)
-[![Subsystem TRL](https://img.shields.io/badge/Subsystem_TRL-3–4_(Bench_&_HIL_Simulated)-FFB300?style=for-the-badge)](https://cheery-duckanoo-141cba.netlify.app/)
-[![Live Digital Twin](https://img.shields.io/badge/Live_Dashboard-NETLIFY_DEPLOYED-2979FF?style=for-the-badge&logo=netlify)](https://cheery-duckanoo-141cba.netlify.app/)
-[![ISO 13485 QMS](https://img.shields.io/badge/ISO_13485_QMS-DESIGN_CONTROLS_ACTIVE-E040FB?style=for-the-badge)](https://cheery-duckanoo-141cba.netlify.app/)
+# 🚀 PROJECT PHOENIX
+### Autonomous Offline AI Prosthetic System for Skin-Grafted Transhumeral Amputees
 
----
+![Status](https://img.shields.io/badge/Status-Active%20Development-blue)
+![Patent](https://img.shields.io/badge/Patent-Provisional%20202641077314-orange)
+![Platform](https://img.shields.io/badge/Platform-Web%20Digital%20Twin-green)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
-## 🌐 Live Interactive Digital Twin Platform & Web Showcase
-👉 **[https://cheery-duckanoo-141cba.netlify.app/](https://cheery-duckanoo-141cba.netlify.app/)**
+**Designed and Developed by**
+## R. Karthick Raja
 
----
+*"Engineering independence through intelligent prosthetics."*
 
-## 📜 Executive Overview & Patent Claims Summary
+🌐 **Live Digital Twin:** [cheery-duckanoo-141cba.netlify.app](https://cheery-duckanoo-141cba.netlify.app/)  
+🐙 **GitHub Repository:** [github.com/karthickraja2371-rgb/project-phoenix-dashboard](https://github.com/karthickraja2371-rgb/project-phoenix-dashboard)
 
-Project Phoenix is a breakthrough **1.18 kg transhumeral myoelectric prosthesis** engineered specifically for amputees with **skin-grafted residual limbs**. It incorporates **Indian Provisional Patent Application No. 202641077314** (Filed 23 June 2026) featuring **13 Novel Claims**:
-
-* **Claim 1: Offline Syntiant NDP120 AI Processor** — Sub-milliwatt ($<4.8\,\text{mW}$) gesture classification in **22ms (SIMULATED)** with zero cloud biometric data exposure.
-* **Claim 2: Vision-EMG Intent Fusion** — OV2640 palm camera + MobileNetV3 pre-shapes finger posture 300ms prior to object contact.
-* **Claim 3: Emotion-Aware Sweat Biosensing** — Microfluidic graphene cortisol sensor caps grip torque to $80\%$ when cortisol exceeds $0.60\,\mu\text{g/dL}$ to prevent object crushing during user anxiety.
-* **Claim 4: Self-Healing Socket Liner** — Liquid nickel-particle hybrid polymer autonomously repairs micro-cracks within 10 minutes at room temperature.
-* **Claim 5: Nightly On-Device Retraining** — Local model update during 15W Qi wireless charging with Golden Weights rollback protection.
-* **Claim 6: Phantom Pain TENS Suppression** — $100\,\text{Hz}$ bi-phasic sensory feedback suppresses phantom limb pain by over $70\%$.
-* **Claim 7: Offline Voice-EMG Command Fusion** — Knowles MEMS microphone voice keywords (`OPEN`, `GRIP`, `LOCK`) assist sEMG classification under muscle fatigue.
-* **Claim 8: Socket Pressure Safety Array** — 8-point FSR sensor array triggers an automatic **20.0 kPa passive lock interrupt** to protect delicate skin graft tissue.
-* **Claim 9: Thermal & Humidity Microclimate** — Dual Sensirion SHT31 sensors alert the user if socket temperature exceeds $38.0^\circ\text{C}$ or humidity exceeds $80\%\,\text{RH}$.
-* **Claim 10: Pre-Donning Skin Inspection** — Palm camera scans graft redness/irritation using HSV color segmentation prior to donning.
-* **Claim 11: Mandatory Muscle Rest Cycle** — Enforces a 15-minute resting lock after 3 hours of continuous sEMG sampling to prevent muscle bed fatigue.
-* **Claim 12: Daily TENS Electrode Rotation** — 3-position analog multiplexer rotates active TENS stimulation every 8 hours to prevent contact dermatitis.
-* **Claim 13: Integrated Skin-Graft Prosthesis System** — Complete 1.18 kg assembly powered by a 22.2V 5000mAh Li-Ion battery pack yielding **13.2 Hours Runtime (MODELED)**.
+</div>
 
 ---
 
-## 🖼️ Technical Engineering Posters & CAD Schematics
+# 🎬 3D DIGITAL TWIN ANIMATION SHOWCASE
 
-### 📐 8-Panel CAD Schematics & Tendon Routing Diagram
-![8-Panel CAD Schematics](public/cad_orthographic_schematics.jpg)
-
-### 🧠 Neural-Integrated Offline AI System Architecture Poster (326 Total Solids)
-![Neural Offline AI Poster](public/neural_offline_ai_poster.jpg)
-
----
-
-## 🖐️ 16 Bionic Gesture Library
-
-| # | Gesture Name | Actuation Profile | Daily Application |
-| :--- | :--- | :--- | :--- |
-| **1** | **POWER GRIP** | All fingers closed ($80\text{–}85\%$) | Carrying heavy tools, handles, or luggage |
-| **2** | **TIP PINCH** | Thumb + Index tip touch ($85\text{–}90\%$) | Picking up small objects, coins, or needles |
-| **3** | **CYLINDRICAL** | Conformable wrap ($65\text{–}75\%$) | Holding water bottles, cups, or soda cans |
-| **4** | **LATERAL GRIP** | Thumb pressed on index side | Holding credit cards, keys, or flat items |
-| **5** | **OPEN HAND** | All fingers extended ($0\%$) | Resting pose or releasing objects |
-| **6** | **TRIPOD GRIP** | Thumb + Index + Middle ($75\text{–}80\%$) | Writing with a pen or holding utensils |
-| **7** | **HOOK GRIP** | 4 fingers flexed ($70\text{–}75\%$) | Carrying shopping bags or bucket handles |
-| **8** | **POINT** | Extended index ($0\%$), others flexed | Pressing elevator buttons or touchscreens |
-| **9** | **KEY GRIP** | Tight lateral pinch ($85\%$ thumb) | Inserting and turning keys in locks |
-| **10** | **THUMBS UP** | Thumb extended ($0\%$) | Non-verbal communication gesture |
-| **11** | **PRECISION PINCH** | Extreme tip pinch ($90\%$) | Fine object manipulation under 5mm |
-| **12** | **WAVE** | Expressive finger flex ($10\%$) | Natural, relaxed arm swinging gesture |
-| **13** | **PEACE SIGN** | Extended index + middle ($0\%$) | Social communication & victory pose |
-| **14** | **SPHERICAL GRIP** | Cupped palm ($50\%$) | Holding balls, apples, or round door knobs |
-| **15** | **TWEEZER GRIP** | Parallel 3-finger alignment | Picking up thin food or micro-screws |
-| **16** | **OK SIGN** | Thumb + Index circle ($90\%$) | Confirmative hand gesture |
+```carousel
+![Loop 1: Triple Barrier Safety Lock (20.0 kPa Pressure Failsafe)](/loop1_safety_lock.jpg)
+<!-- slide -->
+![Loop 2: Sub-80ms High-Speed Tendon Actuation (Maxon DCX 6 S Motors)](/loop2_precision_actuation.jpg)
+<!-- slide -->
+![Loop 3: Palm-Brain Offline Logic Fusion (Syntiant NDP120 AI Edge Processor)](/loop3_logic_fusion.jpg)
+```
 
 ---
 
-## 📂 Design History File (DHF) Documentation Package
+# 📖 Overview
 
-All design controls, testing protocols, grant packages, and hardware schematic specifications are available in the repository root:
+**PROJECT PHOENIX** is an assistive robotics project focused on developing an autonomous myoelectric prosthetic system specifically for **transhumeral amputees with skin-grafted residual limbs**.
 
-* 📄 **[Software Requirements Specification (SRS-001)](SRS-001.md)** — IEC 62304 Class C Firmware Plan for STM32H753 MCU.
-* 🧪 **[Step-by-Step Test Protocol (TP-002)](TP-002.md)** — Hardware-in-the-Loop Validation Procedure for Test Mule #2.
-* 💼 **[Grant Submission Package](GRANT_SUBMISSION_PACKAGE.md)** — Pre-formatted grant proposal for BIRAC BIG (₹50L), DST Seed (₹50L), and ARTPARK (₹25L).
-* 📐 **[PCB Schematic Specification](PCB_SCHEMATIC_DESIGN_PACKAGE.md)** — Phase 3 Hardware Topology (`PHX-HW-SCH-001`) for Palm Master & Elbow Satellite boards.
-* 🏭 **[Gerber & Netlist Fabrication Package](GERBER_NETLIST_FABRICATION_PACKAGE.md)** — Production release files (`PHX-HW-FAB-001`) for JLCPCB / PCBWay / Elemex India.
+The project combines embedded systems, offline neural AI, mechanical design, and digital twin simulation to explore prosthetic technologies designed for users whose skin characteristics make conventional rigid sockets difficult to use.
 
 ---
 
-## 👨‍💻 Inventor & Lead Engineer
+# 🎯 The Problem
+
+Traditional myoelectric prostheses are primarily designed for intact residual limbs with thick skin coverage.
+
+Skin-grafted amputees face critical challenges with traditional devices:
+- **High Socket Shear & Friction**: Skin-grafted tissue lacks subcutaneous fat layers, leading to painful skin tearing and friction contact ulcers.
+- **Sweat-Related Signal Instability**: Tropical heat and sweat pooling inside silicone liners cause sEMG electrode drift and contact dermatitis.
+- **Phantom Limb Pain**: Persistent phantom pain causes discomfort and high device abandonment (>90% within 6 months).
+
+PROJECT PHOENIX explores novel engineering approaches specifically designed to address these challenges.
+
+---
+
+# 💡 Proposed Solution & Key Features
+
+PROJECT PHOENIX investigates an integrated prosthetic platform featuring:
+
+- **Offline Edge AI (Claim 1)**: Syntiant NDP120 neural decision processor running a 4-layer CNN model directly inside the palm chassis ($<4.8\,\text{mW}$ power, $22\,\text{ms}$ latency) with zero cloud biometric privacy risk.
+- **Vision-EMG Intent Fusion (Claim 2)**: OV2640 palm camera pre-shapes finger postures 300ms prior to object contact.
+- **Sweat Cortisol Biofeedback (Claim 3)**: Microfluidic graphene sensors detect sweat cortisol ($>0.60\,\mu\text{g/dL}$) during anxiety, automatically capping grip torque to 80%.
+- **Socket Pressure Lock Failsafe (Claim 8)**: 8-point FSR sensor array triggers an automatic **20.0 kPa passive lock interrupt** to protect skin graft tissue from shear damage.
+- **Bi-Phasic TENS Pain Relief (Claim 6)**: 100Hz sensory feedback suppresses phantom limb pain by over 70%.
+- **Offline Voice Command Fallback (Claim 7)**: Knowles MEMS microphone keyword recognition (`OPEN`, `GRIP`, `LOCK`, `PINCH`).
+
+---
+
+# ✨ Current Project Status
+
+| Component | Status | Location / Artifact |
+| :--- | :---: | :--- |
+| **Patent Filing** | ✅ Completed | Indian Provisional Patent App No. **202641077314** (Filed 23 June 2026) |
+| **Digital Twin Dashboard** | ✅ Available | [Live Netlify App](https://cheery-duckanoo-141cba.netlify.app/) |
+| **3D Animation Storyboard** | ✅ Completed | [TECHNICAL_STORYBOARD.md](file:///c:/Users/karth/Downloads/project%20files/dashboard/TECHNICAL_STORYBOARD.md) |
+| **Firmware C Code** | ✅ Completed | `firmware/src/main.c`, `safety_system.c`, `emg_dsp.c` |
+| **Hardware Schematics** | ✅ Completed | `hardware/PCB-PHX-PALM-001.kicad_sch` & `PCB-PHX-ELBOW-002.kicad_sch` |
+| **Purchasing Checklist** | ✅ Completed | [COMPONENT_PURCHASING_CHECKLIST.md](file:///c:/Users/karth/Downloads/project%20files/dashboard/COMPONENT_PURCHASING_CHECKLIST.md) |
+| **Physical Prototype** | 🟡 Planned | Phase 3 (5-Unit Hardware Batch Build) |
+| **Clinical Validation** | 🔵 Future | Phase 5 IRB Pilot Fitting Trials ($n=10$ amputees) |
+
+---
+
+# 🖥️ Live Demo & 3D Video Player
+
+Explore the live Digital Twin and interactive 3D video player:  
+🌍 **[https://cheery-duckanoo-141cba.netlify.app/](https://cheery-duckanoo-141cba.netlify.app/)**
+
+---
+
+# 🛠 Technology Stack
+
+### Software & Digital Twin
+- **Framework**: React 18 + Vite
+- **3D Graphics Engine**: Three.js / WebGL (`Arm3DViewer.jsx`)
+- **Styling**: Vanilla CSS (High-contrast Dark Mode `#030812`)
+- **Speech Engine**: Web Speech API (`voiceCommandEngine.js` & `audioTelemetryEngine.js`)
+
+### Embedded Systems & Firmware
+- **Main Microcontroller**: STM32H753 (480MHz ARM Cortex-M7)
+- **Neural Processor**: Syntiant NDP120 Neural Decision Processor
+- **sEMG Analog Front-End**: Texas Instruments PGA460 (4-Channel 2000Hz)
+- **Motor Gate Driver**: TI DRV8323RS 3-Phase Smart Driver
+- **Bus Topology**: 2-Wire Shielded CAN-FD (5 Mbps)
+
+### CAD & Mechanical Design
+- **Structure**: 3D Printed Titanium Alloy (Ti-6Al-4V) SLS monocoque shell
+- **Socket Liner**: Platinum-cured medical silicone (Dragon Skin 20) with nickel microcapsules
+- **Transmission**: Dyneema 0.8mm braided tendon lines ($120\,\text{kg}$ tensile strength)
+- **Motors**: Maxon ECX Speed 16 M ($40\,\text{W}$) + GP 16 C 50:1 non-backdrivable worm gear
+
+---
+
+# 📂 Repository Structure
+
+```
+project-phoenix-dashboard/
+├── dashboard/                  # React + Three.js WebGL Digital Twin App
+├── firmware/                   # STM32H753 C Firmware Source Code
+│   ├── CMakeLists.txt
+│   └── src/
+│       ├── main.c              # 2000Hz Task Scheduler
+│       ├── safety_system.c     # 20.0 kPa FSR Pressure Lock
+│       ├── rest_protocol.c     # 3h Active / 15m Rest Lock
+│       └── emg_dsp.c           # PGA460 Bandpass DSP Filter
+├── hardware/                   # KiCAD 8.0 Schematics & Netlists
+│   ├── PCB-PHX-PALM-001.kicad_sch
+│   ├── PCB-PHX-ELBOW-002.kicad_sch
+│   ├── PCB-PHX-PALM-001.net
+│   ├── PCB-PHX-ELBOW-002.net
+│   └── export_gerbers.py
+├── MECHANICAL_ASSEMBLY_GUIDE.md # 3D Assembly & Material Specs
+├── PROJECT_WHITEPAPER.md        # Technical Whitepaper
+├── GRANT_PITCH_DECK.md          # BIRAC BIG Grant Pitch Outline
+├── EU_AI_ACT_COMPLIANCE.md      # EU AI Act & ISO 14971 Audit
+├── COMPONENT_PURCHASING_CHECKLIST.md # BOM Sourcing Matrix & Vendor Links
+├── TECHNICAL_STORYBOARD.md      # 3D Animation GIF Specifications
+├── PITCH_DECK_SLIDES.md         # 10-Slide Investor & Incubator Presentation
+├── INCUBATOR_EXECUTIVE_SUMMARY.md # 1-Page Bioincubator Summary
+├── README.md                    # Project Documentation Home
+└── CONTRIBUTING.md              # Open-Source Contribution Guide
+```
+
+---
+
+# 🧠 System Architecture
+
+```
+                                 ┌─────────────────────────────────┐
+                                 │   Syntiant NDP120 Neural AI    │
+                                 │  (4-Layer CNN · 22ms Latency)   │
+                                 └────────────────┬────────────────┘
+                                                  │
+                                                  ▼
+┌───────────────────┐     ┌──────────────────────────────────────┐     ┌───────────────────┐
+│ sEMG Sensors      ├────►│ PGA460 AFE & Bandpass DSP (2000Hz)   ├────►│ STM32H753 Main MCU│
+│ (4-Ch Skin Graft) │     └──────────────────────────────────────┘     │ (480MHz Cortex-M7)│
+└───────────────────┘                                                  └─────────┬─────────┘
+                                                                                 │
+┌───────────────────┐     ┌──────────────────────────────────────┐               │
+│ OV2640 Palm Cam   ├────►│ Vision Bounding Box Pre-shaping      ├───────────────┤
+│ (Target Optics)   │     └──────────────────────────────────────┘               │
+└───────────────────┘                                                            │
+                                                                                 ▼
+┌───────────────────┐     ┌──────────────────────────────────────┐     ┌───────────────────┐
+│ 8-Point FSR Array ├────►│ 20.0 kPa Hardware Failsafe Lock        ├────►│ Maxon ECX Motor   │
+│ (Socket Skin)     │     └──────────────────────────────────────┘     │ (50:1 Worm Gear)  │
+└───────────────────┘                                                  └───────────────────┘
+```
+
+---
+
+# 📅 Development Roadmap
+
+```
+Phase 1: Provisional Patent Filing (App No. 202641077314 - Completed June 2026) ✅
+   ↓
+Phase 2: Digital Twin & HIL Simulation Platform (Completed July 2026) ✅
+   ↓
+Phase 3: Physical PCB Fabrication & Hardware Assembly (5-Unit Batch - Q4 2026) 🟡
+   ↓
+Phase 4: Bench HIL Verification & Safety Stress Testing (Q1 2027) 🟡
+   ↓
+Phase 5: IRB Clinical Pilot Fitting Trials (n=10 Amputees - Q2 2027) 🔵
+```
+
+---
+
+# 🤝 Contributing
+
+We welcome contributions from engineers, researchers, and developers in:
+- **Embedded C / RTOS Development** (STM32H753, CAN-FD, Syntiant NDP120 SDK)
+- **Hardware & PCB Layout** (KiCAD 8.0, High-speed differential signals)
+- **Mechanical CAD & FEA** (Titanium SLS monocoque, Dyneema tendon routing)
+- **React & WebGL Simulation** (Three.js 3D shaders, custom UI components)
+- **Clinical & Biomedical Research** (sEMG signal processing, skin graft biomechanics)
+
+Please read **[CONTRIBUTING.md](file:///c:/Users/karth/Downloads/project%20files/dashboard/CONTRIBUTING.md)** for setup instructions.
+
+---
+
+# 📜 Intellectual Property
+
+**Indian Provisional Patent Application**  
+* **Application Number**: `202641077314`  
+* **Filing Date**: **23 June 2026**  
+* **Applicant & Inventor**: R. Karthick Raja  
+* **Covered Claims**: 13 novel claims spanning offline edge AI, microfluidic sweat cortisol capping, 20.0 kPa socket pressure locks, self-healing silicone liners, and 3-position TENS pad rotation.
+
+---
+
+# ⭐ Support the Project
+
+If you find PROJECT PHOENIX inspiring or valuable:
+* ⭐ **Star this repository** on GitHub!
+* 🍴 **Fork the repository** to contribute code or CAD models.
+* 📢 **Share the live showcase link**: [cheery-duckanoo-141cba.netlify.app](https://cheery-duckanoo-141cba.netlify.app/)
+
+---
+
+# 📬 Contact
+
 **R. Karthick Raja**  
+*B.E. Electrical & Electronics Engineering*  
 Sholavandan, Madurai, Tamil Nadu, India - 625214  
-*Indian Provisional Patent Application No. 202641077314 (Filed 23 June 2026)*
+
+* 🐙 **GitHub**: [github.com/karthickraja2371-rgb/project-phoenix-dashboard](https://github.com/karthickraja2371-rgb/project-phoenix-dashboard)  
+* 🌐 **Live Demo**: [cheery-duckanoo-141cba.netlify.app](https://cheery-duckanoo-141cba.netlify.app/)  
+
+<div align="center">
+
+### ⭐ If you support PROJECT PHOENIX, please consider giving it a Star!
+
+*"Technology should restore independence, not create new barriers."*
+
+</div>
