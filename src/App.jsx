@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Arm3DViewer from './components/Arm3DViewer';
+import { VoiceCommandEngine } from './utils/voiceCommandEngine';
+import { audioTelemetry } from './utils/audioTelemetryEngine';
 
 // ── Palette & Constants ───────────────────────────────────────────────────────
 const P = {
@@ -164,6 +166,43 @@ export default function App() {
     }, 4000);
     return () => clearInterval(interval);
   }, [isVideoPlaying]);
+
+  // Claim 7 Voice & Audio Telemetry State
+  const [isVoiceListening, setIsVoiceListening] = useState(false);
+  const [isAudioTelemetryActive, setIsAudioTelemetryActive] = useState(true);
+  const voiceEngineRef = useRef(null);
+
+  useEffect(() => {
+    voiceEngineRef.current = new VoiceCommandEngine((res) => {
+      setIsAutoCycle(false);
+      setManualGestureIdx(res.gestureIdx);
+      const timeStr = new Date().toLocaleTimeString();
+      setTelemetryLogs((prev) => [
+        ...prev.slice(-30),
+        { time: timeStr, text: `🎤 [CLAIM 7 VOICE COMMAND] Recognized keyword "${res.keyword}" -> Posing ${GESTURES[res.gestureIdx].name}`, color: P.cyan }
+      ]);
+      if (audioTelemetry.enabled) {
+        audioTelemetry.speakGesture(GESTURES[res.gestureIdx].name);
+      }
+    });
+
+    return () => {
+      if (voiceEngineRef.current) {
+        voiceEngineRef.current.stop();
+      }
+    };
+  }, []);
+
+  const toggleVoiceListening = () => {
+    if (!voiceEngineRef.current) return;
+    if (isVoiceListening) {
+      voiceEngineRef.current.stop();
+      setIsVoiceListening(false);
+    } else {
+      voiceEngineRef.current.start();
+      setIsVoiceListening(true);
+    }
+  };
 
   // Chatbot State
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -737,11 +776,31 @@ export default function App() {
             {/* Left Column: 3D WebGL Kinematics Model */}
             <div className="col-5">
               <div className="card" style={{ marginBottom: 20, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-                <div className="card-title" style={{ justifyContent: "space-between" }}>
-                  <div><span className="icon">🖐</span> 3D MODEL &amp; 16 GESTURE SELECTOR (SIMULATED)</div>
-                  <button className="btn btn-outline" style={{ padding: "3px 8px", fontSize: 10 }} onClick={() => setIsAutoCycle(!isAutoCycle)}>
-                    {isAutoCycle ? "⏸ Pause Auto-Cycle" : "▶ Resume Auto-Cycle"}
-                  </button>
+                <div className="card-title" style={{ justifyContent: "space-between", flexWrap: "wrap", gap: 6 }}>
+                  <div><span className="icon">🖐</span> 3D MODEL &amp; 16 GESTURES (SIMULATED)</div>
+                  <div style={{ display: "flex", gap: 6 }}>
+                    <button
+                      className={`btn ${isVoiceListening ? "btn-danger" : "btn-outline"}`}
+                      style={{ padding: "3px 8px", fontSize: 10, borderColor: isVoiceListening ? P.red : P.cyan, color: isVoiceListening ? "#FFF" : P.cyan }}
+                      onClick={toggleVoiceListening}
+                    >
+                      {isVoiceListening ? "🎤 LISTENING ('OPEN','GRIP','LOCK')" : "🎤 LISTEN VOICE COMMANDS"}
+                    </button>
+                    <button
+                      className={`btn ${isAudioTelemetryActive ? "btn-primary" : "btn-outline"}`}
+                      style={{ padding: "3px 8px", fontSize: 10 }}
+                      onClick={() => {
+                        const nextState = !isAudioTelemetryActive;
+                        setIsAudioTelemetryActive(nextState);
+                        audioTelemetry.enabled = nextState;
+                      }}
+                    >
+                      {isAudioTelemetryActive ? "🔊 AUDIO ALERTS ON" : "🔇 AUDIO MUTE"}
+                    </button>
+                    <button className="btn btn-outline" style={{ padding: "3px 8px", fontSize: 10 }} onClick={() => setIsAutoCycle(!isAutoCycle)}>
+                      {isAutoCycle ? "⏸ Pause" : "▶ Resume"}
+                    </button>
+                  </div>
                 </div>
                 <div style={{ background: P.bg3, border: `1px solid ${P.bd}`, borderRadius: 10, padding: 16, textAlign: "center", flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                   <div>
