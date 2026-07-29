@@ -1,12 +1,16 @@
 <div align="center">
 
+![Project Phoenix Header Banner](/github_banner.jpg)
+
 # 🚀 PROJECT PHOENIX
 ### Autonomous Offline AI Prosthetic System for Skin-Grafted Transhumeral Amputees
 
-![Status](https://img.shields.io/badge/Status-Active%20Development-blue)
-![Patent](https://img.shields.io/badge/Patent-Provisional%20202641077314-orange)
-![Platform](https://img.shields.io/badge/Platform-Web%20Digital%20Twin-green)
-![License](https://img.shields.io/badge/License-MIT-yellow)
+![Status](https://img.shields.io/badge/Status-Active_Development-blue)
+![Patent](https://img.shields.io/badge/Patent-Provisional_202641077314-orange)
+![Platform](https://img.shields.io/badge/Digital_Twin-Live-success)
+![React](https://img.shields.io/badge/React-19-61DAFB)
+![Three.js](https://img.shields.io/badge/Three.js-WebGL-black)
+![License](https://img.shields.io/badge/License-MIT-green)
 
 **Designed and Developed by**
 ## R. Karthick Raja
