@@ -3,7 +3,7 @@
 **Lead Innovator**: R. Karthick Raja (Sholavandan, Madurai, Tamil Nadu, India)  
 **Intellectual Property**: Indian Provisional Patent Application No. `202641077314` (Filed 23 June 2026)  
 **Subsystem TRL**: TRL 3–4 (Bench & HIL Simulated)  
-**Live Digital Twin Platform**: [https://cheery-duckanoo-141cba.netlify.app/](https://cheery-duckanoo-141cba.netlify.app/)  
+**Live Digital Twin Platform**: [https://project-phoenix-isslsot1z-project-phoenix2.vercel.app/](https://project-phoenix-isslsot1z-project-phoenix2.vercel.app/)  
 **GitHub Repository**: [https://github.com/karthickraja2371-rgb/project-phoenix-dashboard](https://github.com/karthickraja2371-rgb/project-phoenix-dashboard)  
 
 ---
@@ -47,4 +47,4 @@ To transition Project Phoenix from **TRL 3–4 Digital Twin Validation** into **
 ### 📬 Contact Information
 * **Lead Innovator**: R. Karthick Raja  
 * **Location**: Sholavandan, Madurai, TN, India - 625214  
-* **Project Web Link**: [cheery-duckanoo-141cba.netlify.app](https://cheery-duckanoo-141cba.netlify.app/)  
+* **Project Web Link**: [cheery-duckanoo-141cba.netlify.app](https://project-phoenix-isslsot1z-project-phoenix2.vercel.app/)  

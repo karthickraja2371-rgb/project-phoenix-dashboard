@@ -16,7 +16,7 @@
 * **Lead Innovator**: R. Karthick Raja (Sholavandan, Madurai, Tamil Nadu, India)
 * **Intellectual Property**: Indian Provisional Patent Application No. **202641077314** (Filed **23 June 2026**)
 * **Current Maturity**: Subsystem TRL 3–4 (Bench & HIL Simulated)
-* **Live Digital Twin**: [cheery-duckanoo-141cba.netlify.app](https://cheery-duckanoo-141cba.netlify.app/)
+* **Live Digital Twin**: [cheery-duckanoo-141cba.netlify.app](https://project-phoenix-isslsot1z-project-phoenix2.vercel.app/)
 * **GitHub Repository**: [github.com/karthickraja2371-rgb/project-phoenix-dashboard](https://github.com/karthickraja2371-rgb/project-phoenix-dashboard)
 
 ---
@@ -144,5 +144,5 @@ We are seeking **incubator onboarding**, **academic lab access**, and **collabor
 ### 📬 Contact Details
 * **Lead Innovator**: R. Karthick Raja  
 * **Location**: Sholavandan, Madurai, Tamil Nadu, India - 625214  
-* **Digital Twin Web App**: [cheery-duckanoo-141cba.netlify.app](https://cheery-duckanoo-141cba.netlify.app/)  
+* **Digital Twin Web App**: [cheery-duckanoo-141cba.netlify.app](https://project-phoenix-isslsot1z-project-phoenix2.vercel.app/)  
 * **GitHub**: [github.com/karthickraja2371-rgb/project-phoenix-dashboard](https://github.com/karthickraja2371-rgb/project-phoenix-dashboard)  

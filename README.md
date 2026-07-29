@@ -17,7 +17,7 @@
 
 *"Engineering independence through intelligent prosthetics."*
 
-🌐 **Live Digital Twin:** [cheery-duckanoo-141cba.netlify.app](https://cheery-duckanoo-141cba.netlify.app/)  
+🌐 **Live Digital Twin:** [project-phoenix-isslsot1z-project-phoenix2.vercel.app](https://project-phoenix-isslsot1z-project-phoenix2.vercel.app/)  
 🐙 **GitHub Repository:** [github.com/karthickraja2371-rgb/project-phoenix-dashboard](https://github.com/karthickraja2371-rgb/project-phoenix-dashboard)
 
 </div>
@@ -75,7 +75,7 @@ PROJECT PHOENIX investigates an integrated prosthetic platform featuring:
 | Component | Status | Location / Artifact |
 | :--- | :---: | :--- |
 | **Patent Filing** | ✅ Completed | Indian Provisional Patent App No. **202641077314** (Filed 23 June 2026) |
-| **Digital Twin Dashboard** | ✅ Available | [Live Netlify App](https://cheery-duckanoo-141cba.netlify.app/) |
+| **Digital Twin Dashboard** | ✅ Available | [Live Netlify App](https://project-phoenix-isslsot1z-project-phoenix2.vercel.app/) |
 | **3D Animation Storyboard** | ✅ Completed | [TECHNICAL_STORYBOARD.md](file:///c:/Users/karth/Downloads/project%20files/dashboard/TECHNICAL_STORYBOARD.md) |
 | **Firmware C Code** | ✅ Completed | `firmware/src/main.c`, `safety_system.c`, `emg_dsp.c` |
 | **Hardware Schematics** | ✅ Completed | `hardware/PCB-PHX-PALM-001.kicad_sch` & `PCB-PHX-ELBOW-002.kicad_sch` |
@@ -88,7 +88,7 @@ PROJECT PHOENIX investigates an integrated prosthetic platform featuring:
 # 🖥️ Live Demo & 3D Video Player
 
 Explore the live Digital Twin and interactive 3D video player:  
-🌍 **[https://cheery-duckanoo-141cba.netlify.app/](https://cheery-duckanoo-141cba.netlify.app/)**
+🌍 **[https://project-phoenix-isslsot1z-project-phoenix2.vercel.app/](https://project-phoenix-isslsot1z-project-phoenix2.vercel.app/)**
 
 ---
 
@@ -218,7 +218,7 @@ Please read **[CONTRIBUTING.md](file:///c:/Users/karth/Downloads/project%20files
 If you find PROJECT PHOENIX inspiring or valuable:
 * ⭐ **Star this repository** on GitHub!
 * 🍴 **Fork the repository** to contribute code or CAD models.
-* 📢 **Share the live showcase link**: [cheery-duckanoo-141cba.netlify.app](https://cheery-duckanoo-141cba.netlify.app/)
+* 📢 **Share the live showcase link**: [cheery-duckanoo-141cba.netlify.app](https://project-phoenix-isslsot1z-project-phoenix2.vercel.app/)
 
 ---
 
@@ -229,7 +229,7 @@ If you find PROJECT PHOENIX inspiring or valuable:
 Sholavandan, Madurai, Tamil Nadu, India - 625214  
 
 * 🐙 **GitHub**: [github.com/karthickraja2371-rgb/project-phoenix-dashboard](https://github.com/karthickraja2371-rgb/project-phoenix-dashboard)  
-* 🌐 **Live Demo**: [cheery-duckanoo-141cba.netlify.app](https://cheery-duckanoo-141cba.netlify.app/)  
+* 🌐 **Live Demo**: [cheery-duckanoo-141cba.netlify.app](https://project-phoenix-isslsot1z-project-phoenix2.vercel.app/)  
 
 <div align="center">
 
