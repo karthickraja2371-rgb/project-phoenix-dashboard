@@ -6,6 +6,7 @@
 ### Autonomous Offline AI Prosthetic System for Skin-Grafted Transhumeral Amputees
 
 ![Status](https://img.shields.io/badge/Status-Active_Development-blue)
+![Build](https://github.com/karthickraja2371-rgb/project-phoenix-dashboard/actions/workflows/test.yml/badge.svg)
 ![Patent](https://img.shields.io/badge/Patent-Provisional_202641077314-orange)
 ![Platform](https://img.shields.io/badge/Digital_Twin-Live-success)
 ![3D Model](https://img.shields.io/badge/Tripo3D-CAD_Model-purple)
