@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use or reference Project Phoenix in academic research, grant proposals, or medical device publications, please cite it using the following metadata."
+title: "Project Phoenix: Autonomous Offline AI Prosthetic System for Skin-Grafted Transhumeral Amputees"
+abstract: "Project Phoenix is an assistive bionic prosthetic platform featuring offline neural gesture classification (Syntiant NDP120), vision-EMG intent fusion, and socket pressure interlocks specifically engineered for amputees with skin-grafted residual limbs."
+authors:
+  - family-names: "Raja"
+    given-names: "R. Karthick"
+    orcid: "https://orcid.org/0000-0000-0000-0000"
+    affiliation: "Project Phoenix MedTech & Bionics Research"
+repository-code: "https://github.com/karthickraja2371-rgb/project-phoenix-dashboard"
+url: "https://project-phoenix-isslsot1z-project-phoenix2.vercel.app/"
+type: software
+date-released: 2026-06-23
+keywords:
+  - prosthetics
+  - bionics
+  - myoelectric
+  - edge-ai
+  - skin-graft
+  - medical-devices
+  - semg
+identifiers:
+  - type: patent
+    value: "Indian Provisional Patent Application No. 202641077314"
