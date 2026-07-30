@@ -8,6 +8,7 @@
 ![Status](https://img.shields.io/badge/Status-Active_Development-blue)
 ![Patent](https://img.shields.io/badge/Patent-Provisional_202641077314-orange)
 ![Platform](https://img.shields.io/badge/Digital_Twin-Live-success)
+![3D Model](https://img.shields.io/badge/Tripo3D-CAD_Model-purple)
 ![React](https://img.shields.io/badge/React-19-61DAFB)
 ![Three.js](https://img.shields.io/badge/Three.js-WebGL-black)
 ![License](https://img.shields.io/badge/License-MIT-green)
@@ -108,7 +109,8 @@ Explore the live Digital Twin and interactive 3D video player:
 - **Bus Topology**: 2-Wire Shielded CAN-FD (5 Mbps)
 
 ### CAD & Mechanical Design
-- **Structure**: 3D Printed Titanium Alloy (Ti-6Al-4V) SLS monocoque shell
+- **Tripo3D Interactive 3D Model**: [Tripo3D Studio Model #42691fd0 (STL, GLB, FBX, 3MF)](https://studio.tripo3d.ai/3d-model/42691fd0-7309-4c2e-bbe7-6b26b8cc9b1d?invite_code=hCfcVV)
+- **Structure**: 3D Printed Titanium Alloy (Ti-6Al-4V) SLS monocoque shell with metallic forearm components & beige silicone socket
 - **Socket Liner**: Platinum-cured medical silicone (Dragon Skin 20) with nickel microcapsules
 - **Transmission**: Dyneema 0.8mm braided tendon lines ($120\,\text{kg}$ tensile strength)
 - **Motors**: Maxon ECX Speed 16 M ($40\,\text{W}$) + GP 16 C 50:1 non-backdrivable worm gear
