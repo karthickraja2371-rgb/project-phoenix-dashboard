@@ -11,7 +11,7 @@
 ## 1. Subsystem Interconnect Topology
 
 Project Phoenix utilizes a **Dual-Node CAN-FD Distributed Architecture** to minimize wiring harness bulk across the transhumeral socket:
-* **Palm Master AI Board (`PCB-PHX-PALM-001`)**: Contains Syntiant NDP120 Neural Processor, PGA460 4-ch sEMG AFE, OV2640 Camera, and Knowles MEMS Mic.
+* **Palm Master AI Board (`PCB-PHX-PALM-001`)**: Contains Syntiant NDP120 Neural Processor, TI ADS1299 / Otto Bock 13E200 4-ch sEMG AFE, OV2640 Camera, and Knowles MEMS Mic.
 * **Elbow Motor Satellite Board (`PCB-PHX-ELBOW-002`)**: Contains STM32H753 MCU (480MHz), DRV8323RS Smart Gate Driver, AS5048A 14-bit Magnetic Encoder, and Power Management Regulators.
 
 ```mermaid
@@ -24,7 +24,7 @@ graph TD
 
     subgraph Palm Master PCB (PCB-PHX-PALM-001)
         NDP[Syntiant NDP120 AI] --- SPI1[SPI Bus 1]
-        PGA[TI PGA460 sEMG AFE] --- ADC[4-Ch sEMG Electrodes]
+        PGA[TI TI ADS1299 / Otto Bock 13E200 sEMG AFE] --- ADC[4-Ch sEMG Electrodes]
         CAM[OV2640 Vision Camera] --- DVP[Parallel DVP Bus]
         MIC[Knowles MEMS Mic] --- PDM[PDM Audio Line]
         CAN1[MCP2518FD CAN Controller] --- CAN_TX[MCP2542FD Transceiver]
@@ -93,7 +93,7 @@ graph TD
 3. **Step 3: FSR Safety Lock Interlock Integration**:
    * Wire the 8 FSR pressure sensor pads in parallel into the analog comparator network. Verify that applying $>20.0\,\text{kPa}$ pressure triggers `FSR_IRQ_LOCK` line to $3.3\,\text{V}$ HIGH instantly.
 4. **Step 4: sEMG Signal Calibration**:
-   * Connect 4-channel sEMG shielded differential cables to the PGA460 AFE inputs. Verify zero-load noise is $<5.2\,\mu\text{V RMS}$.
+   * Connect 4-channel sEMG shielded differential cables to the TI ADS1299 / Otto Bock 13E200 AFE inputs. Verify zero-load noise is $<5.2\,\mu\text{V RMS}$.
 
 ---
 

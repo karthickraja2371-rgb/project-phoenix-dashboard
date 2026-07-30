@@ -104,7 +104,7 @@ Explore the live Digital Twin and interactive 3D video player:
 ### Embedded Systems & Firmware
 - **Main Microcontroller**: STM32H753 (480MHz ARM Cortex-M7)
 - **Neural Processor**: Syntiant NDP120 Neural Decision Processor
-- **sEMG Analog Front-End**: Texas Instruments PGA460 (4-Channel 2000Hz)
+- **sEMG Analog Front-End**: Texas Instruments TI ADS1299 / Otto Bock 13E200 (4-Channel 2000Hz)
 - **Motor Gate Driver**: TI DRV8323RS 3-Phase Smart Driver
 - **Bus Topology**: 2-Wire Shielded CAN-FD (5 Mbps)
 
@@ -128,7 +128,7 @@ project-phoenix-dashboard/
 │       ├── main.c              # 2000Hz Task Scheduler
 │       ├── safety_system.c     # 20.0 kPa FSR Pressure Lock
 │       ├── rest_protocol.c     # 3h Active / 15m Rest Lock
-│       └── emg_dsp.c           # PGA460 Bandpass DSP Filter
+│       └── emg_dsp.c           # TI ADS1299 / Otto Bock 13E200 Bandpass DSP Filter
 ├── hardware/                   # KiCAD 8.0 Schematics & Netlists
 │   ├── PCB-PHX-PALM-001.kicad_sch
 │   ├── PCB-PHX-ELBOW-002.kicad_sch
@@ -159,7 +159,7 @@ project-phoenix-dashboard/
                                                   │
                                                   ▼
 ┌───────────────────┐     ┌──────────────────────────────────────┐     ┌───────────────────┐
-│ sEMG Sensors      ├────►│ PGA460 AFE & Bandpass DSP (2000Hz)   ├────►│ STM32H753 Main MCU│
+│ sEMG Sensors      ├────►│ TI ADS1299 / Otto Bock 13E200 AFE & Bandpass DSP (2000Hz)   ├────►│ STM32H753 Main MCU│
 │ (4-Ch Skin Graft) │     └──────────────────────────────────────┘     │ (480MHz Cortex-M7)│
 └───────────────────┘                                                  └─────────┬─────────┘
                                                                                  │

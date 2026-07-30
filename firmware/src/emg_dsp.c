@@ -1,6 +1,6 @@
 /**
  * @file emg_dsp.c
- * @brief PGA460 4-Channel sEMG Signal Processing & Bandpass Filtering (2000Hz)
+ * @brief TI ADS1299 / Otto Bock 13E200 4-Channel sEMG Signal Processing & Bandpass Filtering (2000Hz)
  */
 
 #include <stdint.h>

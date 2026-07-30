@@ -65,7 +65,7 @@
 
 * **Elbow Actuation**: Maxon ECX Speed 16 M ($40\,\text{W}$, $22.2\,\text{V}$) + 50:1 non-backdrivable GP 16 C worm gear ($0\,\text{W}$ passive holding draw).
 * **Hand Actuation**: 5x Maxon DCX 6 S micro DC motors with Dyneema $0.8\,\text{mm}$ braided tendon drive lines ($120\,\text{kg}$ tensile strength).
-* **Processing & Sensor Stack**: STM32H753 MCU (480MHz) + Syntiant NDP120 AI + PGA460 4-ch sEMG AFE + AS5048A 14-bit magnetic encoder + MCP2518FD CAN-FD bus.
+* **Processing & Sensor Stack**: STM32H753 MCU (480MHz) + Syntiant NDP120 AI + TI ADS1299 / Otto Bock 13E200 4-ch sEMG AFE + AS5048A 14-bit magnetic encoder + MCP2518FD CAN-FD bus.
 * **Power System**: 22.2V 5000mAh Li-Ion battery pack (111Wh) with 15W wireless charging.
 
 ---

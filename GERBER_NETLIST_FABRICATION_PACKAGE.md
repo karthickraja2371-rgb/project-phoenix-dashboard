@@ -39,7 +39,7 @@
   )
   (components
     (comp (ref U101) (value NDP120-B0-CB-01) (footprint BGA-42_3.1x2.6mm))
-    (comp (ref U201) (value PGA460TPWR) (footprint TSSOP-16_4.4x5mm_P0.65mm))
+    (comp (ref U201) (value TI ADS1299 / Otto Bock 13E200TPWR) (footprint TSSOP-16_4.4x5mm_P0.65mm))
     (comp (ref U301) (value MCP2518FD-E/SL) (footprint SOIC-14_3.9x8.7mm_P1.27mm))
     (comp (ref U302) (value MCP2542FD-E/MF) (footprint DFN-8-1EP_3x3mm_P0.65mm))
     (comp (ref Y101) (value 32.768kHz_TCXO) (footprint Oscillator_SMD_3.2x2.5mm))

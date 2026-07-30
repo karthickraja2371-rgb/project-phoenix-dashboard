@@ -33,7 +33,7 @@ To eliminate bulky 14-wire cable harnesses passing through the elbow joint, Proj
 +------------------------------------------------+------------------------------------------------+
 |  PALM MASTER AI & SENSOR HUB BOARD (PCB-PHX-PALM-001)                                           |
 |  • AI Processor: Syntiant NDP120 Neural Decision Processor (<4.8mW, 0.9V Core)                  |
-|  • sEMG AFE: TI PGA460 4-Channel Differential sEMG Front-End (2000Hz, Bandpass 10-500Hz)        |
+|  • sEMG AFE: TI TI ADS1299 / Otto Bock 13E200 4-Channel Differential sEMG Front-End (2000Hz, Bandpass 10-500Hz)        |
 |  • Vision Sensor: OV2640 2MP Camera Subsystem (DVP 8-bit Parallel Bus)                          |
 |  • Audio Sensor: Knowles SPH0645LM4H MEMS PDM Microphone                                        |
 |  • Sweat BioAFE: TI LMP91000 Graphene Microfluidic Potentiostat (Cortisol <0.60 ug/dL Cap)     |
@@ -71,8 +71,8 @@ To eliminate bulky 14-wire cable harnesses passing through the elbow joint, Proj
   * `NDP_SPI_CS_N` $\rightarrow$ `GPIO_PB12`
   * `NDP_INT_N` $\rightarrow$ `EXTI_PB11` (Active Low Interrupt on Gesture Classification).
 
-#### Block B: TI PGA460 4-Channel sEMG Analog Front-End (2000Hz)
-* **IC Designation**: `U201` (`PGA460TPWR` TSSOP-16)
+#### Block B: TI TI ADS1299 / Otto Bock 13E200 4-Channel sEMG Analog Front-End (2000Hz)
+* **IC Designation**: `U201` (`TI ADS1299 / Otto Bock 13E200TPWR` TSSOP-16)
 * **Analog Inputs**:
   * `CH1_IN+` / `CH1_IN-`: Biceps Brachii sEMG differential pair via $0.1\,\mu\text{F}$ DC-blocking caps.
   * `CH2_IN+` / `CH2_IN-`: Triceps Brachii sEMG differential pair.
@@ -136,7 +136,7 @@ To eliminate bulky 14-wire cable harnesses passing through the elbow joint, Proj
 | Designator | Component Description | Manufacturer Part Number (MPN) | Package / Footprint | Qty | Target Vendor |
 | :--- | :--- | :--- | :--- | :---: | :--- |
 | **U101** | Syntiant NDP120 Neural AI Processor | `NDP120-B0-CB-01` | BGA-42 ($3.1\times 2.6\,\text{mm}$) | 1 | Syntiant Direct |
-| **U201** | 4-Ch sEMG Analog Front-End | `PGA460TPWR` | TSSOP-16 | 1 | Texas Instruments |
+| **U201** | 4-Ch sEMG Analog Front-End | `TI ADS1299 / Otto Bock 13E200TPWR` | TSSOP-16 | 1 | Texas Instruments |
 | **U301** | CAN-FD Controller | `MCP2518FD-E/SL` | SOIC-14 | 1 | Microchip |
 | **U302** | High-Speed CAN-FD Transceiver | `MCP2542FD-E/MF` | DFN-8 ($3\times 3\,\text{mm}$) | 1 | Microchip |
 | **U401** | High-Perf 480MHz MCU | `STM32H753VIT6` | LQFP-100 | 1 | STMicroelectronics |

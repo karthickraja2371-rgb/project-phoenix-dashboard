@@ -61,12 +61,12 @@ All production assets must adhere to these clinical and mechanical specification
 | :--- | :--- | :--- |
 | **0.0s – 1.5s** | **Vision**: OV2640 micro-camera identifies a cup. Display a MobileNetV3 Bounding Box at 10fps. | **NDP120 Processing**: Signals stream into the Palm Electronics Housing (Subsystem 8). |
 | **1.5s – 2.5s** | **EMG**: Four channels (Biceps, Triceps, Pectoralis Minor, Deltoid) display high-frequency Oscilloscope Wave Ripples. | **Logic Fusion**: Vision and EMG signals overlap. A "Match Confirmed" icon flashes at 82% confidence threshold. |
-| **2.5s – 4.0s** | **Feedback**: PGA460 gain calibration pulses to adjust for skin-graft signal drift. | **Performance Graphic**: A "73% Latency Reduction" banner appears (300ms baseline $\rightarrow$ 80ms actual). |
+| **2.5s – 4.0s** | **Feedback**: TI ADS1299 / Otto Bock 13E200 gain calibration pulses to adjust for skin-graft signal drift. | **Performance Graphic**: A "73% Latency Reduction" banner appears (300ms baseline $\rightarrow$ 80ms actual). |
 
 ### Technical Data Points:
 * **AI Chip**: Syntiant NDP120 (Offline Edge)
 * **Power Comparison**: 5mW (NDP120) vs. 500mW (Std. GPU Inference)
-* **Nomenclature**: PGA460 (Gain), OV2640 (Vision)
+* **Nomenclature**: TI ADS1299 / Otto Bock 13E200 (Gain), OV2640 (Vision)
 
 ---
 

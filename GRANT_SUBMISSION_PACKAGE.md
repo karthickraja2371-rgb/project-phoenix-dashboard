@@ -46,5 +46,5 @@ pie showData
 
 1. **Q3 2026**: Submit BIRAC BIG & DST Seed Support applications; publish web showcase.
 2. **Q4 2026**: Manufacture physical platinum silicone socket mold and fabricate STM32H753 PCB.
-3. **Q1 2027**: Conduct physical bench HIL testing with PGA460 AFE and FSR load cells.
+3. **Q1 2027**: Conduct physical bench HIL testing with TI ADS1299 / Otto Bock 13E200 AFE and FSR load cells.
 4. **Q2 2027**: Initiate IRB-approved clinical pilot fitting with 10 transhumeral amputee patients.

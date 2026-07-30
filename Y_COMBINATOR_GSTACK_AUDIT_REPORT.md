@@ -56,10 +56,10 @@
 * **Firmware C Suite (`firmware/src/`)**: Clean modular architecture using STM32H753 (480MHz Cortex-M7).
   * `main.c`: 2000Hz Deterministic Task Scheduler.
   * `safety_system.c`: 20.0 kPa FSR Hardware Interrupt Failsafe.
-  * `emg_dsp.c`: PGA460 4-Channel Bandpass & Notch Filter.
+  * `emg_dsp.c`: TI ADS1299 / Otto Bock 13E200 4-Channel Bandpass & Notch Filter.
   * `rest_protocol.c`: 3h Active / 15m Mandatory Rest Cycle.
 * **KiCAD 8.0 Hardware Schematics (`hardware/`)**:
-  * `PCB-PHX-PALM-001.kicad_sch`: Syntiant NDP120 + PGA460 AFE.
+  * `PCB-PHX-PALM-001.kicad_sch`: Syntiant NDP120 + TI ADS1299 / Otto Bock 13E200 AFE.
   * `PCB-PHX-ELBOW-002.kicad_sch`: DRV8323RS Gate Driver + AS5048A 14-bit Encoder.
 
 ---
