@@ -205,13 +205,56 @@ Please read **[CONTRIBUTING.md](file:///c:/Users/karth/Downloads/project%20files
 
 ---
 
-# 📜 Intellectual Property
+# 📜 License & Intellectual Property Notice
 
-**Indian Provisional Patent Application**  
-* **Application Number**: `202641077314`  
-* **Filing Date**: **23 June 2026**  
-* **Applicant & Inventor**: R. Karthick Raja  
-* **Covered Claims**: 13 novel claims spanning offline edge AI, microfluidic sweat cortisol capping, 20.0 kPa socket pressure locks, self-healing silicone liners, and 3-position TENS pad rotation.
+Project Phoenix contains software, engineering documentation, and research materials. Different parts of this repository are subject to different intellectual property terms.
+
+### 🔹 Covered by the MIT License
+
+The MIT License applies **only** to the software source code unless otherwise stated, including:
+* Website and dashboard source code (`src/`)
+* React / Vite frontend applications
+* JavaScript / TypeScript source files & utility scripts
+* WebGL / Three.js 3D viewer components
+* Open firmware C source code files (`firmware/src/`)
+
+These files may be used, copied, modified, and distributed under the terms of the MIT License.
+
+### 🔴 Not Covered by the MIT License (All Rights Reserved / Patent Protected)
+
+Unless explicitly stated otherwise, the following materials are **not** licensed under the MIT License:
+* Patent rights
+* **Indian Provisional Patent Application No. 202641077314** (Filed 23 June 2026)
+* Patent claims and inventions described in the patent application (Claims 1 to 13)
+* Engineering concepts protected by patent law
+* 3D CAD models (STEP, STL, GLB, Tripo3D assets, Fusion 360, SolidWorks)
+* Mechanical drawings & 3D monocoque assembly guides
+* KiCAD 8.0 PCB layouts, schematics (`.kicad_sch`), and manufacturing netlists (`.net`)
+* Medical safety documentation & DHF files
+* Technical whitepapers (`PROJECT_WHITEPAPER.md`)
+* Research documents & clinical trial protocol documentation
+* Images, logos, branding, and Project Phoenix artwork
+
+These materials remain the exclusive intellectual property of **R. Karthick Raja** unless a separate written license is provided.
+
+### 📜 Patent Notice
+
+Project Phoenix is the subject of **Indian Provisional Patent Application No. 202641077314**.
+
+The MIT License grants rights only to the software covered by that license. It does **not** grant any patent license or permission to manufacture, assemble, commercialize, or otherwise practice patented inventions. For full legal scope, see **[PATENT_NOTICE.md](PATENT_NOTICE.md)**.
+
+### 💼 Commercial Licensing & Partnerships
+
+If you are interested in:
+* Commercial licensing or manufacturing,
+* Clinical trial partnerships ($n=10$ amputee fitting trials),
+* Research collaboration, or
+* Technology transfer,
+
+please contact the project owner to discuss appropriate licensing arrangements:  
+📧 Email: `karthickraja2371@gmail.com`
+
+*© 2026 R. Karthick Raja. All Rights Reserved except where otherwise licensed under explicit written agreement.*
 
 ---
 

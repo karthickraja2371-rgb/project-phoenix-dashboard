@@ -1,4 +1,7 @@
-MIT License
+MIT License (Software Only)
+
+IMPORTANT INTELLECTUAL PROPERTY NOTICE:
+This MIT License applies EXCLUSIVELY to the software source code contained within this repository (React/Vite frontend, WebGL scripts, firmware C code files). It does NOT apply to, nor does it grant any license for, Indian Provisional Patent Application No. 202641077314, patent claims 1 to 13, 3D CAD models (STEP, STL, GLB, Tripo3D assets), KiCAD 8.0 PCB schematics/netlists, medical whitepapers, or physical hardware manufacturing designs. All hardware, CAD, schematic, and patent rights remain the exclusive intellectual property of R. Karthick Raja. For full legal scope and commercial contact details, see PATENT_NOTICE.md and README.md.
 
 Copyright (c) 2026 R. Karthick Raja
 
