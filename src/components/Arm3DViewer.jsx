@@ -9,6 +9,7 @@ export default function Arm3DViewer({ fingers = [0, 0, 0, 0, 0], elbow = 45, wri
   const wristGroupRef = useRef(null);
   const fingerJointsRef = useRef([]); // Stores { proxGroup, distGroup } for each of the 5 fingers
   const elbowMeshRef = useRef(null);
+  const jointMatRef = useRef(null);
 
   useEffect(() => {
     const container = mountRef.current;
@@ -72,6 +73,7 @@ export default function Arm3DViewer({ fingers = [0, 0, 0, 0, 0], elbow = 45, wri
       metalness: 0.95,
       roughness: 0.1,
     });
+    jointMatRef.current = jointMat;
 
     const carbonMat = new THREE.MeshStandardMaterial({
       color: 0x1E293B, // Carbon Fiber Finger Phalanx
@@ -251,7 +253,10 @@ export default function Arm3DViewer({ fingers = [0, 0, 0, 0, 0], elbow = 45, wri
     if (wristGroupRef.current) {
       wristGroupRef.current.rotation.y = (wrist / 90) * 0.8;
     }
-  }, [fingers, elbow, wrist]);
+    if (jointMatRef.current && color) {
+      jointMatRef.current.color.set(color);
+    }
+  }, [fingers, elbow, wrist, color]);
 
   return (
     <div

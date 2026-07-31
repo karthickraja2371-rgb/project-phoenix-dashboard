@@ -78,10 +78,10 @@ PROJECT PHOENIX investigates an integrated prosthetic platform featuring:
 | :--- | :---: | :--- |
 | **Patent Filing** | ✅ Completed | Indian Provisional Patent App No. **202641077314** (Filed 23 June 2026) |
 | **Digital Twin Dashboard** | ✅ Available | [Live Netlify App](https://project-phoenix-isslsot1z-project-phoenix2.vercel.app/) |
-| **3D Animation Storyboard** | ✅ Completed | [TECHNICAL_STORYBOARD.md](file:///c:/Users/karth/Downloads/project%20files/dashboard/TECHNICAL_STORYBOARD.md) |
+| **3D Animation Storyboard** | ✅ Completed | [TECHNICAL_STORYBOARD.md](./TECHNICAL_STORYBOARD.md) |
 | **Firmware C Code** | ✅ Completed | `firmware/src/main.c`, `safety_system.c`, `emg_dsp.c` |
 | **Hardware Schematics** | ✅ Completed | `hardware/PCB-PHX-PALM-001.kicad_sch` & `PCB-PHX-ELBOW-002.kicad_sch` |
-| **Purchasing Checklist** | ✅ Completed | [COMPONENT_PURCHASING_CHECKLIST.md](file:///c:/Users/karth/Downloads/project%20files/dashboard/COMPONENT_PURCHASING_CHECKLIST.md) |
+| **Purchasing Checklist** | ✅ Completed | [COMPONENT_PURCHASING_CHECKLIST.md](./COMPONENT_PURCHASING_CHECKLIST.md) |
 | **Physical Prototype** | 🟡 Planned | Phase 3 (5-Unit Hardware Batch Build) |
 | **Clinical Validation** | 🔵 Future | Phase 5 IRB Pilot Fitting Trials ($n=10$ amputees) |
 
@@ -202,7 +202,7 @@ We welcome contributions from engineers, researchers, and developers in:
 - **React & WebGL Simulation** (Three.js 3D shaders, custom UI components)
 - **Clinical & Biomedical Research** (sEMG signal processing, skin graft biomechanics)
 
-Please read **[CONTRIBUTING.md](file:///c:/Users/karth/Downloads/project%20files/dashboard/CONTRIBUTING.md)** for setup instructions.
+Please read **[CONTRIBUTING.md](./CONTRIBUTING.md)** for setup instructions.
 
 ---
 
