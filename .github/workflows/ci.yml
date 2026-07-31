@@ -2,32 +2,33 @@ name: Project Phoenix CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main ]
 
 jobs:
-  build-lint-and-test:
+  lint-test-build:
+    name: Build, Lint & Unit Test Verification
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js Environment
+      - name: Set up Node.js 20.x
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20'
           cache: 'npm'
 
       - name: Install Dependencies
         run: npm ci
 
-      - name: Run Oxlint Code Quality Check
-        run: npx oxlint
+      - name: Run Code Linter (oxlint)
+        run: npm run lint
 
-      - name: Run Vitest Unit Tests
-        run: npm test
+      - name: Run Unit Tests (Vitest)
+        run: npm run test
 
-      - name: Run Production Build
+      - name: Run Production WebGL Build Verification (Vite)
         run: npm run build
