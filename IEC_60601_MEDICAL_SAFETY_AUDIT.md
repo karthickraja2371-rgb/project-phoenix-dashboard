@@ -83,7 +83,7 @@ graph TD
 | Hazard ID | Cause / Failure Mode | Severity | Initial Risk | Hardware / Software Mitigation Control | Final Risk Status |
 | :--- | :--- | :---: | :---: | :--- | :---: |
 | **HZ-01** | Socket shear tearing skin-grafted tissue | High | Unacceptable | **FSR 20.0 kPa Hardware Comparator Interlock** (`safety_system.c`). Cuts motor PWM in $<5\,\text{ms}$. | **Acceptable (Broadly Safe)** |
-| **HZ-02** | Sweat pooling causing sEMG electrode drift | Medium | Moderate | **PGA460/ADS1299 Bandpass Filter (10-500Hz)** & microfluidic sweat drainage channels in Dragon Skin 20 liner. | **Acceptable** |
+| **HZ-02** | Sweat pooling causing sEMG electrode drift | Medium | Moderate | **TI ADS1299 / Otto Bock 13E200 Bandpass Filter (10-500Hz)** & microfluidic sweat drainage channels in Dragon Skin 20 liner. | **Acceptable** |
 | **HZ-03** | Motor thermal runaway ($>41^\circ\text{C}$) | High | Unacceptable | Dual NTC thermistors on Maxon ECX motor casing; automatic torque throttling at $40^\circ\text{C}$. | **Acceptable** |
 | **HZ-04** | Accidental high-torque grip during stress | Medium | Moderate | **Sweat Cortisol Biofeedback (Claim 3)**; caps max grip torque to 80% when cortisol $>0.60\,\mu\text{g/dL}$. | **Acceptable** |
 
