@@ -64,10 +64,10 @@ PROJECT PHOENIX explores novel engineering approaches specifically designed to a
 PROJECT PHOENIX investigates an integrated prosthetic platform featuring:
 
 - **Offline Edge AI (Claim 1)**: Syntiant NDP120 neural decision processor running a 4-layer CNN model directly inside the palm chassis ($<4.8\,\text{mW}$ power, $22\,\text{ms}$ latency) with zero cloud biometric privacy risk.
-- **Vision-EMG Intent Fusion (Claim 2)**: OV2640 palm camera pre-shapes finger postures 300ms prior to object contact.
-- **Sweat Cortisol Biofeedback (Claim 3)**: Microfluidic graphene sensors detect sweat cortisol ($>0.60\,\mu\text{g/dL}$) during anxiety, automatically capping grip torque to 80%.
+- **Vision-EMG Intent Fusion (Claim 2)**: OV2640 palmar camera captures object geometry 300ms prior to contact, pre-shaping finger postures before sEMG muscle contraction completes.
+- **Sweat Cortisol Biofeedback (Claim 3)**: Microfluidic sweat cortisol biosensor detects cortisol ($>0.60\,\mu\text{g/dL}$) during user anxiety, automatically capping grip torque to 80%.
 - **Socket Pressure Lock Failsafe (Claim 8)**: 8-point FSR sensor array triggers an automatic **20.0 kPa passive lock interrupt** to protect skin graft tissue from shear damage.
-- **Bi-Phasic TENS Pain Relief (Claim 6)**: 100Hz sensory feedback suppresses phantom limb pain by over 70%.
+- **Bi-Phasic TENS Pain Relief (Claim 6)**: 100Hz sensory stimulation feedback (targeting $>70\%$ phantom pain score reduction in Phase 5 clinical trials).
 - **Offline Voice Command Fallback (Claim 7)**: Knowles MEMS microphone keyword recognition (`OPEN`, `GRIP`, `LOCK`, `PINCH`).
 
 ---
@@ -77,7 +77,7 @@ PROJECT PHOENIX investigates an integrated prosthetic platform featuring:
 | Component | Status | Location / Artifact |
 | :--- | :---: | :--- |
 | **Patent Filing** | ✅ Completed | Indian Provisional Patent App No. **202641077314** (Filed 23 June 2026) |
-| **Digital Twin Dashboard** | ✅ Available | [Live Netlify App](https://project-phoenix-isslsot1z-project-phoenix2.vercel.app/) |
+| **Digital Twin Dashboard** | ✅ Available | [Live Vercel Application](https://project-phoenix-isslsot1z-project-phoenix2.vercel.app/) |
 | **3D Animation Storyboard** | ✅ Completed | [TECHNICAL_STORYBOARD.md](./TECHNICAL_STORYBOARD.md) |
 | **Firmware C Code** | ✅ Completed | `firmware/src/main.c`, `safety_system.c`, `emg_dsp.c` |
 | **Hardware Schematics** | ✅ Completed | `hardware/PCB-PHX-PALM-001.kicad_sch` & `PCB-PHX-ELBOW-002.kicad_sch` |
@@ -97,7 +97,7 @@ Explore the live Digital Twin and interactive 3D video player:
 # 🛠 Technology Stack
 
 ### Software & Digital Twin
-- **Framework**: React 18 + Vite
+- **Framework**: React 19 + Vite
 - **3D Graphics Engine**: Three.js / WebGL (`Arm3DViewer.jsx`)
 - **Styling**: Vanilla CSS (High-contrast Dark Mode `#030812`)
 - **Speech Engine**: Web Speech API (`voiceCommandEngine.js` & `audioTelemetryEngine.js`)
@@ -264,7 +264,7 @@ please contact the project owner to discuss appropriate licensing arrangements:
 If you find PROJECT PHOENIX inspiring or valuable:
 * ⭐ **Star this repository** on GitHub!
 * 🍴 **Fork the repository** to contribute code or CAD models.
-* 📢 **Share the live showcase link**: [cheery-duckanoo-141cba.netlify.app](https://project-phoenix-isslsot1z-project-phoenix2.vercel.app/)
+* 📢 **Share the live showcase link**: [project-phoenix-isslsot1z-project-phoenix2.vercel.app](https://project-phoenix-isslsot1z-project-phoenix2.vercel.app/)
 
 ---
 
@@ -275,7 +275,7 @@ If you find PROJECT PHOENIX inspiring or valuable:
 Sholavandan, Madurai, Tamil Nadu, India - 625214  
 
 * 🐙 **GitHub**: [github.com/karthickraja2371-rgb/project-phoenix-dashboard](https://github.com/karthickraja2371-rgb/project-phoenix-dashboard)  
-* 🌐 **Live Demo**: [cheery-duckanoo-141cba.netlify.app](https://project-phoenix-isslsot1z-project-phoenix2.vercel.app/)  
+* 🌐 **Live Demo**: [project-phoenix-isslsot1z-project-phoenix2.vercel.app](https://project-phoenix-isslsot1z-project-phoenix2.vercel.app/)  
 
 <div align="center">
 
