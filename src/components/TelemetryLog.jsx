@@ -37,7 +37,7 @@ export default function TelemetryLog({ telemetryLogs, logContainerRef }) {
           <div style={{ color: P.t3, fontStyle: "italic" }}>Initializing CAN-FD bus & TI ADS1299 telemetry stream...</div>
         ) : (
           telemetryLogs.map((log, idx) => (
-            <div key={idx} style={{ color: log.color, marginBottom: 2 }}>
+            <div key={log.id || idx} style={{ color: log.color, marginBottom: 2 }}>
               <span style={{ color: P.t3, marginRight: 8 }}>[{log.time}]</span>
               {log.text}
             </div>

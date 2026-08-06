@@ -14,7 +14,6 @@ const P = {
 export default function Dashboard({
   GESTURES,
   currentGestureIdx,
-  manualGestureIdx,
   setManualGestureIdx,
   isAutoCycle,
   setIsAutoCycle,
@@ -31,8 +30,6 @@ export default function Dashboard({
   isDiagnosticRunning,
   diagnosticProgress,
   runFullSystemDiagnostics,
-  testResults,
-  setSelectedClaim,
   telemetryLogs,
   logContainerRef
 }) {
@@ -67,7 +64,6 @@ export default function Dashboard({
         <GestureSelector
           GESTURES={GESTURES}
           activeGestureIdx={currentGestureIdx}
-          manualGestureIdx={manualGestureIdx}
           setManualGestureIdx={setManualGestureIdx}
           isAutoCycle={isAutoCycle}
           setIsAutoCycle={setIsAutoCycle}

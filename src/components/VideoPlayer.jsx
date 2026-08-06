@@ -67,6 +67,7 @@ export default function VideoPlayer({
         <img
           src={currentLoop.poster}
           alt={currentLoop.title}
+          onError={(e) => { e.target.onerror = null; e.target.src = '/hero_render_phoenix.jpg'; }}
           style={{ width: "100%", height: 340, objectFit: "cover" }}
         />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(3,8,18,0.95) 0%, rgba(3,8,18,0.2) 60%, transparent 100%)" }} />
@@ -104,7 +105,12 @@ export default function VideoPlayer({
                 transition: "all 0.2s ease"
               }}
             >
-              <img src={loop.poster} alt={loop.title} style={{ width: "100%", height: 80, objectFit: "cover", borderRadius: 4, marginBottom: 6 }} />
+              <img
+                src={loop.poster}
+                alt={loop.title}
+                onError={(e) => { e.target.onerror = null; e.target.src = '/hero_render_phoenix.jpg'; }}
+                style={{ width: "100%", height: 80, objectFit: "cover", borderRadius: 4, marginBottom: 6 }}
+              />
               <div style={{ fontSize: 11, fontWeight: 700, color: isActive ? P.cyan : P.t1 }}>Loop #{loop.id + 1}</div>
               <div style={{ fontSize: 9, color: P.t3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{loop.title}</div>
             </div>

@@ -9,7 +9,6 @@ const P = {
 export default function GestureSelector({
   GESTURES,
   activeGestureIdx,
-  manualGestureIdx,
   setManualGestureIdx,
   isAutoCycle,
   setIsAutoCycle,
@@ -69,9 +68,26 @@ export default function GestureSelector({
                 <span style={{ fontSize: 11, fontWeight: 800, color: isActive ? P.t1 : P.t2 }}>{g.name}</span>
                 <span style={{ width: 6, height: 6, borderRadius: "50%", background: g.color }} />
               </div>
-              <div style={{ fontSize: 9, color: P.t3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+              <div style={{ fontSize: 9, color: P.t3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", marginBottom: 4 }}>
                 {g.desc}
               </div>
+              {g.fingers && (
+                <div style={{ display: "flex", gap: 2, alignItems: "flex-end", height: 10, marginBottom: 2 }}>
+                  {g.fingers.map((fVal, fIdx) => (
+                    <div
+                      key={fIdx}
+                      style={{
+                        flex: 1,
+                        height: `${Math.max(15, fVal)}%`,
+                        background: isActive ? P.cyan : P.t3,
+                        borderRadius: 1,
+                        opacity: isActive ? 0.9 : 0.4
+                      }}
+                      title={`Finger ${fIdx + 1}: ${fVal}% flex`}
+                    />
+                  ))}
+                </div>
+              )}
               {keyShortcut && (
                 <span style={{ position: "absolute", bottom: 2, right: 4, fontSize: 8, color: P.cyan, opacity: 0.6, fontWeight: 700 }}>
                   [{keyShortcut}]

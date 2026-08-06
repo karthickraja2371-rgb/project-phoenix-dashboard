@@ -30,7 +30,7 @@ function GaugeBar({ label, value, max, warn, danger, unit = "", small = false })
 function SVGWaveform({ data, color, height = 36 }) {
   if (!data || data.length === 0) return null;
   const width = 280;
-  const maxVal = 1.2;
+  const maxVal = Math.max(1.2, ...data);
   const EMG_LEN = 80;
   const points = data
     .map((val, idx) => {

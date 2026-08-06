@@ -331,6 +331,20 @@ export default function Arm3DViewer({ fingers = [0, 0, 0, 0, 0], elbow = 45, wri
       container.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
+      
+      // Traverse scene and dispose of geometries and materials to avoid GPU memory leaks
+      scene.traverse((object) => {
+        if (!object.isMesh) return;
+        if (object.geometry) object.geometry.dispose();
+        if (object.material) {
+          if (Array.isArray(object.material)) {
+            object.material.forEach((mat) => mat.dispose());
+          } else {
+            object.material.dispose();
+          }
+        }
+      });
+
       if (container && renderer.domElement) {
         container.removeChild(renderer.domElement);
       }

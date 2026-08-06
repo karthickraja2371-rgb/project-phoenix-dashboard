@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const P = {
   bg2: "#0A1424", bg3: "#101F36", bd: "#172A45",
@@ -6,6 +6,17 @@ const P = {
   cyan: "#00E5FF", green: "#00E676", amber: "#FFB300",
   purple: "#E040FB",
 };
+
+function renderFormattedText(text) {
+  if (!text) return null;
+  const parts = text.split(/(\*\*.*?\*\*)/g);
+  return parts.map((part, idx) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <strong key={idx} style={{ fontWeight: 800 }}>{part.slice(2, -2)}</strong>;
+    }
+    return part;
+  });
+}
 
 export default function AIChatModal({
   isChatOpen,
@@ -15,6 +26,14 @@ export default function AIChatModal({
   setChatInput,
   handleSendChat
 }) {
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    if (isChatOpen && messagesEndRef.current && typeof messagesEndRef.current.scrollIntoView === 'function') {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [chatMessages, isChatOpen]);
+
   if (!isChatOpen) return null;
 
   return (
@@ -55,9 +74,10 @@ export default function AIChatModal({
                 fontWeight: msg.sender === "user" ? 700 : 400
               }}
             >
-              {msg.text}
+              {renderFormattedText(msg.text)}
             </div>
           ))}
+          <div ref={messagesEndRef} />
         </div>
 
         {/* Input Footer */}
@@ -67,6 +87,7 @@ export default function AIChatModal({
         >
           <input
             type="text"
+            autoFocus
             placeholder="Ask about 16 gestures, patent claims, 20.0 kPa lock, TI ADS1299..."
             value={chatInput}
             onChange={(e) => setChatInput(e.target.value)}

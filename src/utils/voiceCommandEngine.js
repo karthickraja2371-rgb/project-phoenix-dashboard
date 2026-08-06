@@ -53,6 +53,20 @@ export class VoiceCommandEngine {
           this.onCommandRecognized({ command: "PASSIVE_LOCK", keyword: "LOCK", gestureIdx: 3, confidence });
         } else if (transcript.includes("PINCH")) {
           this.onCommandRecognized({ command: "PRECISION_PINCH", keyword: "PINCH", gestureIdx: 10, confidence });
+        } else if (transcript.includes("POINT")) {
+          this.onCommandRecognized({ command: "POINT", keyword: "POINT", gestureIdx: 7, confidence });
+        } else if (transcript.includes("WAVE")) {
+          this.onCommandRecognized({ command: "WAVE", keyword: "WAVE", gestureIdx: 11, confidence });
+        } else if (transcript.includes("PEACE") || transcript.includes("VICTORY")) {
+          this.onCommandRecognized({ command: "PEACE_SIGN", keyword: "PEACE", gestureIdx: 12, confidence });
+        } else if (transcript.includes("THUMB") || transcript.includes("LIKE")) {
+          this.onCommandRecognized({ command: "THUMBS_UP", keyword: "THUMBS UP", gestureIdx: 9, confidence });
+        } else if (transcript.includes("TRIPOD")) {
+          this.onCommandRecognized({ command: "TRIPOD", keyword: "TRIPOD", gestureIdx: 5, confidence });
+        } else if (transcript.includes("HOOK")) {
+          this.onCommandRecognized({ command: "HOOK", keyword: "HOOK", gestureIdx: 6, confidence });
+        } else if (transcript.includes("OK")) {
+          this.onCommandRecognized({ command: "OK_SIGN", keyword: "OK", gestureIdx: 15, confidence });
         }
       };
 

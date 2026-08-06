@@ -19,38 +19,7 @@ const P = {
   red: "#FF3D00", blue: "#2979FF", purple: "#E040FB",
 };
 
-// ── Patent Claim Test Matrix ───────────────────────────────────────────────────
-const TESTS = [
-  { claim: "Claim 1",  name: "Offline NDP120 AI Processor",         evidence: "Hardware-in-the-Loop", sub: "Syntiant palm chip · Cloud-independent gesture classification", detail: "Syntiant NDP120 neural processor runs a 4-layer CNN model directly inside the palm chassis, eliminating cloud dependency and GDPR risk." },
-  { claim: "Claim 2",  name: "Vision-EMG Intent Fusion",            evidence: "Simulation & Camera Feed", sub: "OV2640 palm camera + MobileNetV3 predictive pre-selection", detail: "OV2640 camera captures object geometries 300ms prior to contact, pre-shaping hand fingers before sEMG muscles complete contraction." },
-  { claim: "Claim 3",  name: "Emotion-Aware Sweat Biosensing",      evidence: "Microfluidic Model", sub: "Microfluidic cortisol & epinephrine grip force modulation", detail: "Graphene microfluidic sensors detect sweat cortisol levels (>0.60 ug/dL) during user anxiety, automatically capping grip torque to 80% to prevent object damage." },
-  { claim: "Claim 4",  name: "Self-Healing Socket Liner",           evidence: "Material Bench Test", sub: "Nickel-particle hybrid polymer autonomous micro-crack repair", detail: "Liquid-filled microcapsules within the inner silicone socket release self-healing monomer upon micro-crack formation, repairing tears within 10 mins." },
-  { claim: "Claim 5",  name: "Nightly On-Device Retraining",        evidence: "Firmware State Machine", sub: "NDP120 micro-training during 15W Qi wireless charging", detail: "During wireless charging at night, accumulated gesture variations update local neural weights without transmitting biometric data over internet." },
-  { claim: "Claim 6",  name: "Phantom Pain TENS Suppression",       evidence: "Bi-phasic Waveform", sub: "Background Graded Motor Imagery (GMI) auto-therapy", detail: "Bi-phasic TENS pulses (100Hz, 200us) deliver tactile sensory feedback to residual skin grafts, suppressing phantom limb pain by over 70%." },
-  { claim: "Claim 7",  name: "Offline Voice-EMG Command Fusion",    evidence: "MEMS PDM Audio Model", sub: "Knowles MEMS microphone voice command fallback", detail: "Knowles MEMS microphone isolates voice keywords ('OPEN', 'GRIP', 'LOCK') to assist sEMG classification when muscle fatigue is detected." },
-  { claim: "Claim 8",  name: "Socket Pressure Safety Array",        evidence: "FSR Array Simulation", sub: "8-12 FSR array with automatic 20.0 kPa passive lock", detail: "8 FSR sensors monitor socket skin pressure. If pressure exceeds 20.0 kPa on skin grafts, STM32 MCU triggers an immediate passive tendon lock." },
-  { claim: "Claim 9",  name: "Thermal & Humidity Microclimate",     evidence: "Sensirion SHT31 Model", sub: "Sensirion SHT31 sensor (>38°C / >80% RH alert)", detail: "Dual Sensirion SHT31 sensors monitor socket temperature and sweat humidity, alerting the user to un-don the arm if skin temperature exceeds 38.0°C." },
-  { claim: "Claim 10", name: "Pre-Donning Skin Inspection",         evidence: "Vision Model", sub: "OV2640 palm camera graft redness detection", detail: "Before donning, the palm camera scans skin graft redness/irritation using HSV color segmentation, preventing socket friction over inflamed tissue." },
-  { claim: "Claim 11", name: "Mandatory Muscle Rest Cycle",         evidence: "STM32 Timer Logic", sub: "STM32H753 3-hour active / 15-minute rest lock", detail: "To protect skin-grafted muscle beds from over-fatigue, the system enforces a 15-minute resting lock after every 3 hours of continuous sEMG sampling." },
-  { claim: "Claim 12", name: "Daily TENS Electrode Rotation",       evidence: "Multiplexer Logic", sub: "3-position pad rotation to prevent contact dermatitis", detail: "An analog multiplexer rotates active TENS stimulation across 3 skin graft pad locations every 8 hours, preventing localized skin irritation." },
-  { claim: "Claim 13", name: "Integrated Skin-Graft Prosthesis",    evidence: "KCL CAD Assembly", sub: "Complete clinical system under 1.2kg with 13.2h runtime", detail: "Complete transhumeral assembly weighing 1.18 kg powered by a 22.2V 5000mAh Li-Ion battery pack, providing 13.2 hours of heavy daily use." },
-];
 
-const RESULT_VALS = [
-  "92.4% (SIMULATED) · 22ms latency · 4.8mW · OFFLINE",
-  "28ms fused latency (vs 300ms traditional) · 91% reduction",
-  "Cortisol 0.28 ug/dL · Grip ceiling 100% (Spike >0.6 → 80%)",
-  "Micro-cracks repaired in 10 mins @ room temperature",
-  "Accumulated 1,420 gestures · Retrained model 94.2% accurate",
-  "GMI sequence active every 2h · Baseline micro-contractions clear",
-  "5/5 voice commands recognized · 0.94 confidence score",
-  "Pressure 9.2 kPa OK (Threshold: 20.0 kPa passive lock)",
-  "34.8°C / 63% RH → Socket Microclimate Normal",
-  "Graft skin color scan normal · Zero discolouration detected",
-  "Active timer 01h 14m · Rest cycle scheduled in 01h 46m",
-  "Position #1 active · Rotation to Position #2 scheduled",
-  "Weight 1.18 kg (MODELED) · 22.2V Battery · Runtime 13.2h (MODELED)",
-];
 
 // ── Offline AI Chat Response Engine ───────────────────────────────────────────
 const getBotResponse = (question) => {
@@ -145,9 +114,6 @@ export default function App() {
   // ── System Diagnostics Runner ──────────────────────────────────────────────
   const [isDiagnosticRunning, setIsDiagnosticRunning] = useState(false);
   const [diagnosticProgress, setDiagnosticProgress] = useState(100);
-  const [testResults] = useState(
-    TESTS.map((t, idx) => ({ ...t, val: RESULT_VALS[idx], status: "SIMULATION VALIDATED" }))
-  );
 
   const runFullSystemDiagnostics = useCallback(() => {
     setIsDiagnosticRunning(true);
@@ -184,6 +150,7 @@ export default function App() {
       } else if (e.code === 'Escape') {
         setSelectedClaim(null);
         setIsChatOpen(false);
+        setIsOnboardingTourOpen(false);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -243,7 +210,6 @@ export default function App() {
           <Dashboard
             GESTURES={GESTURES}
             currentGestureIdx={currentGestureIdx}
-            manualGestureIdx={manualGestureIdx}
             setManualGestureIdx={setManualGestureIdx}
             isAutoCycle={isAutoCycle}
             setIsAutoCycle={setIsAutoCycle}
@@ -260,8 +226,6 @@ export default function App() {
             isDiagnosticRunning={isDiagnosticRunning}
             diagnosticProgress={diagnosticProgress}
             runFullSystemDiagnostics={runFullSystemDiagnostics}
-            testResults={testResults}
-            setSelectedClaim={setSelectedClaim}
             telemetryLogs={telemetryLogs}
             logContainerRef={logContainerRef}
           />

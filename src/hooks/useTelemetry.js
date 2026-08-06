@@ -98,8 +98,8 @@ export function useTelemetry(
       d.pressure = Math.max(...d.fsrSensors);
       d.lockEngaged = pressureSpike;
 
-      // Battery & Environment
-      d.batteryV = lowBattery ? 18.2 : 22.4;
+      // Battery & Environment (Battery gradually drains over time)
+      d.batteryV = lowBattery ? 18.2 : Math.max(16.5, +(22.4 - (t * 0.001)).toFixed(2));
       d.temperature = 34.0 + Math.sin(t * 0.05) * 1.5;
       d.humidity = 60 + Math.cos(t * 0.05) * 5;
 
@@ -137,7 +137,7 @@ export function useTelemetry(
       }
 
       setTelemetryLogs((prev) => {
-        const nextLogs = [...prev, { time: timeStr, text: logMsg, color: logColor }];
+        const nextLogs = [...prev, { id: `${Date.now()}-${Math.random()}`, time: timeStr, text: logMsg, color: logColor }];
         if (nextLogs.length > 50) nextLogs.shift();
         return nextLogs;
       });
@@ -156,7 +156,8 @@ export function useTelemetry(
   // Stable addLog — useCallback prevents infinite re-renders in consumers
   const addLog = useCallback((logObj) => {
     setTelemetryLogs((prev) => {
-      const next = [...prev, logObj];
+      const entry = logObj.id ? logObj : { ...logObj, id: `${Date.now()}-${Math.random()}` };
+      const next = [...prev, entry];
       if (next.length > 50) next.shift();
       return next;
     });
