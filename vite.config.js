@@ -8,6 +8,21 @@ export default defineConfig({
     host: true,
     allowedHosts: true,
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules/three')) {
+            return 'three';
+          }
+          if (id.includes('node_modules/react')) {
+            return 'react';
+          }
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1000,
+  },
   test: {
     globals: true,
     environment: 'jsdom',

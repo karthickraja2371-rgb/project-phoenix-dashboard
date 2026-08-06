@@ -42,6 +42,7 @@ export default function GestureSelector({
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: 8, maxHeight: 190, overflowY: "auto", paddingRight: 4 }}>
         {GESTURES.map((g, idx) => {
           const isActive = idx === activeGestureIdx;
+          const keyShortcut = idx < 9 ? `${idx + 1}` : null;
           return (
             <div
               key={idx}
@@ -53,12 +54,15 @@ export default function GestureSelector({
                 }
               }}
               style={{
-                background: isActive ? `rgba(0, 229, 255, 0.15)` : P.bg3,
-                border: `1px solid ${isActive ? g.color : P.bd}`,
+                background: isActive ? `rgba(0, 229, 255, 0.2)` : P.bg3,
+                border: `1px solid ${isActive ? P.cyan : P.bd}`,
                 borderRadius: 6,
                 padding: "8px 10px",
                 cursor: "pointer",
-                transition: "all 0.2s ease"
+                boxShadow: isActive ? `0 0 12px rgba(0, 229, 255, 0.5)` : "none",
+                transform: isActive ? "scale(1.02)" : "scale(1)",
+                transition: "all 0.2s ease",
+                position: "relative"
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 3 }}>
@@ -68,6 +72,11 @@ export default function GestureSelector({
               <div style={{ fontSize: 9, color: P.t3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                 {g.desc}
               </div>
+              {keyShortcut && (
+                <span style={{ position: "absolute", bottom: 2, right: 4, fontSize: 8, color: P.cyan, opacity: 0.6, fontWeight: 700 }}>
+                  [{keyShortcut}]
+                </span>
+              )}
             </div>
           );
         })}

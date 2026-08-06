@@ -17,7 +17,12 @@ export default function HeaderNavbar({
   setIsChatOpen,
   pressureSpike,
   sensorFailure,
-  lowBattery
+  lowBattery,
+  viewModeType = "engineer",
+  setViewModeType,
+  exportCSV,
+  onConnectWebSerial,
+  isSerialConnected = false
 }) {
   return (
     <header style={{ background: P.bg2, borderBottom: `1px solid ${P.bd}`, padding: "12px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
@@ -38,42 +43,111 @@ export default function HeaderNavbar({
         </div>
       </div>
 
-      {/* Navigation Tabs */}
-      <div style={{ display: "flex", background: P.bg3, padding: 3, borderRadius: 8, border: `1px solid ${P.bd}` }}>
-        <button
-          onClick={() => setViewMode("dashboard")}
-          style={{
-            background: viewMode === "dashboard" ? P.cyan : "transparent",
-            color: viewMode === "dashboard" ? "#000" : P.t2,
-            border: "none", padding: "6px 14px", borderRadius: 6, fontWeight: 700, fontSize: 12, cursor: "pointer"
-          }}
-        >
-          🎛️ Digital Twin Dashboard
-        </button>
-        <button
-          onClick={() => setViewMode("cad")}
-          style={{
-            background: viewMode === "cad" ? P.cyan : "transparent",
-            color: viewMode === "cad" ? "#000" : P.t2,
-            border: "none", padding: "6px 14px", borderRadius: 6, fontWeight: 700, fontSize: 12, cursor: "pointer"
-          }}
-        >
-          🎨 Tripo3D Model (#42691fd0)
-        </button>
-        <button
-          onClick={() => setViewMode("video")}
-          style={{
-            background: viewMode === "video" ? P.cyan : "transparent",
-            color: viewMode === "video" ? "#000" : P.t2,
-            border: "none", padding: "6px 14px", borderRadius: 6, fontWeight: 700, fontSize: 12, cursor: "pointer"
-          }}
-        >
-          🎬 3D Animation Storyboard
-        </button>
+      {/* 8-LED Subsystem Hardware Health Status Matrix */}
+      <div style={{ display: "flex", alignItems: "center", gap: 8, background: P.bg3, padding: "4px 10px", borderRadius: 6, border: `1px solid ${P.bd}` }}>
+        <span style={{ fontSize: 10, color: P.t3, fontWeight: 700 }}>SUBSYSTEMS:</span>
+        {["MCU", "CAN", "NDP", "FSR", "SHT", "TENS", "CAM", "BAT"].map((sys) => (
+          <span key={sys} style={{ display: "flex", alignItems: "center", gap: 3, fontSize: 9, color: P.t2, fontWeight: 700 }} title={`${sys} Hardware Normal`}>
+            <span style={{ width: 6, height: 6, borderRadius: "50%", background: P.green, boxShadow: `0 0 6px ${P.green}` }}></span>
+            {sys}
+          </span>
+        ))}
       </div>
 
-      {/* Status Badges & Controls */}
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+      {/* Navigation Tabs & Clinician/Engineer Mode Switch */}
+      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <div style={{ display: "flex", background: P.bg3, padding: 3, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+          <button
+            onClick={() => setViewMode("dashboard")}
+            style={{
+              background: viewMode === "dashboard" ? P.cyan : "transparent",
+              color: viewMode === "dashboard" ? "#000" : P.t2,
+              border: "none", padding: "6px 12px", borderRadius: 6, fontWeight: 700, fontSize: 11, cursor: "pointer"
+            }}
+          >
+            🎛️ Digital Twin
+          </button>
+          <button
+            onClick={() => setViewMode("cad")}
+            style={{
+              background: viewMode === "cad" ? P.cyan : "transparent",
+              color: viewMode === "cad" ? "#000" : P.t2,
+              border: "none", padding: "6px 12px", borderRadius: 6, fontWeight: 700, fontSize: 11, cursor: "pointer"
+            }}
+          >
+            🎨 3D Model
+          </button>
+          <button
+            onClick={() => setViewMode("video")}
+            style={{
+              background: viewMode === "video" ? P.cyan : "transparent",
+              color: viewMode === "video" ? "#000" : P.t2,
+              border: "none", padding: "6px 12px", borderRadius: 6, fontWeight: 700, fontSize: 11, cursor: "pointer"
+            }}
+          >
+            🎬 Storyboard
+          </button>
+        </div>
+
+        {/* Clinician vs Engineer View Mode Toggle */}
+        <div style={{ display: "flex", background: P.bg3, padding: 3, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+          <button
+            onClick={() => setViewModeType && setViewModeType("clinician")}
+            style={{
+              background: viewModeType === "clinician" ? P.green : "transparent",
+              color: viewModeType === "clinician" ? "#000" : P.t2,
+              border: "none", padding: "6px 10px", borderRadius: 6, fontWeight: 700, fontSize: 11, cursor: "pointer"
+            }}
+            title="Simplified view for prosthetists & patient fitting"
+          >
+            🩺 Clinician
+          </button>
+          <button
+            onClick={() => setViewModeType && setViewModeType("engineer")}
+            style={{
+              background: viewModeType === "engineer" ? P.blue : "transparent",
+              color: viewModeType === "engineer" ? "#FFF" : P.t2,
+              border: "none", padding: "6px 10px", borderRadius: 6, fontWeight: 700, fontSize: 11, cursor: "pointer"
+            }}
+            title="Detailed multi-channel telemetry view for engineers"
+          >
+            ⚡ Engineer
+          </button>
+        </div>
+      </div>
+
+      {/* Status Badges & Action Controls */}
+      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        {/* USB WebSerial Connect Button */}
+        <button
+          onClick={onConnectWebSerial}
+          style={{
+            background: isSerialConnected ? "rgba(0, 230, 118, 0.2)" : "rgba(255, 179, 0, 0.15)",
+            color: isSerialConnected ? P.green : P.amber,
+            border: `1px solid ${isSerialConnected ? P.green : P.amber}`,
+            padding: "6px 10px", borderRadius: 6, fontSize: 11, fontWeight: 700, cursor: "pointer"
+          }}
+          title="Connect live hardware (Arduino/STM32/Syntiant) over USB serial port"
+        >
+          {isSerialConnected ? "🔌 USB Serial Live" : "🔌 USB WebSerial"}
+        </button>
+
+        {/* CSV Export Button */}
+        {exportCSV && (
+          <button
+            onClick={exportCSV}
+            style={{
+              background: "rgba(0, 229, 255, 0.1)",
+              color: P.cyan,
+              border: `1px solid ${P.cyan}`,
+              padding: "6px 10px", borderRadius: 6, fontSize: 11, fontWeight: 700, cursor: "pointer"
+            }}
+            title="Download real-time telemetry stream as CSV file"
+          >
+            📥 Export CSV
+          </button>
+        )}
+
         {/* Voice Command Button (Claim 7) */}
         <button
           onClick={toggleVoiceListening}
@@ -84,7 +158,7 @@ export default function HeaderNavbar({
             padding: "6px 12px", borderRadius: 6, fontSize: 11, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 6
           }}
         >
-          {isVoiceListening ? "🎙️ Voice Active ('OPEN', 'GRIP', 'LOCK')" : "🎤 Voice Assistant (Claim 7)"}
+          {isVoiceListening ? "🎙️ Voice Active" : "🎤 Voice (Claim 7)"}
         </button>
 
         {/* Audio Telemetry Toggle */}
@@ -97,7 +171,7 @@ export default function HeaderNavbar({
             padding: "6px 10px", borderRadius: 6, fontSize: 11, fontWeight: 700, cursor: "pointer"
           }}
         >
-          {isAudioTelemetryActive ? "🔊 Speech Alarms ON" : "🔇 Mute Speech"}
+          {isAudioTelemetryActive ? "🔊 Speech ON" : "🔇 Mute"}
         </button>
 
         {/* AI Chat Button */}
@@ -108,13 +182,13 @@ export default function HeaderNavbar({
             color: "#FFF", border: "none", padding: "6px 12px", borderRadius: 6, fontSize: 11, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 6
           }}
         >
-          🤖 AI Assistant
+          🤖 AI Chat
         </button>
 
         {/* System Warnings */}
         {pressureSpike && (
           <span style={{ background: "rgba(255, 61, 0, 0.2)", color: P.red, border: `1px solid ${P.red}`, padding: "4px 8px", borderRadius: 6, fontSize: 11, fontWeight: 800 }}>
-            🚨 20.0 kPa LOCK ENGAGED
+            🚨 20.0 kPa LOCK
           </span>
         )}
         {sensorFailure && (
@@ -124,7 +198,7 @@ export default function HeaderNavbar({
         )}
         {lowBattery && (
           <span style={{ background: "rgba(255, 179, 0, 0.2)", color: P.amber, border: `1px solid ${P.amber}`, padding: "4px 8px", borderRadius: 6, fontSize: 11, fontWeight: 800 }}>
-            🔋 LOW BATT 18.2V
+            🔋 LOW BATT
           </span>
         )}
       </div>

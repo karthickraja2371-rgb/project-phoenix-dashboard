@@ -276,3 +276,37 @@ body {
     align-items: flex-start;
   }
 }
+
+/* ── WCAG 2.2 Focus Rings & Accessibility ── */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent-cyan) !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.6) !important;
+}
+
+.tnum {
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Printable Clinical Spec Sheet CSS ── */
+@media print {
+  body {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+  }
+  .card {
+    background: #FFFFFF !important;
+    border: 1px solid #CCCCCC !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+  .no-print, header, nav, button {
+    display: none !important;
+  }
+}
+

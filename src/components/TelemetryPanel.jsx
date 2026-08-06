@@ -67,8 +67,13 @@ export default function TelemetryPanel({
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
       {/* Syntiant NDP120 & Gesture Card */}
       <div style={{ background: P.bg2, border: `1px solid ${P.cyan}`, borderRadius: 10, padding: 14 }}>
-        <div style={{ fontSize: 10, fontWeight: 800, color: P.cyan, letterSpacing: 1, marginBottom: 4 }}>
-          OFFLINE EDGE AI NEURAL CLASSIFIER (NDP120)
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
+          <div style={{ fontSize: 10, fontWeight: 800, color: P.cyan, letterSpacing: 1 }}>
+            OFFLINE EDGE AI NEURAL CLASSIFIER (NDP120)
+          </div>
+          <span style={{ background: "rgba(0, 229, 255, 0.15)", color: P.cyan, fontSize: 9, padding: "1px 6px", borderRadius: 3, fontWeight: 800 }}>
+            [MODEL SIMULATED]
+          </span>
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
           <span style={{ fontSize: 16, fontWeight: 900, color: currentGesture.color }}>{currentGesture.name}</span>
@@ -81,11 +86,11 @@ export default function TelemetryPanel({
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, background: P.bg3, padding: 8, borderRadius: 6 }}>
           <div>
             <div style={{ fontSize: 9, color: P.t3 }}>INFERENCE LATENCY</div>
-            <div style={{ fontSize: 14, fontWeight: 800, color: P.cyan }}>{d.latency} ms <span style={{ fontSize: 9, color: P.t3 }}>(Simulated)</span></div>
+            <div style={{ fontSize: 14, fontWeight: 800, color: P.cyan }}>{d.latency} ms <span style={{ fontSize: 9, color: P.t3 }}>[ESTIMATED]</span></div>
           </div>
           <div>
             <div style={{ fontSize: 9, color: P.t3 }}>POWER DRAW</div>
-            <div style={{ fontSize: 14, fontWeight: 800, color: P.green }}>4.8 mW <span style={{ fontSize: 9, color: P.t3 }}>(Modeled)</span></div>
+            <div style={{ fontSize: 14, fontWeight: 800, color: P.green }}>4.8 mW <span style={{ fontSize: 9, color: P.t3 }}>[MODELED]</span></div>
           </div>
         </div>
       </div>
@@ -96,8 +101,53 @@ export default function TelemetryPanel({
           🛡️ SKIN GRAFT SAFETY INTERLOCKS & BIOSENSORS
         </div>
 
+        {/* 2D Anatomical FSR Pressure Socket Heatmap */}
+        <div style={{ marginBottom: 12, background: P.bg3, padding: 10, borderRadius: 8, border: `1px solid ${P.bd}` }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+            <span style={{ fontSize: 10, color: P.t2, fontWeight: 700 }}>8-POINT SOCKET PRESSURE HEATMAP</span>
+            <span style={{ fontSize: 9, color: d.pressure >= 20.0 ? P.red : P.green, fontWeight: 800 }}>
+              PEAK: {d.pressure.toFixed(1)} kPa {d.pressure >= 20.0 && "(LOCK DISENGAGE ENGAGED)"}
+            </span>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 6, marginBottom: 8 }}>
+            {(d.fsrSensors || [8,9,7,10,8,9,7,8]).map((val, i) => {
+              const isDanger = val >= 20.0;
+              const isWarn = val >= 15.0;
+              const bgCol = isDanger ? "rgba(255, 61, 0, 0.4)" : isWarn ? "rgba(255, 179, 0, 0.3)" : "rgba(0, 230, 118, 0.2)";
+              const borderCol = isDanger ? P.red : isWarn ? P.amber : P.green;
+              return (
+                <div key={i} style={{ background: bgCol, border: `1px solid ${borderCol}`, padding: "4px 6px", borderRadius: 4, textAlign: "center" }} title={`FSR Pad #${i + 1}: ${val} kPa`}>
+                  <div style={{ fontSize: 8, color: P.t3 }}>FSR #{i + 1}</div>
+                  <div style={{ fontSize: 11, fontWeight: 800, color: isDanger ? P.red : isWarn ? P.amber : P.t1 }}>{val} <span style={{ fontSize: 7 }}>kPa</span></div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
         <GaugeBar label="Peak Socket Pressure (8-FSR Array)" value={d.pressure} max={30} warn={15} danger={20} unit=" kPa" />
-        <GaugeBar label="Sweat Cortisol Stress Sensor" value={d.cortisol} max={1.0} warn={0.5} danger={0.6} unit=" ug/dL" />
+        
+        {/* Interactive Cortisol Biofeedback Slider */}
+        <div style={{ marginBottom: 10 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, marginBottom: 3 }}>
+            <span style={{ color: P.t2 }}>Sweat Cortisol Biofeedback</span>
+            <span style={{ color: cortisolOverride > 0.60 ? P.amber : P.green, fontWeight: 700 }}>
+              {cortisolOverride.toFixed(2)} ug/dL (Cap: {d.gripCeiling}%)
+            </span>
+          </div>
+          <input
+            type="range"
+            min="0.10"
+            max="0.90"
+            step="0.02"
+            value={cortisolOverride}
+            onChange={(e) => setCortisolOverride(parseFloat(e.target.value))}
+            style={{ width: "100%", accentColor: cortisolOverride > 0.60 ? P.amber : P.cyan, cursor: "pointer" }}
+            title="Drag slider to test automatic 80% grip torque ceiling"
+          />
+        </div>
+
         <GaugeBar label="Socket Microclimate Temperature" value={d.temperature} max={45} warn={36} danger={38} unit="°C" small />
         <GaugeBar label="Socket Microclimate Humidity" value={d.humidity} max={100} warn={75} danger={80} unit="%" small />
 
