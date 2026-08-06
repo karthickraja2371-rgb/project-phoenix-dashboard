@@ -17,7 +17,7 @@ export default function VideoPlayer({
       id: 0,
       title: "LOOP 1: 20.0 kPa Socket Pressure Lock & Passive Tendon Interrupt",
       sub: "8-point FSR sensor array detecting skin graft shear stress → STM32 hardware comparator cuts motor PWM in <5ms.",
-      poster: "/loop1_safety_lock_keyframe.jpg",
+      poster: "/loop1_safety_lock.jpg",
       tags: ["Claim 8", "FSR Array", "<5ms Hardware Cutoff", "Skin Graft Safety"]
     },
     {
