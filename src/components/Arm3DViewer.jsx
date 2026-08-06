@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 export default function Arm3DViewer({ fingers = [0, 0, 0, 0, 0], elbow = 45, wrist = 12, color = "#00E5FF" }) {
