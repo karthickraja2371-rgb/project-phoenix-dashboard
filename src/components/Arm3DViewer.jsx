@@ -115,28 +115,30 @@ export default function Arm3DViewer({ fingers = [0, 0, 0, 0, 0], elbow = 45, wri
 
     // High-Contrast Metallic Platinum Material
     const titaniumMat = new THREE.MeshStandardMaterial({
-      color: 0xE2E8F0, // Platinum Silver
+      color: 0xE2E8F0,
       metalness: 0.9,
       roughness: 0.15,
     });
 
     const jointMat = new THREE.MeshStandardMaterial({
-      color: 0x00E5FF, // High-visibility Cyan Joint Ring
+      color: 0x00E5FF,
       emissive: 0x004466,
       metalness: 0.95,
       roughness: 0.1,
     });
     jointMatRef.current = jointMat;
 
+    // FIX: Changed from near-black (0x1E293B) to visible steel-blue so fingers
+    // are legible against the dark background
     const carbonMat = new THREE.MeshStandardMaterial({
-      color: 0x1E293B, // Carbon Fiber Finger Phalanx
-      metalness: 0.8,
-      roughness: 0.2,
+      color: 0x4A7FA5,
+      metalness: 0.75,
+      roughness: 0.25,
     });
 
     const fingerTipMat = new THREE.MeshStandardMaterial({
-      color: 0x00E676, // Neon Green Tactile Fingertips
-      emissive: 0x005522,
+      color: 0x00E676,
+      emissive: 0x003311,
       metalness: 0.9,
       roughness: 0.1,
     });
@@ -191,12 +193,14 @@ export default function Arm3DViewer({ fingers = [0, 0, 0, 0, 0], elbow = 45, wri
 
     // 6. 5 Anatomically Opposed Articulating Fingers
     const fingerJoints = [];
+    // FIX: Enlarged finger dimensions and repositioned below the palm so they
+    // are clearly visible. Thumb spread outward; all fingers radii increased.
     const fingerConfigs = [
-      { name: "Thumb",  x: -2.3, y: -1.2, z:  0.8, rotZ:  0.6, rotY:  0.5, len: 2.5 },
-      { name: "Index",  x: -1.5, y: -2.3, z:  0.0, rotZ:  0.0, rotY:  0.0, len: 3.2 },
-      { name: "Middle", x: -0.5, y: -2.3, z:  0.0, rotZ:  0.0, rotY:  0.0, len: 3.6 },
-      { name: "Ring",   x:  0.5, y: -2.3, z:  0.0, rotZ:  0.0, rotY:  0.0, len: 3.1 },
-      { name: "Little", x:  1.5, y: -2.3, z:  0.0, rotZ: -0.1, rotY:  0.0, len: 2.5 },
+      { name: "Thumb",  x: -2.6, y: -0.5, z:  1.2, rotZ:  0.55, rotY:  0.45, len: 3.0 },
+      { name: "Index",  x: -1.6, y: -2.5, z:  0.3, rotZ:  0.0,  rotY:  0.0,  len: 3.6 },
+      { name: "Middle", x: -0.5, y: -2.5, z:  0.3, rotZ:  0.0,  rotY:  0.0,  len: 4.0 },
+      { name: "Ring",   x:  0.6, y: -2.5, z:  0.3, rotZ:  0.0,  rotY:  0.0,  len: 3.5 },
+      { name: "Little", x:  1.7, y: -2.5, z:  0.3, rotZ: -0.08, rotY:  0.0,  len: 2.8 },
     ];
 
     fingerConfigs.forEach((cfg) => {
@@ -209,11 +213,13 @@ export default function Arm3DViewer({ fingers = [0, 0, 0, 0, 0], elbow = 45, wri
       proxGroup.rotation.z = cfg.rotZ;
       proxGroup.rotation.y = cfg.rotY;
 
-      const knuckleGeo = new THREE.SphereGeometry(0.4, 14, 14);
+      // Larger knuckle sphere
+      const knuckleGeo = new THREE.SphereGeometry(0.52, 16, 16);
       const knuckleMesh = new THREE.Mesh(knuckleGeo, jointMat);
       proxGroup.add(knuckleMesh);
 
-      const proxMeshGeo = new THREE.CylinderGeometry(0.36, 0.3, proxLen, 16);
+      // Thicker prox phalanx
+      const proxMeshGeo = new THREE.CylinderGeometry(0.44, 0.38, proxLen, 16);
       const proxMesh = new THREE.Mesh(proxMeshGeo, carbonMat);
       proxMesh.position.y = -proxLen / 2;
       proxGroup.add(proxMesh);
@@ -221,11 +227,13 @@ export default function Arm3DViewer({ fingers = [0, 0, 0, 0, 0], elbow = 45, wri
       const distGroup = new THREE.Group();
       distGroup.position.set(0, -proxLen, 0);
 
-      const ipJointGeo = new THREE.SphereGeometry(0.32, 14, 14);
+      // IP joint sphere
+      const ipJointGeo = new THREE.SphereGeometry(0.40, 16, 16);
       const ipJointMesh = new THREE.Mesh(ipJointGeo, jointMat);
       distGroup.add(ipJointMesh);
 
-      const distMeshGeo = new THREE.CylinderGeometry(0.28, 0.2, distLen, 16);
+      // Thicker distal phalanx
+      const distMeshGeo = new THREE.CylinderGeometry(0.36, 0.26, distLen, 16);
       const distMesh = new THREE.Mesh(distMeshGeo, fingerTipMat);
       distMesh.position.y = -distLen / 2;
       distGroup.add(distMesh);

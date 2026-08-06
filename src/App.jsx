@@ -5,6 +5,7 @@ import VideoPlayer from './components/VideoPlayer';
 import AIChatModal from './components/AIChatModal';
 import ClaimDetailsModal from './components/ClaimDetailsModal';
 import OnboardingTourModal from './components/OnboardingTourModal';
+import Arm3DViewer from './components/Arm3DViewer';
 
 import { useTelemetry, GESTURES } from './hooks/useTelemetry';
 import { useVoiceEngine } from './hooks/useVoiceEngine';
@@ -267,16 +268,33 @@ export default function App() {
         )}
 
         {viewMode === "cad" && (
-          <div style={{ background: P.bg2, border: `1px solid ${P.bd}`, borderRadius: 12, padding: 20, textAlign: "center" }}>
-            <h2 style={{ fontSize: 18, fontWeight: 800, color: P.t1, marginBottom: 8 }}>🎨 Tripo3D Interactive 3D Model (#42691fd0)</h2>
-            <p style={{ fontSize: 12, color: P.t2, marginBottom: 16 }}>
-              Interactive CAD Mesh created by lead engineer R. Karthick Raja for physical SLS titanium & 3D printed monocoque manufacturing.
-            </p>
-            <iframe
-              src="https://studio.tripo3d.ai/3d-model/42691fd0-7309-4c2e-bbe7-6b26b8cc9b1d"
-              title="Project Phoenix Tripo3D Model"
-              style={{ width: "100%", height: 580, border: `1px solid ${P.cyan}`, borderRadius: 8 }}
-            />
+          <div style={{ background: P.bg2, border: `1px solid ${P.bd}`, borderRadius: 12, padding: 20 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
+              <div>
+                <h2 style={{ fontSize: 16, fontWeight: 800, color: P.t1, margin: 0 }}>
+                  📐 Engineering CAD Model — Three.js WebGL Digital Twin
+                </h2>
+                <p style={{ fontSize: 11, color: P.t3, margin: "4px 0 0 0" }}>
+                  Interactive 3D kinematic model · Drag to rotate · Use exploded view slider · Click component badges for specs
+                </p>
+              </div>
+              <div style={{ display: "flex", gap: 8 }}>
+                <span style={{ background: "rgba(0, 229, 255, 0.15)", color: P.cyan, border: `1px solid ${P.cyan}`, fontSize: 10, padding: "3px 10px", borderRadius: 4, fontWeight: 800 }}>
+                  CLAIM 13 — INTEGRATED ASSEMBLY
+                </span>
+                <span style={{ background: "rgba(0, 230, 118, 0.15)", color: P.green, border: `1px solid ${P.green}`, fontSize: 10, padding: "3px 10px", borderRadius: 4, fontWeight: 800 }}>
+                  60 FPS REAL-TIME
+                </span>
+              </div>
+            </div>
+            <div style={{ width: "100%", height: 620, borderRadius: 10, overflow: "hidden", border: `1px solid ${P.cyan}`, boxShadow: "0 0 40px rgba(0, 229, 255, 0.15)" }}>
+              <Arm3DViewer
+                fingers={GESTURES[currentGestureIdx].fingers}
+                elbow={d.elbow}
+                wrist={d.wrist}
+                color={GESTURES[currentGestureIdx].color}
+              />
+            </div>
           </div>
         )}
 

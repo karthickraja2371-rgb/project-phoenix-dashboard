@@ -52,7 +52,14 @@ export default function Dashboard({
           </div>
 
           <div style={{ width: "100%", height: 320, borderRadius: 8, overflow: "hidden", background: "#020610", border: `1px solid ${P.bd}` }}>
-            <Arm3DViewer gesture={GESTURES[currentGestureIdx]} elbowAngle={d.elbow} wristAngle={d.wrist} pressureSpike={pressureSpike} />
+            {/* FIX: was passing gesture/elbowAngle/wristAngle/pressureSpike — Arm3DViewer
+                only accepts fingers/elbow/wrist/color. Fixed to pass the correct props. */}
+            <Arm3DViewer
+              fingers={GESTURES[currentGestureIdx].fingers}
+              elbow={d.elbow}
+              wrist={d.wrist}
+              color={GESTURES[currentGestureIdx].color}
+            />
           </div>
         </div>
 
